@@ -1,0 +1,113 @@
+from __future__ import annotations
+
+import argparse
+
+from uk_tech_prices.channels import (
+    build_hmrc_trade_weights,
+    download_channel_data,
+    run_channel_analysis,
+)
+from uk_tech_prices.model_pipeline import download_foreign_data, run_modeling
+from uk_tech_prices.pipeline import build_uk_indices, download_uk_data, run_all
+from uk_tech_prices.reporting import build_report_outputs
+
+
+def _parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="uk-tech",
+        description="Reproducible UK CPI technology-goods data pipeline",
+    )
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    download = subparsers.add_parser("download", help="Download ONS input series")
+    download.add_argument(
+        "--refresh",
+        action="store_true",
+        help="Replace raw snapshots with the latest ONS vintage",
+    )
+
+    subparsers.add_parser("build", help="Build UK technology-goods indices")
+
+    foreign = subparsers.add_parser(
+        "download-foreign",
+        help="Download BOJ, Bank of England, FRED/BLS and WTO/DBnomics inputs",
+    )
+    foreign.add_argument(
+        "--refresh",
+        action="store_true",
+        help="Replace raw foreign snapshots with the latest vintage",
+    )
+
+    subparsers.add_parser(
+        "model",
+        help="Run publication-aware lead diagnostics and forecast tests",
+    )
+
+    channels = subparsers.add_parser(
+        "download-channels",
+        help="Download ONS technology import prices and HMRC technology imports",
+    )
+    channels.add_argument(
+        "--refresh",
+        action="store_true",
+        help="Replace raw ONS PPI and HMRC snapshots with the latest vintage",
+    )
+
+    subparsers.add_parser(
+        "channels",
+        help="Build trade weights and run the two-stage/component analysis",
+    )
+    subparsers.add_parser(
+        "report",
+        help="Build the focused research-report charts and scorecards",
+    )
+
+    all_command = subparsers.add_parser("all", help="Download and build")
+    all_command.add_argument(
+        "--refresh",
+        action="store_true",
+        help="Replace raw snapshots with the latest ONS vintage",
+    )
+    return parser
+
+
+def main() -> None:
+    args = _parser().parse_args()
+    if args.command == "download":
+        manifest = download_uk_data(refresh=args.refresh)
+        print(f"Prepared {len(manifest)} ONS series.")
+    elif args.command == "download-foreign":
+        manifest = download_foreign_data(refresh=args.refresh)
+        print(f"Prepared {len(manifest)} foreign source files.")
+    elif args.command == "build":
+        result = build_uk_indices()
+        print(f"Built UK indices through {result.dropna(how='all').index.max():%Y-%m}.")
+    elif args.command == "model":
+        forecasts, summary, correlations = run_modeling()
+        print(
+            "Completed "
+            f"{len(forecasts):,} forecasts, {len(summary):,} evaluations and "
+            f"{len(correlations):,} lead-correlation estimates."
+        )
+    elif args.command == "download-channels":
+        manifest = download_channel_data(refresh=args.refresh)
+        print(f"Prepared {len(manifest)} channel source files.")
+    elif args.command == "channels":
+        _, weights, coverage = build_hmrc_trade_weights()
+        result = run_channel_analysis()
+        print(
+            f"Built {len(weights):,} trade weights and {len(coverage):,} "
+            f"coverage estimates; completed "
+            f"{len(result['stage1_forecasts']):,} stage-one and "
+            f"{len(result['stage2_forecasts']):,} stage-two forecasts."
+        )
+    elif args.command == "report":
+        build_report_outputs()
+        print("Built three research-report charts and three scorecards.")
+    else:
+        result = run_all(refresh=args.refresh)
+        print(f"Downloaded inputs and built UK indices through {result.index.max():%Y-%m}.")
+
+
+if __name__ == "__main__":
+    main()
