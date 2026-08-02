@@ -1,0 +1,2 @@
+series_group,file,retrieved_at_utc,source_url,sha256,bytes
+China NBS technology PPI reconstructed from DBnomics vintages,technology_ppi_archive.csv,2026-07-29T22:12:21.486179+00:00,https://git.nomics.world/dbnomics-json-data/nbs-json-data.git,b95155a2e8b0bc33f90e1dc32bc94f906ff5026f9a492981a67075ff9017d614,5899

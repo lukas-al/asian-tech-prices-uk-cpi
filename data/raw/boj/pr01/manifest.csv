@@ -1,0 +1,2 @@
+series_group,file,retrieved_at_utc,source_url,sha256,bytes
+BOJ PR01 technology and control series,technology_price_series.csv,2026-07-29T22:09:04.068192+00:00,https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=csv&lang=en&db=PR01&startDate=201401&endDate=202612&code=PRCG20_2400520001%2CPRCG20_2300520001%2CPRCG20_2201520001%2CPRCG20_2201720001%2CPRCG20_2400000000,234138a137bd588d6db9eec04f7e95dcfd19bc59cb3bd895bf25c72b245a8ebc,141528

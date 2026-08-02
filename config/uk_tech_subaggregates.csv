@@ -1,0 +1,11 @@
+subaggregate,coicop5_code,index_series_id,weight_series_id,role
+telecom_computing,08.2.0.2,L7GG,L8C3,Mobile telephone equipment
+telecom_computing,09.1.3.1,L7GT,L8CH,Personal computers
+telecom_computing,09.1.3.2,L7GU,L8CI,Accessories for information processing equipment
+audio_visual_optical,09.1.1.1,L7GM,L8CA,Sound equipment
+audio_visual_optical,09.1.1.2,L7GP,L8CD,Sound and vision equipment
+audio_visual_optical,09.1.1.3,L7GQ,L8CE,Portable sound and vision devices
+audio_visual_optical,09.1.1.9,L7GR,L8CF,Other sound and picture equipment
+audio_visual_optical,09.1.2,D7EO,CJYD,Photographic cinematographic and optical equipment
+media_games,09.1.4.9,L7GY,L8CM,Other recording media
+media_games,09.3.1.1,L7H9,L8CT,Games and hobbies

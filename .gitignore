@@ -1,0 +1,11 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Download cache: the compact extracted snapshot and source register are tracked.
+data/raw/south_korea/bok/workbooks/

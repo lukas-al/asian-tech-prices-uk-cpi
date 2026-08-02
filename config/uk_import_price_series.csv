@@ -1,0 +1,8 @@
+series_key,cdid,concept,coverage,role
+uk_ipi_manufactures,GB8U,Import price index,Manufactured products,Broad import-price control
+uk_ipi_c26,G68Q,Import price index,"Computer, electronic and optical products",Primary technology-border-price measure
+uk_ipi_c26_noneu,G6PT,Non-EU import price index,"Computer, electronic and optical products",Asian-origin robustness measure
+uk_ipi_c261,EZSQ,Import price index,Electronic components and boards,Upstream component measure
+uk_ipi_c261_noneu,EZXC,Non-EU import price index,Electronic components and boards,Asian-origin component measure
+uk_ipi_c262,EZSR,Import price index,Computers and peripheral equipment,Computing-component match
+uk_ipi_c262_noneu,EZXD,Non-EU import price index,Computers and peripheral equipment,Asian-origin computing match

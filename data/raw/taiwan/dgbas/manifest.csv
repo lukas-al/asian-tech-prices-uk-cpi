@@ -1,0 +1,4 @@
+series_group,file,retrieved_at_utc,source_url,sha256,bytes
+Taiwan DGBAS epi_twd,epi_twd.xml,2026-07-29T22:12:21.486732+00:00,https://ws.dgbas.gov.tw/001/Upload/461/relfile/11525/230552/pr0402a1m.xml,1e0158f63f200f59c6f3435b8c3e823edf9047819a6e25185769143f65233642,10891054
+Taiwan DGBAS epi_usd,epi_usd.xml,2026-07-29T22:12:21.486732+00:00,https://ws.dgbas.gov.tw/001/Upload/461/relfile/11525/230551/pr0401a1m.xml,d267f4d59fb9a7436c9138feaabb3a0ca0fc9f5d35836c3f2a68ab74dda300ee,10885694
+Taiwan DGBAS ppi,ppi.xml,2026-07-29T22:12:21.486732+00:00,https://ws.dgbas.gov.tw/001/Upload/461/relfile/11525/230534/pr0701a1m.xml,c53343b1e7dfdc5201f62e6cc3415c8e822c81374623d986a05438b23389f811,2426767

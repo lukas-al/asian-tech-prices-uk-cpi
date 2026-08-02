@@ -1,0 +1,2 @@
+series_group,file,retrieved_at_utc,source_url,sha256,bytes
+Hong Kong C&SD industry producer price indices,producer_price_indices.json,2026-07-29T22:12:30.647375+00:00,https://www.censtatd.gov.hk/api/get.php?id=520-62001&lang=en&full_series=1,9e4b2ad55584d7659e8134bbc9b9822a4ed653c01fd1e0191110d8c512a795d8,284367

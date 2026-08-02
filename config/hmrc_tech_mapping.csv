@@ -1,0 +1,26 @@
+component_id,component_label,hs4_code,hs4_label,mapping_grade
+L7GG,Mobile telephone equipment,8517,Telephone sets including smartphones,A
+L7GM,Sound equipment,8518,"Microphones, loudspeakers and headphones",A
+L7GM,Sound equipment,8519,Sound recording or reproducing apparatus,A
+L7GM,Sound equipment,8527,Radio-broadcast receivers,A
+L7GP,Sound and vision equipment,8518,"Microphones, loudspeakers and headphones",B
+L7GP,Sound and vision equipment,8519,Sound recording or reproducing apparatus,A
+L7GP,Sound and vision equipment,8521,Video recording or reproducing apparatus,A
+L7GP,Sound and vision equipment,8527,Radio-broadcast receivers,A
+L7GP,Sound and vision equipment,8528,"Monitors, projectors and televisions",A
+L7GQ,Portable sound and vision devices,8518,"Microphones, loudspeakers and headphones",B
+L7GQ,Portable sound and vision devices,8519,Sound recording or reproducing apparatus,A
+L7GQ,Portable sound and vision devices,8527,Radio-broadcast receivers,A
+L7GR,Other sound and picture equipment,8518,"Microphones, loudspeakers and headphones",B
+L7GR,Other sound and picture equipment,8521,Video recording or reproducing apparatus,A
+L7GR,Other sound and picture equipment,8527,Radio-broadcast receivers,B
+L7GR,Other sound and picture equipment,8528,"Monitors, projectors and televisions",A
+D7EO,Photographic and optical equipment,8525,Digital and television cameras,A
+D7EO,Photographic and optical equipment,9005,"Binoculars, telescopes and optical instruments",A
+D7EO,Photographic and optical equipment,9006,Photographic cameras and flash apparatus,A
+D7EO,Photographic and optical equipment,9007,Cinematographic cameras and projectors,A
+L7GT,Personal computers,8471,Computers and data-processing machines,A
+L7GU,Information-processing accessories,8471,Computer units and peripherals,B
+L7GU,Information-processing accessories,8473,Parts and accessories for office and data-processing machines,A
+L7GY,Other recording media,8523,Prepared unrecorded and recorded media,A
+L7H9,Games and hobbies,9504,"Video-game consoles, table and parlour games",B

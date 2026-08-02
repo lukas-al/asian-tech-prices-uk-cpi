@@ -437,7 +437,6 @@ def download_south_korea_data(
         pd.DataFrame(downloaded).drop(columns=["path"]).to_csv(sources_path, index=False)
 
     retrieved_at = datetime.now(UTC).isoformat()
-    sources = pd.read_csv(sources_path)
     rows = [
         _manifest_item(
             group="South Korea BOK extracted technology export prices",
@@ -452,18 +451,6 @@ def download_south_korea_data(
             retrieved_at=retrieved_at,
         ),
     ]
-    for source in sources.itertuples(index=False):
-        path = workbooks / source.file
-        rows.append(
-            {
-                "series_group": "South Korea BOK monthly release workbook",
-                "file": f"workbooks/{source.file}",
-                "retrieved_at_utc": retrieved_at,
-                "source_url": source.file_url,
-                "sha256": _sha256(path),
-                "bytes": path.stat().st_size,
-            }
-        )
     return _write_manifest(RAW_KOREA_DIR, rows)
 
 

@@ -1,0 +1,18 @@
+series_key,country,agency,concept,product_group,currency_basis,source_code,publication_timing,mapping_grade,role
+jp_epi_electronics_yen,Japan,Bank of Japan,Export price index,Electric and electronic products,Yen,PRCG20_2400520001,Eighth business day after reference month,A/B,candidate
+jp_epi_electronics_contract,Japan,Bank of Japan,Export price index,Electric and electronic products,Contract currency,PRCG20_2300520001,Eighth business day after reference month,A/B,candidate
+jp_ppi_electronic_components,Japan,Bank of Japan,Producer price index,Electronic components and devices,Yen,PRCG20_2201520001,Eighth business day after reference month,B,candidate
+jp_ppi_information_communications,Japan,Bank of Japan,Producer price index,Information and communications equipment,Yen,PRCG20_2201720001,Eighth business day after reference month,A/B,candidate
+jp_epi_all_yen,Japan,Bank of Japan,Export price index,All commodities,Yen,PRCG20_2400000000,Eighth business day after reference month,C,control
+fred_asian_nie_semiconductor,Asian newly industrialised economies,U.S. Bureau of Labor Statistics via FRED,Import price index by origin,Semiconductor and other electronic component manufacturing,USD,COOASZ3344,Usually second or third week after reference month,B,robustness candidate
+fred_asian_nie_computer_electronics,Asian newly industrialised economies,U.S. Bureau of Labor Statistics via FRED,Import price index by origin,Computer and electronic product manufacturing,USD,COOASZ334,Usually second or third week after reference month,B,robustness candidate
+fred_asian_nie_all_imports,Asian newly industrialised economies,U.S. Bureau of Labor Statistics via FRED,Import price index by origin,All industries,USD,OASTOT,Usually second or third week after reference month,C,control
+fred_fx_krw_per_usd,South Korea,Federal Reserve Board via FRED,Exchange rate,South Korean won per US dollar,KRW per USD,DEXKOUS,Daily; monthly average calculated by FRED,Control,control
+fred_fx_twd_per_usd,Taiwan,Federal Reserve Board via FRED,Exchange rate,Taiwan dollars per US dollar,TWD per USD,DEXTAUS,Daily; monthly average calculated by FRED,Control,control
+fred_fx_cny_per_usd,China,Federal Reserve Board via FRED,Exchange rate,Chinese yuan per US dollar,CNY per USD,DEXCHUS,Daily; monthly average calculated by FRED,Control,control
+fred_fx_hkd_per_usd,Hong Kong,Federal Reserve Board via FRED,Exchange rate,Hong Kong dollars per US dollar,HKD per USD,DEXHKUS,Daily; monthly average calculated by FRED,Control,control
+wto_china_manufactures_export,China,World Trade Organization via DBnomics,Export price index,Manufactures,Reported national basis,156.MA.M,About six weeks after reference month,C,control
+wto_taiwan_manufactures_export,Chinese Taipei,World Trade Organization via DBnomics,Export price index,Manufactures,Reported national basis,158.MA.M,About six weeks after reference month,C,control
+wto_japan_manufactures_export,Japan,World Trade Organization via DBnomics,Export price index,Manufactures,Reported national basis,392.MA.M,About six weeks after reference month,C,control
+wto_korea_manufactures_export,South Korea,World Trade Organization via DBnomics,Export price index,Manufactures,Reported national basis,410.MA.M,About six weeks after reference month,C,control
+wto_singapore_manufactures_export,Singapore,World Trade Organization via DBnomics,Export price index,Manufactures,Reported national basis,702.MA.M,About six weeks after reference month,C,control
