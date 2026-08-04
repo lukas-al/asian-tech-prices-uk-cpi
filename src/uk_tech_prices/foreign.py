@@ -80,7 +80,7 @@ def _existing_retrieval_time(manifest_path: Path, filename: str) -> str | None:
 def download_boj_data(
     *,
     refresh: bool = False,
-    start: str = "201401",
+    start: str = "199501",
     end: str = "202612",
     timeout: int = 60,
 ) -> pd.DataFrame:
@@ -134,7 +134,7 @@ def download_boj_data(
 def download_boe_fx(
     *,
     refresh: bool = False,
-    date_from: str = "01/Jan/2014",
+    date_from: str = "01/Jan/1995",
     date_to: str = "31/Dec/2026",
     timeout: int = 60,
 ) -> pd.DataFrame:
@@ -432,6 +432,9 @@ def build_foreign_panel() -> pd.DataFrame:
     for column in (
         "fred_asian_nie_semiconductor",
         "fred_asian_nie_computer_electronics",
+        "fred_china_computer_electronics",
+        "fred_japan_computer_electronics",
+        "fred_asian_nie_all_imports",
     ):
         panel[f"{column}_gbp"] = panel[column] / panel["gbpusd"]
     panel["wto_asian_nie_manufactures_export"] = panel[
@@ -483,13 +486,14 @@ def build_foreign_panel() -> pd.DataFrame:
         fx_growth = panel[fx] / panel[fx].shift(12)
         panel[f"{prefix}_gbp_12m_pct"] = (local_growth / fx_growth - 1) * 100
 
-    hk_tech_yoy = hong_kong["hk_ppi_tech"].pct_change(4, fill_method=None) * 100
-    hk_all_yoy = (
-        hong_kong["hk_ppi_manufacturing"].pct_change(4, fill_method=None) * 100
-    )
-    hk_quarterly_fx = panel["gbphkd"].reindex(hong_kong.index)
-    hk_tech_gbp_level = hong_kong["hk_ppi_tech"] / hk_quarterly_fx
+    hk_tech_level = hong_kong["hk_ppi_tech"].dropna()
+    hk_all_level = hong_kong["hk_ppi_manufacturing"].dropna()
+    hk_tech_yoy = hk_tech_level.pct_change(4, fill_method=None) * 100
+    hk_all_yoy = hk_all_level.pct_change(4, fill_method=None) * 100
+    hk_quarterly_fx = panel["gbphkd"].reindex(hk_tech_level.index)
+    hk_tech_gbp_level = hk_tech_level / hk_quarterly_fx
     hk_tech_gbp_yoy = hk_tech_gbp_level.pct_change(4, fill_method=None) * 100
+    quarterly_updates = {}
     for name, quarterly in (
         ("hk_ppi_tech_12m_pct", hk_tech_yoy),
         ("hk_ppi_tech_gbp_12m_pct", hk_tech_gbp_yoy),
@@ -497,6 +501,7 @@ def build_foreign_panel() -> pd.DataFrame:
     ):
         available = quarterly.dropna().copy()
         available.index = available.index + pd.DateOffset(months=3)
-        panel[name] = available.reindex(panel.index).ffill(limit=2)
+        quarterly_updates[name] = available.reindex(panel.index).ffill(limit=2)
+    panel = pd.concat([panel, pd.DataFrame(quarterly_updates)], axis=1)
     panel.index.name = "date"
     return panel

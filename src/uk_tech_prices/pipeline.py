@@ -18,6 +18,7 @@ from uk_tech_prices.aggregate import (
     construct_custom_aggregate,
     select_components,
 )
+from uk_tech_prices.backcast import backcast_cdids, build_uk_backcasts
 from uk_tech_prices.ons import download_series, load_component_data, verify_snapshot
 from uk_tech_prices.paths import (
     CHART_DIR,
@@ -65,7 +66,8 @@ def all_cdids(basket: pd.DataFrame) -> list[str]:
 def download_uk_data(*, refresh: bool = False) -> pd.DataFrame:
     ensure_project_directories()
     basket = load_basket()
-    return download_series(all_cdids(basket), RAW_ONS_DIR, refresh=refresh)
+    cdids = sorted(set(all_cdids(basket)) | set(backcast_cdids()))
+    return download_series(cdids, RAW_ONS_DIR, refresh=refresh)
 
 
 def _build_one(
@@ -162,6 +164,7 @@ def build_uk_indices() -> pd.DataFrame:
     diagnostics.to_csv(PROCESSED_DIR / "uk_tech_aggregation_diagnostics.csv")
     result.tail(24).to_csv(TABLE_DIR / "latest_uk_tech_indices.csv")
     _save_charts(result)
+    build_uk_backcasts(result)
     return result
 
 

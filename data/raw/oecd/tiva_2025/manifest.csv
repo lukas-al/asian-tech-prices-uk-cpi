@@ -1,0 +1,3 @@
+file,retrieved_at_utc,source_url,sha256,bytes
+selected_origins.csv,2026-08-03T21:10:35.630839+00:00,"https://sdmx.oecd.org/sti-public/rest/data/OECD.STI.PIE,DSD_TIVA_IMGRVA@DF_IMGRVA,1.1/IMGRVA.GBR.CHN+HKG+JPN+KOR+TWN.W.C26.USD.A?startPeriod=1995&dimensionAtObservation=AllDimensions&format=csvfilewithlabels",5551a6db1897af9c29755105912e75948225cb04b4798d1bbb76dd91a4946237,48190
+world_total.csv,2026-08-03T21:10:35.703074+00:00,"https://sdmx.oecd.org/sti-public/rest/data/OECD.STI.PIE,DSD_TIVA_IMGRVA@DF_IMGRVA,1.1/IMGRVA.GBR.W.W.C26.USD.A?startPeriod=1995&dimensionAtObservation=AllDimensions&format=csvfilewithlabels",ea635f401b172d62b3bf101185b42995ed9562e77b1d016f66f7bf4244d7f96c,9639

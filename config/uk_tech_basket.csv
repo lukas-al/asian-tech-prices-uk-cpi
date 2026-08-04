@@ -9,3 +9,8 @@ coicop5_code,coicop5_description,index_series_id,weight_series_id,include_core,f
 09.1.3.2,Accessories for information processing equipment,L7GU,L8CI,TRUE,Monthly,NSA,2015=100,Parts per 1000,Close technology-goods match
 09.1.4.9,Other recording media,L7GY,L8CM,TRUE,Monthly,NSA,2015=100,Parts per 1000,Technology-related but product mix should be documented
 09.3.1.1,Games and hobbies,L7H9,L8CT,TRUE,Monthly,NSA,2015=100,Parts per 1000,Broad category containing non-technology goods; retain in core definition but test an exclusion sensitivity
+05.3.1/2,Major household appliances and small electric goods,D7E3,CJXI,FALSE,Monthly,NSA,2015=100,Parts per 1000,Adjacent technology-exposed destination; includes non-connected appliances
+06.1.2/3,Other medical and therapeutic equipment,D7F8,CJYH,FALSE,Monthly,NSA,2015=100,Parts per 1000,Adjacent technology-exposed destination; product mix is broader than electronic medical devices
+12.1.2.1,Electric appliances for personal care,L7IO,L8UI,FALSE,Monthly,NSA,2015=100,Parts per 1000,Adjacent consumer-electronics destination
+07.1.1A,New cars,D7E8,CJXN,FALSE,Monthly,NSA,2015=100,Parts per 1000,Broad embodied-semiconductor exposure; use only in the broad sensitivity aggregate
+07.2.1,Spare parts and accessories for personal transport equipment,D7EB,CJXQ,FALSE,Monthly,NSA,2015=100,Parts per 1000,Broad embodied-electronics exposure; includes non-electronic parts

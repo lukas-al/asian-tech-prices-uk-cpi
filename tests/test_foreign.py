@@ -147,6 +147,29 @@ def test_hong_kong_parser_selects_index_not_yoy_rows(tmp_path: Path) -> None:
         json.dumps({"dataSet": rows}),
         encoding="utf-8",
     )
+    (tmp_path / "merchandise_export_indices.json").write_text(
+        json.dumps(
+            {
+                "dataSet": [
+                    {
+                        "freq": "M",
+                        "period": "202503",
+                        "sv": "UVI_TX",
+                        "svDesc": "Index",
+                        "figure": "108.4",
+                    },
+                    {
+                        "freq": "M",
+                        "period": "202503",
+                        "sv": "UVI_TX",
+                        "svDesc": "Year-on-year % change",
+                        "figure": "2.1",
+                    },
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
 
     result = parse_hong_kong_data(tmp_path)
 
@@ -154,6 +177,9 @@ def test_hong_kong_parser_selects_index_not_yoy_rows(tmp_path: Path) -> None:
     assert result.loc[
         pd.Timestamp("2025-03-01"), "hk_ppi_manufacturing"
     ] == 122.2
+    assert result.loc[
+        pd.Timestamp("2025-03-01"), "hk_export_unit_value_all"
+    ] == 108.4
 
 
 def test_wto_json_is_parsed_from_dbnomics_snapshot(tmp_path: Path) -> None:

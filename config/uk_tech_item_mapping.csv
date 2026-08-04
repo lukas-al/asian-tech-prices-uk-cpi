@@ -1,0 +1,6 @@
+item_id,bridge_group,include_targeted_hardware,include_ex_games,mapping_note
+430334,mobile_hardware,TRUE,TRUE,Mobile phone handset
+430357,mobile_hardware,TRUE,TRUE,Smartphone handsets
+430360,mobile_hardware,TRUE,TRUE,Mobile phone handsets replacement item
+520127,mobile_hardware,TRUE,TRUE,Early mobile handset item; CPI weight is zero and therefore does not affect the aggregate
+520141,mobile_hardware,TRUE,TRUE,Mobile phone accessory

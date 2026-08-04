@@ -9,3 +9,42 @@ audio_visual_optical,09.1.1.9,L7GR,L8CF,Other sound and picture equipment
 audio_visual_optical,09.1.2,D7EO,CJYD,Photographic cinematographic and optical equipment
 media_games,09.1.4.9,L7GY,L8CM,Other recording media
 media_games,09.3.1.1,L7H9,L8CT,Games and hobbies
+targeted_hardware,08.2.0.2,L7GG,L8C3,Mobile telephone equipment
+targeted_hardware,09.1.3.1,L7GT,L8CH,Personal computers
+targeted_hardware,09.1.3.2,L7GU,L8CI,Accessories for information processing equipment
+targeted_hardware,09.1.1.1,L7GM,L8CA,Sound equipment
+targeted_hardware,09.1.1.2,L7GP,L8CD,Sound and vision equipment
+targeted_hardware,09.1.1.3,L7GQ,L8CE,Portable sound and vision devices
+targeted_hardware,09.1.1.9,L7GR,L8CF,Other sound and picture equipment
+targeted_hardware,09.1.2,D7EO,CJYD,Photographic cinematographic and optical equipment
+tech_adjacent_durables,05.3.1/2,D7E3,CJXI,Major household appliances and small electric goods
+tech_adjacent_durables,06.1.2/3,D7F8,CJYH,Other medical and therapeutic equipment
+tech_adjacent_durables,12.1.2.1,L7IO,L8UI,Electric appliances for personal care
+tech_adjacent_durables,07.1.1A,D7E8,CJXN,New cars
+tech_adjacent_durables,07.2.1,D7EB,CJXQ,Spare parts and accessories for personal transport equipment
+expanded_consumer_tech,08.2.0.2,L7GG,L8C3,Mobile telephone equipment
+expanded_consumer_tech,09.1.1.1,L7GM,L8CA,Sound equipment
+expanded_consumer_tech,09.1.1.2,L7GP,L8CD,Sound and vision equipment
+expanded_consumer_tech,09.1.1.3,L7GQ,L8CE,Portable sound and vision devices
+expanded_consumer_tech,09.1.1.9,L7GR,L8CF,Other sound and picture equipment
+expanded_consumer_tech,09.1.2,D7EO,CJYD,Photographic cinematographic and optical equipment
+expanded_consumer_tech,09.1.3.1,L7GT,L8CH,Personal computers
+expanded_consumer_tech,09.1.3.2,L7GU,L8CI,Accessories for information processing equipment
+expanded_consumer_tech,09.1.4.9,L7GY,L8CM,Other recording media
+expanded_consumer_tech,05.3.1/2,D7E3,CJXI,Major household appliances and small electric goods
+expanded_consumer_tech,06.1.2/3,D7F8,CJYH,Other medical and therapeutic equipment
+expanded_consumer_tech,12.1.2.1,L7IO,L8UI,Electric appliances for personal care
+broad_tech_exposure,08.2.0.2,L7GG,L8C3,Mobile telephone equipment
+broad_tech_exposure,09.1.1.1,L7GM,L8CA,Sound equipment
+broad_tech_exposure,09.1.1.2,L7GP,L8CD,Sound and vision equipment
+broad_tech_exposure,09.1.1.3,L7GQ,L8CE,Portable sound and vision devices
+broad_tech_exposure,09.1.1.9,L7GR,L8CF,Other sound and picture equipment
+broad_tech_exposure,09.1.2,D7EO,CJYD,Photographic cinematographic and optical equipment
+broad_tech_exposure,09.1.3.1,L7GT,L8CH,Personal computers
+broad_tech_exposure,09.1.3.2,L7GU,L8CI,Accessories for information processing equipment
+broad_tech_exposure,09.1.4.9,L7GY,L8CM,Other recording media
+broad_tech_exposure,05.3.1/2,D7E3,CJXI,Major household appliances and small electric goods
+broad_tech_exposure,06.1.2/3,D7F8,CJYH,Other medical and therapeutic equipment
+broad_tech_exposure,12.1.2.1,L7IO,L8UI,Electric appliances for personal care
+broad_tech_exposure,07.1.1A,D7E8,CJXN,New cars
+broad_tech_exposure,07.2.1,D7EB,CJXQ,Spare parts and accessories for personal transport equipment

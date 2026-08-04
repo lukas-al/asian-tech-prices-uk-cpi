@@ -1,0 +1,16 @@
+country_chart,series,label,first_12m_observation,last_12m_observation,n_12m_observations
+japan,jp_epi_electronics_yen_12m_pct,"Electronics EPI, yen",1996-01-01,2026-06-01,366
+japan,jp_epi_electronics_contract_12m_pct,"Electronics EPI, contract currency",1996-01-01,2026-06-01,366
+japan,wto_japan_manufactures_export_12m_pct,"Manufactures EPI, broad",2006-01-01,2025-12-01,240
+south_korea,kr_epi_tech_12m_pct,"Technology EPI, won",2019-04-01,2026-06-01,85
+south_korea,kr_epi_tech_gbp_12m_pct,"Technology EPI, GBP",2019-04-01,2026-06-01,85
+south_korea,wto_korea_manufactures_export_12m_pct,"Manufactures EPI, broad",2006-01-01,2025-12-01,240
+china,wto_china_manufactures_export_12m_pct,"Manufactures EPI, broad",2006-01-01,2025-12-01,240
+china,cn_ppi_tech_12m_pct,"Technology PPI, targeted proxy",2021-03-01,2025-12-01,58
+china,cn_ppi_tech_gbp_12m_pct,"Technology PPI, GBP-adjusted proxy",2021-03-01,2025-12-01,58
+taiwan,tw_epi_integrated_circuits_twd_12m_pct,"Integrated-circuits EPI, TWD",1999-01-01,2026-06-01,330
+taiwan,tw_epi_optical_medical_twd_12m_pct,"Optical/medical EPI, TWD",1999-01-01,2026-06-01,330
+taiwan,wto_taiwan_manufactures_export_12m_pct,"Manufactures EPI, broad",2006-01-01,2025-12-01,240
+hong_kong,hk_export_unit_value_all_12m_pct,"Merchandise export unit value, broad",1983-01-01,2026-05-01,521
+hong_kong,hk_ppi_tech_12m_pct,"Technology-heavy PPI, proxy",2006-06-01,2026-08-01,243
+hong_kong,hk_ppi_tech_gbp_12m_pct,"Technology-heavy PPI, GBP proxy",2006-06-01,2026-08-01,243

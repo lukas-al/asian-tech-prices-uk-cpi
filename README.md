@@ -24,14 +24,19 @@ The analysis is an installable Python project managed with
 ```bash
 uv sync --frozen
 uv run --frozen pytest
+uv run --frozen uk-tech download-backcast
+uv run --frozen uk-tech download-oecd
 uv run --frozen uk-tech build
 uv run --frozen uk-tech model
 uv run --frozen uk-tech channels
+uv run --frozen uk-tech transmission
 uv run --frozen uk-tech report
 ```
 
-`uk-tech build` uses the checked-in, checksum-verified ONS snapshot. It does not
-access the internet or silently change the data vintage.
+`download-backcast` verifies the checked-in ONS item archive (or downloads it if
+it is missing). `uk-tech build` uses that archive and the checked-in,
+checksum-verified ONS time-series snapshot. It does not silently change the data
+vintage.
 
 To update to the latest ONS release deliberately:
 
@@ -52,18 +57,26 @@ The requested three-chart, three-paragraph decision summary is in
 [`docs/killer_conclusion.md`](docs/killer_conclusion.md).
 The completed two-stage, trade-weighted and component-level research report is
 in [`docs/research_report.md`](docs/research_report.md).
+The detailed twelve-month extension and source-history audit are in
+[`docs/extended_horizon_results.md`](docs/extended_horizon_results.md).
+The pre-COICOP5 UK backcast and combined import/CPI transmission analysis are in
+[`docs/uk_measure_extension_and_transmission.md`](docs/uk_measure_extension_and_transmission.md).
 
 To deliberately refresh every foreign source snapshot before rerunning:
 
 ```bash
 uv run uk-tech download-foreign --refresh
 uv run uk-tech download-channels --refresh
+uv run uk-tech download-backcast --refresh
+uv run uk-tech download-oecd --refresh
+uv run uk-tech build
 uv run uk-tech model
 uv run uk-tech channels
+uv run uk-tech transmission
 uv run uk-tech report
 ```
 
-The foreign download command records source URLs, retrieval timestamps, file
+The foreign and OECD download commands record source URLs, retrieval timestamps, file
 sizes and SHA-256 checksums. A normal `model` run uses those frozen snapshots.
 The production modelling stack uses `statsmodels` for OLS, pre-whitening and HAC
 inference, and `scikit-learn` for the time-series-cross-validated ridge
@@ -71,6 +84,8 @@ robustness model.
 
 `download-channels` freezes seven ONS import-price series and aggregated HMRC
 monthly trade data with source URLs, retrieval timestamps and checksums.
+`download-oecd` freezes the OECD TiVA 2025 UK computer/electronics import-content
+data used for the five-country weights and the mechanical CPI contribution.
 `channels` constructs previous-complete-year country/product weights and runs
 the Asian-price → UK-import-price → CPI forecast tests. `report` rebuilds the
 three focused report charts and their machine-readable scorecards.
@@ -95,8 +110,9 @@ The model now covers all five required economies separately:
 4. **Taiwan** — DGBAS monthly export price indices for integrated circuits in
    both TWD and USD, plus producer-price technology categories.
 5. **Hong Kong** — C&SD's quarterly PPI for metal, computer, electronic and
-   optical products, machinery and equipment. It is broader and lower frequency
-   than the others and is release-lagged in the monthly model.
+   optical products, machinery and equipment, plus a broad monthly merchandise
+   export unit-value index from 1982. The PPI is broader and lower frequency
+   than the other targeted indicators and is release-lagged in the monthly model.
 
 The country measures are not interchangeable:
 
@@ -153,6 +169,12 @@ audio-visual/optical, and media/games in
 groups do not replace the headline aggregate; they identify which part of the
 basket any foreign-price signal is actually forecasting.
 
+The same configuration also defines targeted hardware, technology-adjacent
+durables, expanded consumer technology and broad technology exposure. These
+are monitoring destinations for possible spillovers beyond the narrow original
+basket; the preferred core forecast target remains the aggregate excluding
+games.
+
 ## Project layout
 
 ```text
@@ -197,3 +219,5 @@ from `data/raw` to `data/interim` and then to analysis-ready files in
 - [China NBS](https://www.stats.gov.cn/english/)
 - [DBnomics NBS archived-data repository](https://git.nomics.world/dbnomics-json-data/nbs-json-data)
 - [Hong Kong C&SD PPI table](https://data.gov.hk/en-data/dataset/hk-censtatd-tablechart-520-62001)
+- [OECD Inter-Country Input-Output tables](https://www.oecd.org/en/data/datasets/inter-country-input-output-tables.html)
+- [BLS international import and export price indexes](https://www.bls.gov/mxp/)

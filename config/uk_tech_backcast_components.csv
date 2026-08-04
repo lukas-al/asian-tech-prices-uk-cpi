@@ -1,0 +1,5 @@
+bridge_group,coicop_parent,index_series_id,weight_series_id,include_targeted_hardware,include_ex_games,mapping_note
+audio_visual,09.1.1,D7EN,CJYC,TRUE,TRUE,Official predecessor parent of the four post-2015 sound and vision subclasses
+photo_optical,09.1.2,D7EO,CJYD,TRUE,TRUE,Same COICOP class as the current photographic cinematographic and optical component
+information_processing,09.1.3,D7EP,CJYE,TRUE,TRUE,Official predecessor parent of personal computers and accessories
+recording_media,09.1.4,D7ES,CJYF,FALSE,TRUE,Broader than current other recording media so retained only in the ex-games sensitivity

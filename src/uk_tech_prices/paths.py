@@ -14,6 +14,8 @@ RAW_CHINA_DIR = DATA_DIR / "raw" / "china" / "nbs"
 RAW_HONG_KONG_DIR = DATA_DIR / "raw" / "hong_kong" / "censtatd"
 RAW_KOREA_DIR = DATA_DIR / "raw" / "south_korea" / "bok"
 RAW_TAIWAN_DIR = DATA_DIR / "raw" / "taiwan" / "dgbas"
+RAW_OECD_DIR = DATA_DIR / "raw" / "oecd" / "tiva_2025"
+RAW_ONS_ITEMS_DIR = DATA_DIR / "raw" / "ons" / "item_indices_2019"
 INTERIM_DIR = DATA_DIR / "interim"
 PROCESSED_DIR = DATA_DIR / "processed"
 CHART_DIR = PROJECT_ROOT / "outputs" / "charts"
@@ -33,6 +35,8 @@ def ensure_project_directories() -> None:
         RAW_HONG_KONG_DIR,
         RAW_KOREA_DIR,
         RAW_TAIWAN_DIR,
+        RAW_OECD_DIR,
+        RAW_ONS_ITEMS_DIR,
         INTERIM_DIR,
         PROCESSED_DIR,
         CHART_DIR,

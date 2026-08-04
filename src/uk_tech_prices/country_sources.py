@@ -45,6 +45,10 @@ HONG_KONG_PPI_URL = (
     "https://www.censtatd.gov.hk/api/get.php"
     "?id=520-62001&lang=en&full_series=1"
 )
+HONG_KONG_EXPORT_INDEX_URL = (
+    "https://www.censtatd.gov.hk/api/get.php"
+    "?id=410-51002&lang=en&full_series=1"
+)
 BOK_ARCHIVE_URL = "https://www.bok.or.kr/eng/singl/newsDataEng/listCont.do"
 BOK_BASE_URL = "https://www.bok.or.kr"
 BOK_SEARCH_TERMS = (
@@ -159,13 +163,25 @@ def download_hong_kong_data(
     timeout: int = 90,
 ) -> pd.DataFrame:
     RAW_HONG_KONG_DIR.mkdir(parents=True, exist_ok=True)
-    path = RAW_HONG_KONG_DIR / "producer_price_indices.json"
-    if refresh or not path.exists():
+    ppi_path = RAW_HONG_KONG_DIR / "producer_price_indices.json"
+    if refresh or not ppi_path.exists():
         content = _download(HONG_KONG_PPI_URL, timeout=timeout)
         payload = json.loads(content)
         if payload.get("header", {}).get("status", {}).get("code") != 0:
             raise RuntimeError("Hong Kong C&SD PPI API did not report success")
-        path.write_text(
+        ppi_path.write_text(
+            json.dumps(payload, ensure_ascii=False, sort_keys=True),
+            encoding="utf-8",
+        )
+    export_path = RAW_HONG_KONG_DIR / "merchandise_export_indices.json"
+    if refresh or not export_path.exists():
+        content = _download(HONG_KONG_EXPORT_INDEX_URL, timeout=timeout)
+        payload = json.loads(content)
+        if payload.get("header", {}).get("status", {}).get("code") != 0:
+            raise RuntimeError(
+                "Hong Kong C&SD merchandise export API did not report success"
+            )
+        export_path.write_text(
             json.dumps(payload, ensure_ascii=False, sort_keys=True),
             encoding="utf-8",
         )
@@ -175,10 +191,16 @@ def download_hong_kong_data(
         [
             _manifest_item(
                 group="Hong Kong C&SD industry producer price indices",
-                path=path,
+                path=ppi_path,
                 source_url=HONG_KONG_PPI_URL,
                 retrieved_at=retrieved_at,
-            )
+            ),
+            _manifest_item(
+                group="Hong Kong C&SD merchandise export unit value index",
+                path=export_path,
+                source_url=HONG_KONG_EXPORT_INDEX_URL,
+                retrieved_at=retrieved_at,
+            ),
         ],
     )
 
@@ -250,6 +272,9 @@ def _discover_bok_releases(*, timeout: int) -> pd.DataFrame:
     if frame.empty:
         raise RuntimeError("Bank of Korea archive search returned no matching releases")
     frame["date"] = frame["title"].map(_reference_period_from_title)
+    # The consistently structured English technology workbooks begin in 2019.
+    # Earlier archive attachments change scope and cannot be spliced into the
+    # same matched-item series without an undocumented break.
     frame = frame.loc[frame["date"].ge("2019-01-01")].copy()
     return frame.sort_values("date").drop_duplicates("date", keep="last")
 
@@ -614,7 +639,27 @@ def parse_hong_kong_data(directory: Path = RAW_HONG_KONG_DIR) -> pd.DataFrame:
     }
     frame["series_key"] = frame["IND"].map(keys)
     frame["figure"] = pd.to_numeric(frame["figure"], errors="coerce")
-    return frame.pivot(index="date", columns="series_key", values="figure").sort_index()
+    ppi = frame.pivot(
+        index="date", columns="series_key", values="figure"
+    ).sort_index()
+
+    export_payload = json.loads(
+        (directory / "merchandise_export_indices.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    export = pd.DataFrame(export_payload["dataSet"])
+    export = export.loc[
+        export["freq"].eq("M")
+        & export["sv"].eq("UVI_TX")
+        & export["svDesc"].eq("Index")
+    ].copy()
+    export["date"] = pd.to_datetime(export["period"], format="%Y%m")
+    export["hk_export_unit_value_all"] = pd.to_numeric(
+        export["figure"], errors="coerce"
+    )
+    export_index = export.set_index("date")[["hk_export_unit_value_all"]]
+    return ppi.join(export_index, how="outer").sort_index()
 
 
 def parse_south_korea_data(directory: Path = RAW_KOREA_DIR) -> pd.DataFrame:

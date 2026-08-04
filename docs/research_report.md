@@ -1,367 +1,332 @@
-# Do technology-specific export or producer prices in major Asian economies provide a useful timely signal for UK CPI technology-goods inflation?
+# Do Asian technology prices provide a timely signal for UK technology-goods inflation?
 
 ## Executive answer
 
-**They provide useful but selective corroborating information; they do not yet
-form a stable mechanical leading indicator for the UK aggregate.** Upstream
-technology-price inflation is currently very high in South Korea, Japan, Hong
-Kong and Taiwan, while the corresponding UK border-price measures remain
-subdued. South Korea is the only country that robustly improves forecasts of
-the broad UK C26 electronics import-price index at all one-to-three-month
-horizons. However, no foreign series robustly forecasts the more detailed C261
-electronic-components import-price index, which is the UK border measure that
-most consistently improves forecasts of headline UK technology-goods CPI.
-The two useful links therefore do not join into one validated pass-through
-chain.
+Asian technology prices are useful as an upstream risk monitor, but the
+historical relationship is not strong enough to generate an automatic UK CPI
+adjustment. Raw annual-rate correlations suggest that some sterling Asian
+prices lead the preferred UK CPI aggregate excluding games by about 9–12
+months. Those relationships weaken sharply after removing each series' own
+persistence, and the apparent long lead is concentrated in a short,
+pandemic-heavy forecast evaluation.
 
-The practical conclusion is to monitor Asian prices as evidence about the
-direction and breadth of upstream pressure, while using the ONS C261 import
-price index as the nearer-term UK-facing indicator. South Korea deserves the
-most weight as a corroborating foreign indicator; Taiwan is useful at broader
-C26 turning points and for mobile-phone component risk; China and Hong Kong
-should remain event and turning-point checks; Japan is a breadth check rather
-than a forecast input. A mechanically weighted Asian composite or automatic UK
-CPI add-factor is not justified.
+The strongest operational result comes from combining information rather than
+selecting one country. A recursively estimated ridge combination of the longer
+China, Japan and Asian-NIE electronics price series improves UK C26 import-price
+forecasts at 3–10 months in the full sample. A model combining those Asian
+prices with UK C26/C261/C262 import prices also improves long-horizon targeted-
+hardware CPI forecasts. The useful horizon shifts across subperiods, so these
+are monitored forecast bands rather than a fixed structural lag.
 
-The checked-in data vintage is 29 July 2026. The UK CPI and main ONS import
-price series run through June 2026; HMRC trade data run through May 2026;
-China's reproducible PPI archive ends in December 2025; and the discontinued
-C262 computer import-price detail ends in September 2025.
+The OECD exposure calculation currently implies a mechanical contribution of
+about **0.05 percentage points** to annual ex-games CPI inflation under full
+pass-through, compared with the 0.25pp internal estimate supplied as a
+benchmark. This is an exposure scenario rather than a forecast. It excludes
+unobserved Asian origins and may use a narrower basket or different production
+weights than the internal calculation, while also making the deliberately
+strong assumption that upstream price changes pass fully into UK retail prices.
 
-## 1. Question and decision rule
+The recommended forecast process is therefore sequential. Use the
+OECD-weighted sterling basket to measure the upstream shock; use Hong Kong and
+the individual Korean and Taiwanese measures as canaries for regional breadth;
+wait for C26 and especially C261 UK import prices to confirm that pressure has
+reached the UK border; and apply component-level judgement only when UK-facing
+prices or retail evidence also move.
 
-The project asks whether technology-specific export or producer prices in
-Japan, South Korea, China, Taiwan and Hong Kong add timely information for a
-validated ten-component UK COICOP5 technology-goods CPI aggregate.
+Data vintage: 3 August 2026. OECD TiVA data are the revised 2025 edition and run
+to 2022. Monthly UK CPI and most UK import-price data run through June 2026.
 
-An indicator is judged useful only if it:
+## 1. Question and preferred measures
 
-1. improves recursive one-to-three-month forecasts relative to UK inflation
-   lags, exchange rates and broader price controls;
-2. retains the result across lag choices, estimation windows and the aggregate
-   excluding games;
-3. has a plausible link through UK import prices and matched products;
-4. is available in time for the UK forecast round;
-5. is not solely a pandemic result; and
-6. survives reasonable protection against specification and indicator
-   selection.
+The research question is whether technology-specific export or producer prices
+in Japan, South Korea, China, Taiwan and Hong Kong provide timely information
+for UK CPI technology-goods inflation.
 
-This is deliberately stricter than finding the largest in-sample correlation.
+The preferred UK target is the validated COICOP5 technology aggregate excluding
+games and hobbies. Games are excluded because the component contains software
+and non-technology products as well as consoles. Consoles remain economically
+relevant and should eventually be monitored separately rather than allowing
+the entire games category to dominate the aggregate.
 
-## 2. Data and construction
+Headline foreign-price analysis now uses sterling versions only. This places
+foreign producer prices and exchange-rate changes into the same price concept
+and matches the cost faced by a UK importer more closely. Models use a broad
+sterling Asian import-price control rather than reintroducing each bilateral
+exchange rate alongside the converted series.
 
-### 2.1 UK CPI targets
+## 2. Data extensions
 
-The headline target is a chain-linked, annually reweighted aggregate of L7GG,
-L7GM, L7GP, L7GQ, L7GR, D7EO, L7GT, L7GU, L7GY and L7H9. The component index
-and weight CDIDs were downloaded from the [ONS CPI time-series
-dataset](https://www.ons.gov.uk/economy/inflationandpriceindices/datasets/consumerpriceindices).
-The aggregate was independently validated against the user's existing series.
-Because L7H9 covers games and hobbies more broadly than technology goods, the
-analysis also uses an aggregate excluding games.
+### 2.1 National technology-price indicators
 
-All CPI targets and predictors are converted to 12-month percentage changes for
-the common comparison with China's published annual-rate measure. The source
-indices are not seasonally adjusted; annual changes also reduce, but do not
-eliminate, seasonal effects.
+The targeted measures remain:
 
-### 2.2 Asian price indicators
-
-| Economy | Primary technology measure | Frequency and basis | Principal limitation |
+| Economy | Preferred measure | Main interpretation | Limitation |
 |---|---|---|---|
-| Japan | BOJ export price index for electric and electronic products | Monthly; yen, contract-currency and sterling versions | Broad electronics coverage; no forecast gain in this exercise |
-| South Korea | BOK export price index for computers, electronic and optical equipment | Monthly; won and sterling versions | Short primary forecast evaluation; older classification is broader |
-| China | NBS PPI for computers, communications and other electronic equipment | Monthly annual rate; local and sterling-adjusted versions | Reproducible history begins in 2021 |
-| Taiwan | DGBAS integrated-circuit export price index | Monthly; TWD, USD and sterling versions | Narrow semiconductor measure rather than finished-goods basket |
-| Hong Kong | C&SD PPI for a technology-heavy manufacturing group | Quarterly, release-lagged in the monthly panel | Includes metals and machinery; Hong Kong is also a re-export hub |
+| Japan | BOJ electronics export-price index | Long electronics benchmark | Broad electronics mix |
+| South Korea | BOK computer/electronic/optical export-price index | Strong current memory and semiconductor signal | Consistent targeted history starts in 2019 |
+| China | NBS computer/communications/electronics PPI | Downstream manufacturing and assembly conditions | Reproducible monthly history starts in 2021 |
+| Taiwan | DGBAS integrated-circuit export-price index | Clean semiconductor indicator | Semiconductor-heavy rather than finished-goods measure |
+| Hong Kong | Technology-heavy quarterly PPI | Regional pricing and re-export conditions | Broad, quarterly and not an original-production measure |
 
-Local-currency versions answer whether producer prices themselves contain a
-signal. Sterling-adjusted versions answer whether exchange-rate movements
-strengthen or offset that pressure. Broad national export/producer prices and
-bilateral sterling exchange rates enter as controls rather than being credited
-to the technology-specific indicator.
+Japan and Taiwan have materially longer targeted histories, while Hong Kong has
+a long broad export unit-value control. Earlier Korean classifications and
+Chinese annual series exist, but they are not silently spliced into the modern
+monthly targeted indicators because their coverage and frequency differ.
 
-### 2.3 UK border prices
+### 2.2 Comparable longer-history border-price proxy
 
-The ONS PPI dataset supplies monthly import-price indices for:
+The [US Bureau of Labor Statistics](https://www.bls.gov/mxp/) publishes monthly
+computer-and-electronics import-price indices by origin for China, Japan and
+the Asian newly industrialised economies from June 2012. The latter group
+contains Hong Kong, Singapore, South Korea and Taiwan. These series are
+converted from dollars into sterling and combined using the OECD weights.
 
-- [all manufactured products (GB8U)](https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/gb8u/ppi);
-- [C26 computer, electronic and optical products (G68Q)](https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/g68q/ppi);
-- [C26 non-EU imports (G6PT)](https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/g6pt/ppi);
-- [C261 electronic components and boards (EZSQ)](https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/ezsq/ppi);
-- C261 non-EU imports (EZXC);
-- C262 computers and peripherals (EZSR); and
-- C262 non-EU imports (EZXD).
+This adds a common monthly history beginning in 2013 after annual-rate
+transformation. It is kept separate from the national series because it records
+prices at the US border rather than Asian producer or export prices. It is a
+useful robustness proxy, not a splice.
 
-The all-manufactures index and GBP/USD are controls in the UK border-to-CPI
-models. Total and non-EU technology indices are tested separately. C262 is
-retained as a historical robustness measure but is not extrapolated past its
-September 2025 endpoint.
+### 2.3 Linked pre-COICOP5 UK target
 
-### 2.4 Product and country exposure
+The official ONS item archive and predecessor classes permit a transparent UK
+classification bridge. COICOP 09.1.1 audio-visual, 09.1.2 photo/optical and
+09.1.3 information-processing indices are chained with their annual ONS
+weights; handset item indices are added from 2005; and the series is linked to
+the validated COICOP5 aggregate in January 2015. A broader ex-games sensitivity
+also includes historical 09.1.4 recording media.
 
-The [HMRC UK Trade Info API](https://www.uktradeinfo.com/api-documentation)
-provides monthly import values aggregated by partner and HS4 product. Each CPI
-component is mapped to one or more plausible HS4 groups. For example, personal
-computers map to HS8471, mobile-phone equipment to HS8517, and computer
-accessories to HS8471/8473.
+The targeted-hardware bridge begins in 1996. Against 44 common annual-rate
+observations from 2016 to August 2019, it has a correlation of 0.986 and RMSE of
+1.08pp relative to the current-classification construction. This creates a
+genuine pre-2020 forecast evaluation, while retaining an explicit classification-
+break caveat. The broader ex-games bridge is less exact and is used as a
+sensitivity. Full details are in
+[`uk_measure_extension_and_transmission.md`](uk_measure_extension_and_transmission.md).
 
-Country weights are shares of the five selected economies' matched import
-values. Only completed calendar years produce operational weights, and year
-\(t-1\) values become weights in year \(t\), preventing future trade data from
-entering a historical forecast. The five economies represent 24–60% of world
-imports across the matched 2025 product groups. These are exposure diagnostics,
-not CPI or price-index weights: HS4 groups are broader than COICOP5 items,
-import values mix prices and quantities, and Hong Kong values can include
-re-exports.
+## 3. OECD import-content weighting and mechanical contribution
 
-## 3. Empirical approach
+The [OECD 2025 Inter-Country Input-Output
+tables](https://www.oecd.org/en/data/datasets/inter-country-input-output-tables.html)
+trace the country origin of value added embodied in UK gross imports of C26
+computer, electronic and optical products. This captures Korean or Taiwanese
+content embodied in a finished good exported from China or another country,
+which direct customs partner shares can miss.
 
-### 3.1 Co-movement and turning points
+The latest available 2022 shares are:
 
-Annual inflation rates are charted in local and sterling-adjusted terms.
-Lead correlations from zero to twelve months use separate AR(12)
-pre-whitening models. Circular-shift p-values protect against choosing the most
-attractive lead after inspecting all thirteen.
+| Value-added origin | Share of all UK C26 import content | Share within the five economies |
+|---|---:|---:|
+| China | 39.6% | 75.7% |
+| Taiwan | 5.3% | 10.2% |
+| South Korea | 4.1% | 7.9% |
+| Japan | 3.2% | 6.0% |
+| Hong Kong | 0.1% | 0.2% |
+| **Five-economy total** | **52.3%** | **100.0%** |
 
-### 3.2 Recursive forecast tests
+For country \(i\), the upstream contribution is:
 
-For target inflation \(y\), the models directly forecast \(y_{t+h}\), for
-\(h=1,2,3\):
+\[
+P_t = \sum_i s_i \pi^{GBP}_{i,t},
+\]
 
-- **M0:** current and lagged target inflation;
-- **M1:** M0 plus the relevant exchange rate and broad price control;
-- **M2:** M1 plus one technology-specific candidate.
+where \(s_i\) is its share of all UK C26 import content and
+\(\pi^{GBP}_{i,t}\) is its sterling technology-price inflation rate. The
+mechanical contribution to annual ex-games CPI inflation is:
 
-The primary model has two autoregressive terms. AR(1), AR(6), and a rolling
-60-month AR(2) model are robustness checks. Forecast origins are genuinely
-recursive: training at origin \(t\) includes only outcomes observable by
-\(t\). The main models require 60 training observations; China has a separately
-labelled 36-observation-minimum exercise.
+\[
+C_t = P_t \times \frac{w^{CPI}_t}{1000}.
+\]
 
-Forecast performance is measured by the M2/M1 RMSE ratio. Values below one
-favour the technology series. Clark–West tests account for the nested forecast
-models, and Benjamini–Hochberg q-values control the false-discovery rate across
-the competing indicators in each pre-specified target, horizon, window and
-sample comparison. A result is highlighted only when RMSE improves and
-\(q<0.10\).
+This assumes that the ex-games basket is fully import exposed and that the
+weighted upstream price change passes through one-for-one. It deliberately
+does not estimate margins, contracts, inventories or quality adjustment.
 
-### 3.3 Pass-through checks
+![Mechanical CPI contribution](../outputs/charts/report_3_mechanical_cpi_contribution.png)
 
-The analysis estimates the two forecast links separately:
+The latest targeted estimate is **0.053pp** in June 2026. South Korea
+contributes +0.051pp, Taiwan +0.013pp, Japan +0.011pp, Hong Kong close to zero
+and China -0.023pp. The longer BLS proxy gives 0.040pp. The targeted series has
+not exceeded 0.092pp in its available history; the longer proxy peaked at
+0.174pp during 2022.
 
-1. Asian technology prices to UK C26, C261 and C262 import prices; and
-2. UK technology import prices to the aggregate and ten CPI components.
+The public-data estimate can differ from 0.25pp because the internal exercise
+may include a broader Asian set, use weights normalised within Asia, apply a
+larger CPI destination, use more targeted current prices, or model production
+content differently. The internal workbook or exact weights are required for a
+full reconciliation. Until then, 0.25pp is shown as a comparator rather than a
+calibration target.
 
-Distributed-lag regressions include two own lags, contemporaneous through
-six-month predictor lags, relevant controls and HAC covariance estimates.
-Because annual rates overlap and product composition differs, their cumulative
-coefficients are descriptive predictive pass-through estimates, not causal
-elasticities.
+## 4. Raw versus pre-whitened co-movement
 
-Implementation uses `statsmodels` for OLS and HAC inference and
-`scikit-learn` for the previously reported time-series-cross-validated
-multi-country ridge robustness model. Project-specific code is confined to
-data mapping, release timing and recursive information sets.
+Pre-whitening and raw correlations answer different questions:
 
-## 4. Results
+- raw annual-rate correlations ask whether foreign and UK prices moved through
+  the same broad cycle;
+- pre-whitened correlations ask whether an unexpected foreign-price movement
+  was followed by an unexpected UK movement; and
+- recursive forecasts ask whether the foreign measure would have improved a
+  real-time UK forecast beyond own lags and broad controls.
 
-### 4.1 Current pressure is upstream, not yet at the UK border
+![Raw and pre-whitened correlations](../outputs/charts/correlation_raw_vs_prewhitened.png)
 
-![Current upstream and UK price pressure](../outputs/charts/report_1_current_pressure_chain.png)
+For ex-games CPI, China's sterling targeted PPI has a raw common-sample
+correlation of 0.69 at a 12-month lead and the OECD-weighted targeted basket has
+a correlation of 0.67 at an 11-month lead. Both survive the within-indicator
+0–12-month circular-shift search. Japan, Taiwan, Hong Kong and the long BLS
+proxy also show raw peaks around 0.52–0.57, mainly at 3 or 9 months.
 
-The latest annual rates are 117.4% in South Korea, 40.2% in Japan, 31.9% in
-Hong Kong and 24.6% in Taiwan. China is the exception at -2.2% in December
-2025. In contrast, the UK C26 import-price index is up only 0.6%, C261
-electronic components 1.6%, and the UK technology CPI aggregate 0.8%.
+These results should not be discarded: they show that technology prices can
+participate in a broad global price cycle. But the corresponding pre-whitened
+relationships are smaller, unstable or change sign, and generally do not
+survive the lead search. Raw correlations therefore describe scenario
+co-movement; they do not identify a stable independent timing coefficient.
 
-This is evidence of a large upstream shock, but the gap across layers is also
-evidence against applying the foreign rates mechanically to UK retail prices.
-Destination-market pricing, contracts, inventories, distribution margins,
-sterling, product mix and quality adjustment can all interrupt or delay the
-chain.
+## 5. Recursive forecast evidence
 
-### 4.2 Historical co-movement does not identify a stable common lead
+Every model forecasts horizons from one to twelve months using data that would
+have been available at the forecast origin. The primary comparison adds one
+sterling technology-price measure to UK inflation lags and broad sterling price
+controls. Robustness covers AR(1), AR(2), AR(6), a rolling 60-month window,
+post-2022 evaluation, Clark–West tests and false-discovery-rate adjustment.
 
-The earlier pre-whitened scan found a positive five-month Taiwan lead for the
-headline target, but Taiwan did not improve the original aggregate forecast
-consistently. Several sterling-adjusted Japan and Taiwan correlations and a
-Korean six-month correlation had negative signs, which are not credible as
-mechanical inflation pass-through signals. Results also changed by sample
-period.
+### 5.1 Direct forecasts of ex-games CPI
 
-The correlation evidence therefore supports using forecast performance and an
-explicit border-price link as the main decision criteria. It does not support
-choosing a fixed country lead from the raw or pre-whitened correlation peak.
+The OECD-weighted long BLS proxy improves the primary ex-games forecast at
+1–4 months, with RMSE ratios of 0.97, 0.97, 0.95 and 0.97. All four
+lag/window specifications improve over these short horizons, and the median
+post-2022 RMSE ratio strengthens from about 0.96 at one month to 0.89 at four
+months.
 
-### 4.3 The two statistically useful forecast links do not join
+The same proxy also produces large apparent gains at 11–12 months. Those gains
+are much stronger during the pandemic evaluation and do not survive
+false-discovery adjustment post-2022. They should be treated as a pandemic
+cycle result, not a validated long lead.
 
-![Two-stage recursive forecast results](../outputs/charts/report_2_forecast_chain.png)
+The targeted OECD basket has a small primary improvement around five months
+(RMSE ratio 0.94, 17 forecast errors) but no stable pattern. Hong Kong produces
+modest ex-games gains around 3–5 months; Japan and Taiwan are mixed; and Korea's
+short sterling sample does not reproduce the earlier local-currency short-lead
+result consistently.
 
-**Asian prices to UK border prices.** South Korean technology export inflation
-improves the broad C26 UK import-price forecast at one, two and three months:
-the primary RMSE ratios are 0.952, 0.943 and 0.920, with FDR-adjusted q-values
-of 0.025, 0.074 and 0.062. The evaluation is short—21 to 24 forecast errors—but
-11 of 12 lag/window/horizon checks improve on M1 and all 12 have nominal
-Clark–West significance.
+### 5.2 Asian prices to UK import prices
 
-Taiwan improves the primary C26 RMSE at two and three months (0.984 and 0.964)
-but does not survive the cross-indicator FDR threshold. Its distributed-lag
-association with C26 is positive and significant over the full sample, which
-makes it a plausible turning-point corroboration rather than a selected
-forecast input. Japan worsens C26 forecasts at every primary horizon; Hong Kong
-is effectively neutral; and China's apparent three-month improvement is small
-and short-sample.
+![Forecast evidence through the price chain](../outputs/charts/report_2_forecast_chain.png)
 
-Crucially, none of the five indicators robustly forecasts C261. Korea produces
-small C261 gains at one and two months (0.978 and 0.987), but these do not pass
-the FDR threshold and the three-month ratio is 1.009. The non-EU C261 results
-are weaker.
+Hong Kong's sterling technology-heavy PPI is the clearest C26 canary. It
+improves all four model specifications from about 5–10 months and remains
+helpful at 11–12 months, including post-2022 estimates. This is economically
+plausible as a regional pricing or re-export signal, but not as a mechanical
+country contribution: OECD attributes only 0.1% of UK C26 import content to
+Hong Kong.
 
-**UK border prices to UK CPI.** The total C261 index is the strongest headline
-predictor: its primary RMSE ratios are 0.960, 0.928 and 0.942, all with
-\(q<0.04\). It improves all 12 combinations of horizon and lag/window
-specification, with a median ratio of 0.943. The post-2022 ratios are 0.926,
-0.925 and 0.934, so this is not a result created solely by the pandemic.
+The long OECD/BLS basket does not improve full-sample C26 forecasts and is close
+to neutral for C261. The targeted OECD basket also fails at short horizons and
+shows only unselected gains around 7–8 months. This means the weighted
+aggregate cannot currently support a statement that Asian prices generally
+reach UK border prices after a fixed number of months.
 
-The broad C26 index does not improve headline forecasts. It helps the ex-games
-aggregate at two and three months in the full-sample primary model, but the
-median result across specifications is slightly worse than M1 and the gain is
-not FDR-significant post-2022. C262 produces a three-month ex-games gain but is
-unstable across specifications and ends in 2025.
+### 5.3 UK import prices to CPI
 
-The conclusion is therefore nuanced: Korea gives a useful signal for broad UK
-electronics border inflation, and C261 gives a useful signal for headline UK
-technology CPI, but no tested Asian series gives a robust timely signal for
-C261. That missing middle link prevents a mechanical pass-through rule.
+The earlier border-price conclusion is unchanged. C261 electronic-component
+import prices improve headline technology-CPI forecasts at 1–4 months across
+the main robustness specifications. C26 and C262 sometimes improve ex-games
+forecasts at 3–6 months, but that result is weaker post-2022 and reverses at
+long horizons. There is no robust general 9- or 12-month UK-border-to-retail
+relationship.
 
-### 4.4 Trade exposure and components sharpen where judgement belongs
+The two stages must therefore not be mechanically added together. Hong Kong may
+signal regional conditions well before UK C26 moves, while the weighted basket
+can help the direct CPI forecast without reliably forecasting C26. These are
+monitoring associations, not an identified structural supply chain.
 
-![Trade exposure and component forecast results](../outputs/charts/report_3_trade_and_components.png)
+### 5.4 Common factors and combined forecasts
 
-China supplies 57–89% of the selected five countries' matched 2025 import value,
-depending on the CPI component. Taiwan has its largest share in recording media
-(21%) and computer accessories (10%); Hong Kong is relatively important in
-photographic/optical equipment (19%) and computing groups (about 12%). These
-weights explain exposure, but not predictive content: China's measure is short
-and weak at the C261 stage, while Korea has a strong C26 forecast result despite
-small direct UK finished-goods import shares. That is economically possible
-when a country is informative about global input prices rather than being the
-direct origin of the final good.
+The first principal component of the sterling BLS electronics price indices for
+China, Japan and the Asian NIEs explains 94.4% of their standardised variation.
+That is evidence of a coherent upstream regional cycle, but the static factor
+alone does not improve C26 forecasts. A time-series-cross-validated ridge model,
+which allows the three origins to receive different coefficients, reduces C26
+forecast RMSE by roughly 8–17% at 4–10 months in the full sample.
 
-At component level, the strongest direct-country median RMSE gains occur for
-Korea with sound-and-vision equipment (0.83) and recording media (0.85), Taiwan
-with mobile phones (0.97), and Hong Kong with photographic/optical equipment
-(0.98). These are useful diagnostics, but they are selected from a large grid.
-After primary-model FDR adjustment, the clearest individual cells are narrower:
-Hong Kong for photographic/optical equipment at two months and Korea/Taiwan
-for mobile phones at two months. China produces several attractive cells only
-in its labelled short sample.
+For targeted-hardware CPI, the combined UK-import/Asian ridge model reduces RMSE
+relative to own lags and controls by about 32% at nine months and 41% at ten and
+twelve months. Import prices alone account for much of this gain, while the
+Asian block adds information at selected horizons. The location of the gains
+changes between the pre-2020 and post-2022 samples, so the model should be used
+as a forecast ensemble rather than evidence for one invariant pass-through lag.
 
-The UK import-price component results are more coherent. Broad/non-EU C26 and
-C262 indices improve photographic/optical and sound-and-vision forecasts at
-selected horizons, and C261 improves sound-and-vision inflation. This suggests
-placing any judgement at matched component level, particularly sound/vision,
-photographic/optical and mobile phones, rather than shifting the whole UK
-technology basket.
+Local projections reinforce the caution. C261 import-price coefficients are
+positive over the first few months but imprecise after multiple-testing
+adjustment and reverse later. The current 3.13pp upstream C26 pressure maps to a
+0.040pp headline contribution under full pass-through, but only about 0.005–
+0.007pp using the illustrative early C261 coefficients. Neither calculation is
+a central forecast: the former is an upper mechanical exposure and the latter
+is a noisy historical association.
 
-## 5. Robustness, timing and interpretation
+## 6. Economic interpretation
 
-- **Pandemic dependence:** C261's headline forecast gain survives the post-2022
-  evaluation. Several other results, especially broad C26 for ex-games, do not.
-- **Lag and window choice:** C261-to-headline and Korea-to-C26 are the most
-  consistent relationships. Component results are more specification-sensitive.
-- **Multiple testing:** Report figures mark only primary cells with both lower
-  RMSE and FDR-adjusted \(q<0.10\). Component medians remain exploratory.
-- **Publication timing:** Asian monthly data and ONS PPI are normally available
-  around the following month's UK forecast round. Hong Kong is explicitly
-  shifted to its later quarterly availability. Prior-year HMRC weights prevent
-  future trade values entering historical decisions.
-- **Vintage limitation:** The exercise respects publication conventions but is
-  not a complete real-time vintage database. Recent observations can embody
-  revisions.
-- **Composition and quality:** Export PPIs, import PPIs and quality-adjusted CPI
-  items do not price identical products. Semiconductor-heavy indicators can
-  move far more than finished consumer goods.
-- **Causality:** Forecast gains and distributed-lag coefficients show
-  incremental predictive information, not structural causal pass-through.
+The statistical winner and the economically most relevant measure need not be
+the same:
 
-## 6. Monitoring recommendation
+- **Korea and Taiwan** are the most relevant indicators of the current AI,
+  memory and semiconductor cost shock;
+- **China** dominates the embodied value of UK C26 imports and represents the
+  assembly and finished-goods channel, but its current sterling PPI contribution
+  is negative;
+- **Japan** provides a long electronics benchmark;
+- **Hong Kong** has the clearest historical C26 lead but should be treated as a
+  canary because it is a re-export hub and has negligible production-origin
+  weight; and
+- **the OECD weighted baskets** provide transparent exposure measures, but the
+  targeted version is too short and the longer BLS version is a US-border proxy.
 
-| Indicator | Recommended use | Trigger for stronger use |
-|---|---|---|
-| ONS C261 import PPI | **Routine leading/corroborating indicator for headline UK technology CPI** | Continue while gains remain across post-2022 vintages and component mappings |
-| South Korea technology EPI | **Corroborating indicator for broad C26 and selected CPI components** | Promote only if it also begins to predict C261 or a stable matched component index |
-| Taiwan integrated-circuit EPI | **Turning-point and semiconductor breadth check** | Promote if C26 gains persist and C261/component evidence strengthens |
-| China technology PPI | **Emerging short-sample/event indicator** | Reassess when at least 60 reproducible training observations are available |
-| Hong Kong technology-heavy PPI | **Quarterly turning-point check only** | Require a narrower technology series and stability outside expanding windows |
-| Japan electronics EPI | **Breadth and cross-country cross-check** | Require positive incremental forecast results |
-| Multi-country composite | **Do not use mechanically** | Construct only when several countries share sign, timing, matched-border and forecast evidence |
+Quality adjustment is especially important. A higher chip or memory cost may
+appear as more memory, faster performance or a redesigned product rather than a
+higher quality-adjusted CPI price. Firms can also absorb costs in margins,
+renegotiate contracts, run down inventories or reallocate product ranges. This
+explains why a large upstream shock can coexist with weak UK retail inflation.
 
-Operationally, each forecast round should:
+## 7. Monitoring and forecast-judgement rule
 
-1. refresh the five country series in local and sterling-adjusted terms;
-2. check C26 and especially C261 UK import-price inflation;
-3. use the previous complete year's HMRC shares to identify exposed
-   components;
-4. rerun the recursive scorecards and post-2022 tests;
-5. inspect sound/vision, photographic/optical and mobile-phone CPI components;
-6. add judgement only when the country, border and component evidence point in
-   the same direction.
+The recommended monthly dashboard has four layers:
 
-## 7. Concise conclusion
+1. **Upstream exposure:** OECD-weighted targeted sterling basket, its mechanical
+   CPI contribution and its country decomposition.
+2. **Regional canaries:** Hong Kong for C26 timing; Korea and Taiwan for the
+   breadth and intensity of memory/semiconductor pressure.
+3. **UK-border confirmation:** C26 and especially C261 import-price inflation.
+4. **Retail localisation:** ex-games CPI, targeted hardware and the relevant
+   mobile, computer, AV, photographic and recording-media components.
 
-Upstream Asian technology inflation is unusually strong, but it has not yet
-appeared proportionately in UK border or retail prices. The gap is economically
-meaningful: it warns of risk while showing that pass-through is neither
-immediate nor one-for-one.
+The forecast rule should be:
 
-The best individual forecast results are South Korea to broad UK C26 import
-prices and UK C261 component import prices to headline technology CPI. Because
-no Asian indicator robustly forecasts C261, those links do not establish one
-continuous leading chain. Component evidence is selective and should guide
-where to investigate, not justify shifting the whole basket.
+- do not add a CPI judgement when only the upstream basket rises;
+- mark the risk as elevated when several Asian indicators rise and the
+  mechanical contribution increases materially;
+- consider a component-level judgement when C26/C261 or credible UK retail
+  evidence confirms transmission; and
+- review the judgement when margins, inventories or quality-adjusted retail
+  prices suggest that the shock is being absorbed.
 
-The recommended forecast stance is therefore **corroborating, component-focused
-judgement rather than a mechanical add-factor**. Monitor Korea, Taiwan and all
-five countries for the breadth of the shock; make C261 the primary UK-facing
-border indicator; and revisit a composite only when common country evidence
-survives timing, post-pandemic, product-matching and forecast tests.
+The preferred senior statement is:
 
-## 8. Reproducibility and machine-readable results
+> Asian technology prices show a material upstream inflation risk, but the
+> historical relationship does not provide a stable mechanical UK CPI lead.
+> Raw co-movement points to a possible 9–12-month risk window, while robust
+> incremental forecast value is concentrated nearer 1–4 months and in selected
+> border-price canaries. The OECD-weighted public-data calculation currently
+> implies about 0.05pp under full pass-through, so UK import prices should be
+> used as the trigger for forecast judgement rather than Asian prices alone.
 
-From a clean clone:
+## 8. Reproducibility and remaining work
 
-```bash
-uv sync --frozen
-uv run --frozen pytest
-uv run --frozen uk-tech build
-uv run --frozen uk-tech model
-uv run --frozen uk-tech channels
-uv run --frozen uk-tech report
-```
+The OECD downloader, checksum manifest, ONS classification bridge, exposure
+weights, sterling composites, raw/pre-whitened correlations, principal
+component, regularised combinations, local projections and 1–12-month recursive
+forecasts are all part of the Python/`uv` pipeline.
 
-The frozen raw snapshots and SHA-256 manifests allow the analysis to run
-without silently updating data. To deliberately update all sources:
-
-```bash
-uv run uk-tech all --refresh
-uv run uk-tech download-foreign --refresh
-uv run uk-tech download-channels --refresh
-uv run uk-tech model
-uv run uk-tech channels
-uv run uk-tech report
-```
-
-Key machine-readable outputs are:
-
-- `data/processed/extended_modeling_panel.csv`;
-- `data/processed/hmrc_component_country_weights.csv`;
-- `data/processed/hmrc_component_coverage.csv`;
-- `data/processed/stage1_asia_to_uk_import_evaluation.csv`;
-- `data/processed/stage2_uk_import_to_cpi_evaluation.csv`;
-- `data/processed/component_asia_to_cpi_evaluation.csv`; and
-- `data/processed/distributed_lag_pass_through.csv`.
-
-The complete component-to-HS4 and ONS import-price mappings are in
-`config/hmrc_tech_mapping.csv` and `config/uk_import_price_series.csv`.
+The highest-value remaining task is to obtain the International Directorate's
+exact OECD weights and calculation so that the 0.25pp estimate can be
+reconciled line by line. A second-stage extension could create a console and
+storage-device satellite using customs codes or matched retail prices, but it
+is not required to answer the main essay question.

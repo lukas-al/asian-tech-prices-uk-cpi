@@ -45,7 +45,8 @@ A foreign indicator is useful only if it:
 2. has a stable, economically plausible sign and lag;
 3. adds information beyond UK CPI's own lags, exchange rates and broad
    import-price indicators;
-4. improves pseudo-real-time forecast accuracy at one- to three-month horizons;
+4. improves pseudo-real-time forecast accuracy at horizons from one to twelve
+   months, with emphasis on the one- to six-month forecast window;
 5. is not dependent on the 2020–22 disruption period; and
 6. is sufficiently close in product coverage that the relationship is
    interpretable.
@@ -204,7 +205,7 @@ sample.
    the data permit.
 4. **Complete:** produce pre-whitened, multiple-lead-adjusted correlation
    diagnostics.
-5. **Complete:** run one- to three-month forecast comparisons under AR(1),
+5. **Complete:** run one- to twelve-month forecast comparisons under AR(1),
    AR(2), AR(6) and rolling-window specifications; label China's shorter
    training exercise separately.
 6. **Complete:** write the interim monitoring recommendation.

@@ -39,11 +39,13 @@ HMRC_COUNTRIES = {
     740: "Hong Kong",
 }
 REPRESENTATIVE_ASIAN_SERIES = (
-    "jp_epi_electronics_yen_12m_pct",
-    "kr_epi_tech_12m_pct",
-    "cn_ppi_tech_12m_pct",
-    "tw_epi_integrated_circuits_twd_12m_pct",
-    "hk_ppi_tech_12m_pct",
+    "jp_epi_electronics_gbp_12m_pct",
+    "kr_epi_tech_gbp_12m_pct",
+    "cn_ppi_tech_gbp_12m_pct",
+    "tw_epi_integrated_circuits_gbp_12m_pct",
+    "hk_ppi_tech_gbp_12m_pct",
+    "oecd_asia_c26_targeted_gbp_12m_pct",
+    "oecd_asia_c26_bls_gbp_12m_pct",
 )
 UK_IMPORT_SERIES = (
     "uk_ipi_c26_12m_pct",
@@ -482,7 +484,10 @@ def run_channel_analysis() -> dict[str, pd.DataFrame]:
         targets=UK_IMPORT_SERIES,
         candidates=REPRESENTATIVE_ASIAN_SERIES,
         prefix="stage1_asia_to_uk_import",
-        short_history_candidates=("cn_ppi_tech_12m_pct",),
+        short_history_candidates=(
+            "cn_ppi_tech_gbp_12m_pct",
+            "oecd_asia_c26_targeted_gbp_12m_pct",
+        ),
     )
     stage2_forecasts, stage2_evaluation = _forecast_suite(
         panel,
@@ -493,9 +498,12 @@ def run_channel_analysis() -> dict[str, pd.DataFrame]:
     component_forecasts, component_evaluation = _forecast_suite(
         panel,
         targets=component_targets,
-        candidates=REPRESENTATIVE_ASIAN_SERIES,
+        candidates=REPRESENTATIVE_ASIAN_SERIES[:5],
         prefix="component_asia_to_cpi",
-        short_history_candidates=("cn_ppi_tech_12m_pct",),
+        short_history_candidates=(
+            "cn_ppi_tech_gbp_12m_pct",
+            "oecd_asia_c26_targeted_gbp_12m_pct",
+        ),
     )
 
     pass_through = run_distributed_lag_analysis(panel)

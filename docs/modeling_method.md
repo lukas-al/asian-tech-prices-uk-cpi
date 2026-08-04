@@ -8,7 +8,8 @@ from a high in-sample correlation alone. It must:
 
 1. improve pseudo-out-of-sample forecasts relative to the UK aggregate's own
    lags and a controls model;
-2. work at one- to three-month horizons;
+2. work at horizons from one to twelve months, with particular emphasis on the
+   one- to six-month forecast window;
 3. retain the result under alternative autoregressive lag lengths, a rolling
    window, and the UK aggregate excluding games;
 4. have a plausible sign and timing after accounting for publication lags; and
@@ -17,17 +18,22 @@ from a high in-sample correlation alone. It must:
 ## Targets
 
 - Headline ten-component UK technology-goods CPI aggregate.
-- Sensitivity aggregate excluding games and hobbies.
+- Preferred aggregate excluding games and hobbies.
+- Monitoring aggregates for targeted hardware, technology-adjacent durables,
+  expanded consumer technology and broad technology exposure.
 
-Both targets are modelled as 12-month percentage changes. The available target
-inflation history starts in January 2016 because the validated index level starts
-in January 2015.
+All targets are modelled as 12-month percentage changes. The validated COICOP5
+indices begin in 2015. For longer-sample modelling, an ONS classification bridge
+links contemporaneously weighted predecessor classes and handset items to the
+current aggregates in January 2015. The preferred historical targeted-hardware
+inflation series therefore begins in 1997; the broader historical ex-games
+series is retained as a sensitivity.
 
 ## Foreign series
 
 ### Japan
 
-The Bank of Japan provides export price indexes for electric and electronic
+The Bank of Japan provides export price indexes from 1995 for electric and electronic
 products in yen and contract-currency terms, plus PPIs for electronic components
 and information and communications equipment. A sterling version of the yen
 export index is the index divided by the monthly-average JPY-per-GBP exchange
@@ -42,10 +48,10 @@ after that UK release.
 ### South Korea
 
 Bank of Korea monthly release workbooks provide the export price index for
-computers, electronic and optical equipment in won terms. For older releases,
-the closest row is the broader “electrical and electronic equipment” category;
-the extracted snapshot records that classification break. The model also
-constructs a sterling version using monthly KRW-per-GBP.
+computers, electronic and optical equipment in won terms from 2019. Earlier
+English attachments use changing classifications, so they are not spliced into
+the validated targeted history. The model also constructs a sterling version
+using monthly KRW-per-GBP.
 
 The workbooks are normally released around the middle of the following month,
 before the corresponding UK CPI publication. The pipeline archives the source
@@ -87,6 +93,10 @@ native quarterly frequency, shifts it three months to approximate availability,
 then carries the released value for no more than three monthly forecast origins.
 Local-currency and sterling-adjusted variants are tested.
 
+C&SD's monthly all-merchandise export unit-value index from 1982 is retained as
+a long broad comparator. It is not treated as a technology-price candidate
+because changes in exported product mix can materially affect unit values.
+
 ### Asian-origin border-price robustness series
 
 The U.S. BLS/FRED semiconductor and computer/electronics import price indexes
@@ -106,7 +116,7 @@ mean it is not the primary real-time control in the BLS/FRED forecast comparison
 ## Forecast design
 
 For target inflation \(y_t\), each model directly forecasts \(y_{t+h}\), for
-\(h=1,2,3\):
+every \(h=1,\ldots,12\):
 
 - M0: an intercept and the current/lagged values of UK target inflation;
 - M1: M0 plus the relevant exchange rate and broad price control;
@@ -114,6 +124,14 @@ For target inflation \(y_t\), each model directly forecasts \(y_{t+h}\), for
 
 The primary autoregressive specification has two terms. AR(1), AR(6), and an
 AR(2) model estimated on a rolling 60-month window are robustness checks.
+
+The transmission extension additionally compares a transparent OECD-weighted
+average, a recursively estimated first principal component, and a recursively
+standardised ridge regression over the longer China, Japan and Asian-NIE BLS
+electronics series. At the CPI stage it compares an import-price ridge block, the
+Asian factor, and a joint ridge block containing both Asian and UK import-price
+features. Ridge penalties are selected using `TimeSeriesSplit` within each
+forecast origin.
 
 Estimation is implemented with `statsmodels.OLS`. Forecast-comparison tests use
 `statsmodels` HAC/Newey-West covariance estimates, and the AR pre-whitening
@@ -126,14 +144,15 @@ uses Japan, Korea, Taiwan and Hong Kong technology prices plus their exchange
 rates. `scikit-learn` standardises the features and chooses the ridge penalty
 with expanding `TimeSeriesSplit` cross-validation inside each forecast origin.
 China is excluded because its reproducible history cannot meet the common
-60-observation training rule. This model is compared with the AR benchmark; it
-does not improve headline forecasts and improves ex-games only at the
-three-month horizon, so it does not justify a combined indicator.
+60-observation training rule. This model is compared with the AR benchmark. It
+improves ex-games forecasts from three to eight months, but the common Korean
+history leaves only 12–21 forecast errors. It remains a promising monitoring
+robustness check rather than a production composite.
 
 The estimation window is expanding unless labelled rolling. At forecast origin
 \(t\), the training data include only outcomes dated no later than \(t\).
-Therefore a three-month-ahead regression at origin \(t\) does not use target
-observations for \(t+1\), \(t+2\), or \(t+3\). A regression test in
+Therefore an \(h\)-month-ahead regression at origin \(t\) does not use target
+observations from \(t+1\) through \(t+h\). A regression test in
 `tests/test_modeling.py` guards this anti-look-ahead rule.
 
 Primary forecasts require at least 60 complete training observations. With the
@@ -163,7 +182,8 @@ all thirteen.
   not a full vintage database.
 - BLS revises the previous three months, and the current pipeline uses the latest
   available values.
-- Korea's pre-2020 workbooks use a broader technology classification.
+- Korea's consistent targeted workbook history begins in 2019; earlier changing
+  classifications are deliberately not spliced.
 - Hong Kong is quarterly, broad, and represented by a conservative release-lag
   convention rather than a monthly technology-price measure.
 - China's archived history is short and reconstructed across public source

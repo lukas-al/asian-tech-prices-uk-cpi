@@ -2,14 +2,20 @@ from __future__ import annotations
 
 import argparse
 
+from uk_tech_prices.backcast import download_item_archive
 from uk_tech_prices.channels import (
     build_hmrc_trade_weights,
     download_channel_data,
     run_channel_analysis,
 )
 from uk_tech_prices.model_pipeline import download_foreign_data, run_modeling
+from uk_tech_prices.oecd import (
+    build_oecd_import_weights,
+    download_oecd_tiva,
+)
 from uk_tech_prices.pipeline import build_uk_indices, download_uk_data, run_all
 from uk_tech_prices.reporting import build_report_outputs
+from uk_tech_prices.transmission import run_transmission_analysis
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -28,6 +34,16 @@ def _parser() -> argparse.ArgumentParser:
 
     subparsers.add_parser("build", help="Build UK technology-goods indices")
 
+    backcast = subparsers.add_parser(
+        "download-backcast",
+        help="Download ONS predecessor classes and the 1996–2019 item archive",
+    )
+    backcast.add_argument(
+        "--refresh",
+        action="store_true",
+        help="Replace the raw ONS backcast snapshots with the latest available files",
+    )
+
     foreign = subparsers.add_parser(
         "download-foreign",
         help="Download BOJ, Bank of England, FRED/BLS and WTO/DBnomics inputs",
@@ -41,6 +57,16 @@ def _parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "model",
         help="Run publication-aware lead diagnostics and forecast tests",
+    )
+
+    oecd = subparsers.add_parser(
+        "download-oecd",
+        help="Download OECD TiVA UK C26 import-content origins",
+    )
+    oecd.add_argument(
+        "--refresh",
+        action="store_true",
+        help="Replace the raw OECD TiVA snapshot",
     )
 
     channels = subparsers.add_parser(
@@ -61,6 +87,10 @@ def _parser() -> argparse.ArgumentParser:
         "report",
         help="Build the focused research-report charts and scorecards",
     )
+    subparsers.add_parser(
+        "transmission",
+        help="Run common-factor, combined-regression and pass-through analysis",
+    )
 
     all_command = subparsers.add_parser("all", help="Download and build")
     all_command.add_argument(
@@ -79,6 +109,13 @@ def main() -> None:
     elif args.command == "download-foreign":
         manifest = download_foreign_data(refresh=args.refresh)
         print(f"Prepared {len(manifest)} foreign source files.")
+    elif args.command == "download-backcast":
+        class_manifest = download_uk_data(refresh=args.refresh)
+        item_manifest = download_item_archive(refresh=args.refresh)
+        print(
+            f"Prepared {len(class_manifest)} ONS MM23 series and "
+            f"{len(item_manifest)} item archive."
+        )
     elif args.command == "build":
         result = build_uk_indices()
         print(f"Built UK indices through {result.dropna(how='all').index.max():%Y-%m}.")
@@ -88,6 +125,13 @@ def main() -> None:
             "Completed "
             f"{len(forecasts):,} forecasts, {len(summary):,} evaluations and "
             f"{len(correlations):,} lead-correlation estimates."
+        )
+    elif args.command == "download-oecd":
+        manifest = download_oecd_tiva(refresh=args.refresh)
+        weights = build_oecd_import_weights()
+        print(
+            f"Prepared {len(manifest)} OECD source files and "
+            f"{len(weights):,} C26 import-content weights."
         )
     elif args.command == "download-channels":
         manifest = download_channel_data(refresh=args.refresh)
@@ -103,7 +147,16 @@ def main() -> None:
         )
     elif args.command == "report":
         build_report_outputs()
-        print("Built three research-report charts and three scorecards.")
+        print(
+            "Built three research-report charts, one UK-destination chart "
+            "and three scorecards."
+        )
+    elif args.command == "transmission":
+        result = run_transmission_analysis()
+        print(
+            f"Completed {len(result['forecasts']):,} combined forecasts and "
+            f"{len(result['local_projections']):,} pass-through estimates."
+        )
     else:
         result = run_all(refresh=args.refresh)
         print(f"Downloaded inputs and built UK indices through {result.index.max():%Y-%m}.")

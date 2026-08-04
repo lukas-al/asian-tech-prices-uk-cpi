@@ -10,24 +10,22 @@ from sklearn.linear_model import RidgeCV
 from sklearn.model_selection import TimeSeriesSplit
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
+from statsmodels.stats.multitest import multipletests
 
 TARGETS = ("headline_12m_pct", "ex_games_12m_pct")
+FORECAST_HORIZONS = tuple(range(1, 13))
 CONTROLS = ("gbpjpy_12m_pct", "jp_epi_all_yen_12m_pct")
 CANDIDATES = (
-    "jp_epi_electronics_yen_12m_pct",
-    "jp_epi_electronics_contract_12m_pct",
     "jp_epi_electronics_gbp_12m_pct",
-    "jp_ppi_electronic_components_12m_pct",
-    "jp_ppi_information_communications_12m_pct",
-    "kr_epi_tech_12m_pct",
     "kr_epi_tech_gbp_12m_pct",
-    "cn_ppi_tech_12m_pct",
     "cn_ppi_tech_gbp_12m_pct",
-    "tw_epi_integrated_circuits_twd_12m_pct",
-    "tw_epi_integrated_circuits_usd_12m_pct",
     "tw_epi_integrated_circuits_gbp_12m_pct",
-    "hk_ppi_tech_12m_pct",
     "hk_ppi_tech_gbp_12m_pct",
+    "oecd_asia_c26_targeted_gbp_12m_pct",
+    "oecd_asia_c26_bls_gbp_12m_pct",
+    "fred_china_computer_electronics_gbp_12m_pct",
+    "fred_japan_computer_electronics_gbp_12m_pct",
+    "fred_asian_nie_computer_electronics_gbp_12m_pct",
 )
 KOREA_CONTROLS = ("gbpkrw_12m_pct", "kr_epi_all_12m_pct")
 CHINA_CONTROLS = (
@@ -37,15 +35,15 @@ CHINA_CONTROLS = (
 TAIWAN_CONTROLS = ("gbptwd_12m_pct", "tw_epi_all_twd_12m_pct")
 HONG_KONG_CONTROLS = ("gbphkd_12m_pct", "hk_ppi_manufacturing_12m_pct")
 UK_IMPORT_CONTROLS = ("gbpusd_12m_pct", "uk_ipi_manufactures_12m_pct")
+STERLING_CONTROLS = (
+    "gbpusd_12m_pct",
+    "fred_asian_nie_all_imports_gbp_12m_pct",
+)
 MULTICOUNTRY_FEATURES = (
-    "jp_epi_electronics_yen_12m_pct",
-    "kr_epi_tech_12m_pct",
-    "tw_epi_integrated_circuits_twd_12m_pct",
-    "hk_ppi_tech_12m_pct",
-    "gbpjpy_12m_pct",
-    "gbpkrw_12m_pct",
-    "gbptwd_12m_pct",
-    "gbphkd_12m_pct",
+    "jp_epi_electronics_gbp_12m_pct",
+    "kr_epi_tech_gbp_12m_pct",
+    "tw_epi_integrated_circuits_gbp_12m_pct",
+    "hk_ppi_tech_gbp_12m_pct",
 )
 RIDGE_ALPHAS = np.logspace(-3, 3, 13)
 
@@ -53,6 +51,8 @@ RIDGE_ALPHAS = np.logspace(-3, 3, 13)
 def controls_for_candidate(candidate: str) -> tuple[str, ...]:
     if candidate.startswith("uk_ipi_"):
         return UK_IMPORT_CONTROLS
+    if "_gbp_" in candidate or candidate.startswith("oecd_"):
+        return STERLING_CONTROLS
     if candidate.startswith("kr_"):
         return KOREA_CONTROLS
     if candidate.startswith("cn_"):
@@ -115,7 +115,7 @@ def expanding_forecasts(
     *,
     targets: Iterable[str] = TARGETS,
     candidates: Iterable[str] = CANDIDATES,
-    horizons: Iterable[int] = (1, 2, 3),
+    horizons: Iterable[int] = FORECAST_HORIZONS,
     min_train: int = 60,
     rolling_window: int | None = None,
     ar_lags: int = 2,
@@ -191,7 +191,7 @@ def latest_forecasts(
     *,
     targets: Iterable[str] = TARGETS,
     candidates: Iterable[str] = CANDIDATES,
-    horizons: Iterable[int] = (1, 2, 3),
+    horizons: Iterable[int] = FORECAST_HORIZONS,
     min_train: int = 60,
     rolling_window: int | None = None,
     ar_lags: int = 2,
@@ -282,6 +282,7 @@ def _period_masks(frame: pd.DataFrame) -> dict[str, pd.Series]:
     dates = frame["target_date"]
     return {
         "full": pd.Series(True, index=frame.index),
+        "pre_2020": dates.le("2019-12-01"),
         "pandemic_2020_2022": dates.between("2020-01-01", "2022-12-01"),
         "post_2022": dates.ge("2023-01-01"),
         "ex_pandemic": ~dates.between("2020-01-01", "2022-12-01"),
@@ -381,6 +382,28 @@ def summarize_forecasts(
     return pd.DataFrame(rows)
 
 
+def add_forecast_fdr(evaluation: pd.DataFrame) -> pd.DataFrame:
+    """Add Benjamini-Hochberg q-values within each forecast comparison family."""
+    evaluation = evaluation.copy()
+    evaluation["clark_west_fdr_q"] = np.nan
+    group_columns = [
+        "target",
+        "horizon",
+        "window",
+        "evaluation_period",
+        "model",
+        "benchmark",
+    ]
+    for _, index in evaluation.groupby(group_columns).groups.items():
+        p_values = evaluation.loc[index, "clark_west_one_sided_p"]
+        valid = p_values.notna()
+        if valid.any():
+            evaluation.loc[p_values.index[valid], "clark_west_fdr_q"] = (
+                multipletests(p_values.loc[valid], method="fdr_bh")[1]
+            )
+    return evaluation
+
+
 def ar_residuals(series: pd.Series, lags: int = 2) -> pd.Series:
     frame = pd.DataFrame({"value": series})
     lag_columns = []
@@ -399,7 +422,7 @@ def regularized_multicountry_forecasts(
     panel: pd.DataFrame,
     *,
     targets: Iterable[str] = TARGETS,
-    horizons: Iterable[int] = (1, 2, 3),
+    horizons: Iterable[int] = FORECAST_HORIZONS,
     min_train: int = 60,
     ar_lags: int = 2,
 ) -> pd.DataFrame:
@@ -566,6 +589,7 @@ def prewhitened_lead_correlations(
                 for lead in range(max_lead + 1):
                     rows.append(
                         {
+                            "method": "prewhitened_ar",
                             "target": target,
                             "candidate": candidate,
                             "period": period,
@@ -576,6 +600,75 @@ def prewhitened_lead_correlations(
                             "familywise_p_0_12": family_p[lead],
                             "n": len(y_by_lead[lead]),
                             "ar_lags": ar_lags,
+                        }
+                    )
+    return pd.DataFrame(rows)
+
+
+def raw_lead_correlations(
+    panel: pd.DataFrame,
+    *,
+    targets: Iterable[str] = TARGETS,
+    candidates: Iterable[str] = CANDIDATES,
+    max_lead: int = 12,
+) -> pd.DataFrame:
+    """Descriptive lead correlations in annual rates without pre-whitening.
+
+    These intentionally retain common persistent movements. Circular-shift
+    familywise p-values address the 0-12 month search, but the raw estimates
+    are reported as co-movement rather than incremental predictive content.
+    """
+    rows: list[dict[str, object]] = []
+    periods = {
+        "full": ("1900-01-01", "2100-01-01"),
+        "pre_2020": ("1900-01-01", "2019-12-01"),
+        "pandemic_2020_2022": ("2020-01-01", "2022-12-01"),
+        "post_2022": ("2023-01-01", "2100-01-01"),
+    }
+    for target in targets:
+        for candidate in candidates:
+            data = panel[[target, candidate]].rename(
+                columns={target: "y", candidate: "x"}
+            ).dropna()
+            for period, (start, end) in periods.items():
+                base = data.loc[start:end].copy()
+                if len(base) < max_lead + 5:
+                    continue
+                observed = []
+                y_by_lead = []
+                for lead in range(max_lead + 1):
+                    paired = pd.concat(
+                        [base["x"], base["y"].shift(-lead).rename("y_lead")],
+                        axis=1,
+                    ).dropna()
+                    observed.append(float(paired["x"].corr(paired["y_lead"])))
+                    y_by_lead.append(paired["y_lead"].to_numpy(dtype=float))
+                common_n = min(len(values) for values in y_by_lead)
+                x_values = base["x"].to_numpy(dtype=float)[:common_n]
+                y_values = [values[:common_n] for values in y_by_lead]
+                observed_array = np.asarray(
+                    [
+                        float(np.corrcoef(x_values, values)[0, 1])
+                        for values in y_values
+                    ]
+                )
+                point_p, family_p = _circular_shift_pvalues(
+                    x_values, y_values, observed_array
+                )
+                for lead in range(max_lead + 1):
+                    rows.append(
+                        {
+                            "method": "raw_annual_rates",
+                            "target": target,
+                            "candidate": candidate,
+                            "period": period,
+                            "lead_months": lead,
+                            "correlation": observed[lead],
+                            "common_sample_correlation": observed_array[lead],
+                            "circular_shift_p": point_p[lead],
+                            "familywise_p_0_12": family_p[lead],
+                            "n": len(y_by_lead[lead]),
+                            "ar_lags": 0,
                         }
                     )
     return pd.DataFrame(rows)
