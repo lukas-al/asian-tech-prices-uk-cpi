@@ -66,7 +66,10 @@ def all_cdids(basket: pd.DataFrame) -> list[str]:
 def download_uk_data(*, refresh: bool = False) -> pd.DataFrame:
     ensure_project_directories()
     basket = load_basket()
-    cdids = sorted(set(all_cdids(basket)) | set(backcast_cdids()))
+    # A9FU is the annual CPI weight for the official core aggregate excluding
+    # energy, food, alcohol and tobacco. It is used only to translate a
+    # technology-basket contribution into core-CPI percentage points.
+    cdids = sorted(set(all_cdids(basket)) | set(backcast_cdids()) | {"A9FU"})
     return download_series(cdids, RAW_ONS_DIR, refresh=refresh)
 
 

@@ -15,6 +15,7 @@ from uk_tech_prices.oecd import (
 )
 from uk_tech_prices.pipeline import build_uk_indices, download_uk_data, run_all
 from uk_tech_prices.reporting import build_report_outputs
+from uk_tech_prices.scenarios import run_scenario_analysis
 from uk_tech_prices.transmission import run_transmission_analysis
 
 
@@ -91,6 +92,10 @@ def _parser() -> argparse.ArgumentParser:
         "transmission",
         help="Run common-factor, combined-regression and pass-through analysis",
     )
+    subparsers.add_parser(
+        "scenarios",
+        help="Pass current and alternative Asian pressure paths through to UK prices",
+    )
 
     all_command = subparsers.add_parser("all", help="Download and build")
     all_command.add_argument(
@@ -156,6 +161,12 @@ def main() -> None:
         print(
             f"Completed {len(result['forecasts']):,} combined forecasts and "
             f"{len(result['local_projections']):,} pass-through estimates."
+        )
+    elif args.command == "scenarios":
+        result = run_scenario_analysis()
+        print(
+            f"Built {len(result['target_impacts']):,} target impacts and "
+            f"{len(result['macro_contributions']):,} headline/core contributions."
         )
     else:
         result = run_all(refresh=args.refresh)

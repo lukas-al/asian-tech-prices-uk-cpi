@@ -263,6 +263,25 @@ adjustment and reverse later. The current 3.13pp upstream C26 pressure maps to a
 a central forecast: the former is an upper mechanical exposure and the latter
 is a noisy historical association.
 
+### 5.5 Conditional current-shock scenarios
+
+The scenario extension treats the common Asian factor as an AR(2) process and
+extracts its unexpected innovations. Innovation local projections make the UK
+border response detectable within 1–3 months and place its peak around 3–6
+months, with the strongest technology-CPI association at 9–11 months. These are
+shorter and more defensible border lags
+than the raw common-cycle correlations, which peak around 4–6 months for imports
+and 10–12 months for CPI but largely disappear after pre-whitening.
+
+Dynamic ARDL models then condition on three paths for the latest 3.13pp upstream
+pressure. If it is sustained, the central ex-games contribution builds to about
+0.016pp on headline CPI after six months, 0.049pp after nine months and 0.091pp
+after twelve months. If pressure intensifies to the historical 95th percentile,
+the twelve-month contribution reaches about 0.30pp. These estimates have wide
+parameter and specification uncertainty and are scenarios rather than forecasts.
+The full results are in
+[`scenario_transmission_results.md`](scenario_transmission_results.md).
+
 ## 6. Economic interpretation
 
 The statistical winner and the economically most relevant measure need not be

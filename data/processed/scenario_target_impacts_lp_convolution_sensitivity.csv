@@ -1,0 +1,196 @@
+origin,scenario,scenario_label,target,target_label,target_group,horizon,incremental_annual_inflation_pp,approx_standard_error,approx_lower_90,approx_upper_90
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,0,1.256621672550108,0.29840407992845064,0.7657469610678067,1.7474963840324094
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,1,1.9760309681990844,0.5163757119543241,1.1265929220342215,2.8254690143639474
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,2,3.0743411624666233,0.6522227459117744,2.0014347454417543,4.147247579491492
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,3,4.3663806673725265,1.0289555476986452,2.673748791408255,6.059012543336798
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,4,5.458001474558269,1.36365997117714,3.2147808219718734,7.701222127144664
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,5,6.41289237906617,1.8562267247738224,3.3593994168132317,9.466385341319107
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,6,7.661100375008131,2.2217586377643075,4.0063074158858445,11.315893334130417
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,7,7.792606716969286,2.4658484072518836,3.7362860870399377,11.848927346898634
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,8,7.442291695826057,2.8847397314437755,2.6968948376010466,12.187688554051068
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,9,6.515495733861347,3.1992557842118496,1.2527199688328547,11.77827149888984
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,10,4.811510937229776,3.52910972998104,-0.9938745685890353,10.616896443048587
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,11,2.955937669180673,3.7759524871713848,-3.2555041722162548,9.1673795105776
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,12,-0.09616655385226258,3.9776482270804117,-6.63939788739954,6.4470647796950145
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,0,0.9613423560960489,0.2138360133426413,0.609582114147404,1.3131025980446938
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,1,1.4856046636004734,0.39366008338851416,0.8380338264263676,2.133175500774579
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,2,2.213898311764864,0.5841136356415582,1.2530313811345009,3.1747652423952273
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,3,3.313636181807625,0.6792538424912303,2.1962636109095515,4.431008752705699
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,4,3.9188369580489364,0.9743637730568838,2.3160085513703628,5.52166536472751
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,5,4.774451423139689,1.213232144495302,2.778684545444917,6.77021830083446
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,6,6.2423251343584125,1.4781734525699002,3.8107298048809266,8.673920463835898
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,7,6.701560217097443,1.5997599684966868,4.069955068920393,9.333165365274493
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,8,7.163717142783033,1.8505887449403962,4.119498657356081,10.207935628209984
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,9,7.560865396124408,2.034865244790914,4.213512068443354,10.908218723805462
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,10,7.473166746677043,2.2149229048054053,3.829618568272151,11.116714925081935
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,11,7.310381196000223,2.3413362253878245,3.4588831052372515,11.161879286763194
+2026-06-01,intensifying,Intensifying pressure,uk_ipi_c261_12m_pct,UK C261 components,import,12,6.355148704650003,2.509482082169134,2.2270506794817777,10.483246729818228
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,0,0.5920877591490287,0.2929852407349292,0.11012703814007013,1.0740484801579873
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,1,1.0782518595584683,0.48775881380942365,0.27588861084196636,1.88061510827497
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,2,2.1812263497608346,0.7659166889844975,0.9212933963813363,3.441159303140333
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,3,3.4430218252665346,1.0698702977460386,1.683085185474301,5.202958465058768
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,4,5.1149371261312835,1.3400111536746733,2.910618778336446,7.3192554739261215
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,5,7.263674142142945,1.6720039653509104,4.5132276191406975,10.014120665145192
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,6,9.700531518447079,1.8308457364341122,6.688790282012964,12.712272754881194
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,7,12.717468726869841,2.0085079219860265,9.413473195202828,16.021464258536856
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,8,15.689691491994912,2.13068664721318,12.184711957329231,19.194671026660593
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,9,18.655260354682447,2.245763174792175,14.96097993214932,22.349540777215577
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,10,21.91169624359053,2.267343697570275,18.181915861087425,25.641476626093635
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,11,24.93665116016392,2.329091227489726,21.10529609094332,28.76800622938452
+2026-06-01,intensifying,Intensifying pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,12,27.341743553699548,2.3390612717693657,23.49398776163894,31.189499345760154
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,0,0.7924792633883246,0.26565447169177026,0.3554776574553626,1.2294808693212866
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,1,1.3981354400256143,0.440717988476877,0.6731543489811517,2.123116531070077
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,2,2.645765232469314,0.7210837458529382,1.4595824705412306,3.8319479943973973
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,3,4.086861704903616,1.0026375802852014,2.43752288533446,5.736200524472773
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,4,5.906844076598454,1.2575928883209868,3.838103775310431,7.975584377886477
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,5,8.20822171143562,1.5487466115131687,5.660533535496457,10.755909887374782
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,6,10.633198611328107,1.738502060693463,7.77336272148736,13.493034501168854
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,7,13.536043708952194,1.935864814636226,10.351546088875603,16.720541329028787
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,8,16.217753289186188,2.088526141300372,12.782127786747076,19.6533787916253
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,9,18.944392681940272,2.206642771857486,15.314465322234707,22.574320041645837
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,10,21.807550703416915,2.2587202332728773,18.09195591968303,25.5231454871508
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,11,24.516736563664185,2.3123719993554444,20.71288462472448,28.32058850260389
+2026-06-01,intensifying,Intensifying pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,12,26.489837730862522,2.3392736698387515,22.641732543977774,30.33794291774727
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,0,0.5128866449726714,0.14951576954586548,0.26693320406972276,0.7588400858756201
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,1,0.8127603713432715,0.295768075726312,0.3262218867734883,1.2992988559130547
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,2,1.6696723719844808,0.4294216382495318,0.9632737770640011,2.3760709669049604
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,3,2.4760474344053733,0.6223456628671559,1.4522888189889018,3.499806049821845
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,4,3.67321231292573,0.7405939502082058,2.4549352648332317,4.891489361018229
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,5,4.923513507340698,0.8946336598762721,3.4518411368442306,6.395185877837166
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,6,6.403485796755383,0.9757611996203557,4.798358623379898,8.00861297013087
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,7,7.9772275148841265,1.091433535635665,6.181819348763458,9.772635681004795
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,8,9.401909160816647,1.2202728149619138,7.3945603802042985,11.409257941428995
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,9,11.073354775695725,1.3233082778068443,8.896512658703465,13.250196892687985
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,10,12.523283957815726,1.366559661967342,10.275293313879448,14.771274601752005
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,11,13.940498569465127,1.4892125580136957,11.490743911532597,16.390253227397658
+2026-06-01,intensifying,Intensifying pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,12,14.907535879692626,1.5664951063798023,12.33065142969785,17.4844203296874
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,0,1.256621672550108,0.29840407992845064,0.7657469610678067,1.7474963840324094
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,1,1.3899770073302646,0.51780757239343,0.5381835507430722,2.241770463917457
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,2,1.8585644371451824,0.6383675551870133,0.8084498088625456,2.908679065427819
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,3,2.385220142368901,0.9868291119472637,0.7618862532156521,4.00855403152215
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,4,2.574084493690054,1.2933996225912812,0.4464421145273967,4.701726872852712
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,5,2.6649635084682517,1.733740561275661,-0.18703971483021054,5.516966731766714
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,6,3.1429379456155964,2.0131434339778487,-0.1686830032779647,6.454558894509157
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,7,2.9897343083952865,2.099492688039113,-0.4639311634290544,6.443399780219627
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,8,2.571912237373656,2.3613064472291176,-1.3124368683182426,6.456261343065554
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,9,1.9995985476006504,2.504546531142638,-2.120380496128989,6.119577591330289
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,10,1.1089451679693074,2.6631574338988533,-3.2719488107943064,5.489839146732921
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,11,0.4421523773403551,2.7265790180391214,-4.043070107334,4.927374862014711
+2026-06-01,sustained,Sustained pressure,uk_ipi_c26_12m_pct,UK C26 imports,import,12,-1.269822122255846,2.775526936303175,-5.835563932474569,3.2959196879628774
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,0,0.9613423560960489,0.2138360133426413,0.609582114147404,1.3131025980446938
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,1,1.0372608956645537,0.3946247277500117,0.38810321851578444,1.686418572813323
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,2,1.2959760648770964,0.5764602820054949,0.3476989009780572,2.2442532287761354
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,3,1.8684943963079825,0.6444367667281915,0.8083959150401074,2.9285928775758574
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,4,1.7591273661699645,0.9034876540896354,0.27289017519251413,3.245364557147415
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,5,2.0423545963988805,1.1079018873085702,0.21985599177628257,3.8648532010214787
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,6,2.9080916244749955,1.310177398833479,0.7528498033939224,5.063333445556069
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,7,2.8952797898624456,1.3278696010152853,0.7109342961923013,5.0796252835325895
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,8,2.9985580702387247,1.4770197885434142,0.5688605180848083,5.428255622392641
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,9,3.1543409614740057,1.5705860267052851,0.5707269475438115,5.7379549754042
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,10,3.036771113554271,1.632878664194133,0.3506857109549224,5.72285651615362
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,11,2.8355176978536445,1.6501861241430904,0.12096152363826063,5.550073872069028
+2026-06-01,sustained,Sustained pressure,uk_ipi_c261_12m_pct,UK C261 components,import,12,2.0251227681309287,1.7478529466606783,-0.850095329125887,4.9003408653877445
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,0,0.5920877591490287,0.2929852407349292,0.11012703814007013,1.0740484801579873
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,1,0.8021183310581507,0.48921996463098877,-0.0026485107598258617,1.6068851728761273
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,2,1.5397350370104004,0.7543687790959495,0.2987983953975635,2.7806716786232375
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,3,2.1333870994007103,1.0346463462854278,0.4313938597611815,3.8353803390402392
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,4,2.9283945845172004,1.2565389837071346,0.8613879563189641,4.995401212715437
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,5,3.9384458298800205,1.515116680393749,1.4460788906323034,6.430812769127737
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,6,4.9097735037329695,1.5541755471275636,2.3531547287081276,7.466392278757811
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,7,6.46632516839294,1.5700811619554977,3.883541656976146,9.049108679809734
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,8,7.56395454766335,1.5174770113893696,5.067704863927837,10.060204231398863
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,9,8.708536985596423,1.4784103720985757,6.2765519234942655,11.14052204769858
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,10,10.13361053458779,1.353168534685911,7.907648295029466,12.359572774146114
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,11,11.265219985472854,1.3481522244512016,9.047509576250627,13.48293039469508
+2026-06-01,sustained,Sustained pressure,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,12,11.932232240774095,1.3803830932968746,9.661502052300737,14.202962429247453
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,0,0.7924792633883246,0.26565447169177026,0.3554776574553626,1.2294808693212866
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,1,1.028544797622769,0.44204745567834103,0.30137673303189805,1.75571286221364
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,2,1.8081717672023039,0.7109892086382291,0.6385945189924169,2.977749015412191
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,3,2.4721736509336623,0.972268113384343,0.872792604416418,4.071554697450907
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,4,3.290574282181291,1.1812544711521882,1.3474106771359415,5.23373788722664
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,5,4.335951616292762,1.4010266004204712,2.031262858601087,6.6406403739844375
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,6,5.180230952860394,1.4833707654817156,2.7400860436429717,7.620375862077816
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,7,6.676772177528037,1.5439003297623617,4.137056135068953,9.216488219987122
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,8,7.587075575273501,1.5455557541585079,5.044636359682755,10.129514790864247
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,9,8.690227946142327,1.5172597193658344,6.19433570778553,11.186120184499124
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,10,9.944399063810494,1.4287139338020178,7.594164642706174,12.294633484914813
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,11,11.032727689261451,1.3846701426943813,8.754945304529194,13.310510073993708
+2026-06-01,sustained,Sustained pressure,historical_ex_games_12m_pct,Technology CPI ex-games,basket,12,11.530688003254577,1.3840766063577485,9.253881985796081,13.807494020713072
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,0,0.5128866449726714,0.14951576954586548,0.26693320406972276,0.7588400858756201
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,1,0.5735640751716657,0.29639587488065094,0.08599286099299491,1.0611352893503365
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,2,1.1705421997644976,0.4245648481204759,0.4721330246063147,1.8689513749226805
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,3,1.4724865732747785,0.6017799041404965,0.4825586309636617,2.462414515585895
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,4,2.0749654656028964,0.6916490218172217,0.9372028247135669,3.212728106492226
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,5,2.52923142187719,0.7961147728327923,1.2196226205672465,3.838840223187133
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,6,3.1005711562390665,0.8067076237030615,1.7735371152475303,4.427605197230603
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,7,3.860572186449451,0.8426435540023312,2.474423540115616,5.246720832783286
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,8,4.274542547838831,0.9129155148906435,2.772796525843722,5.776288569833939
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,9,5.139383376056234,0.9609703107271801,3.5585872149100224,6.720179537202445
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,10,5.639139593119636,0.9439437673292113,4.0863520958630835,7.191927090376189
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,11,6.248502679605018,1.0415236343426209,4.535196301111407,7.961809058098629
+2026-06-01,sustained,Sustained pressure,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,12,6.423442858929463,1.1047130724422272,4.6061898547619995,8.240695863096928
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,0,1.256621672550108,0.29840407992845064,0.7657469610678067,1.7474963840324094
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,1,0.7849213536906455,0.5570394224273921,-0.13140849620241457,1.7012512035837055
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,2,0.6033684478054623,0.7278567777527374,-0.5939559515977907,1.8006928472087154
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,3,0.33982422926219974,1.0724303765496408,-1.4243237401619593,2.1039721986863587
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,4,-0.40333804827992065,1.4504150940340894,-2.789270877965998,1.9825947814061564
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,5,-1.2044848768520486,1.9317717732156354,-4.382249443791769,1.9732796900876717
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,6,-1.5217173668633452,2.3146668703677613,-5.329344368618313,2.285909634891622
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,7,-2.559909159938225,2.473563472928398,-6.62892107290544,1.5091027530289902
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,8,-3.6825149135877977,2.7146559060330313,-8.148123879012134,0.7830940518365388
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,9,-4.660757590342684,2.931237622434185,-9.482643479246919,0.1611282985615503
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,10,-5.622156531971427,3.119446109016747,-10.753645381303976,-0.49066768263887806
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,11,-5.932997937421623,3.244074183043668,-11.269499968528457,-0.5964959063147894
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c26_12m_pct,UK C26 imports,import,12,-7.038187293632644,3.330891636461262,-12.51750403561142,-1.5588705516538681
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,0,0.9613423560960489,0.2138360133426413,0.609582114147404,1.3131025980446938
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,1,0.5743804278633331,0.42116819701794855,-0.11844125623119228,1.2672021119578585
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,2,0.34829192286113037,0.6353222017404613,-0.6968130990019286,1.3933969447241892
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,3,0.37649661792741373,0.7504213521487418,-0.8579465063572665,1.6109397422120941
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,4,-0.47060673007067577,0.9951656947934855,-2.1076542980059596,1.1664408378646078
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,5,-0.7783253096966697,1.2572625510329138,-2.846522206145813,1.2898715867524735
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,6,-0.5342481094274201,1.49668093768632,-2.996288251921416,1.927792033066576
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,7,-1.4865756352806954,1.5776474399088278,-4.081805673930717,1.1086544033693264
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,8,-2.2273911320463227,1.7022558361370426,-5.027601982491758,0.5728197183991126
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,9,-2.8525107354988504,1.8383495365282498,-5.876595723087821,0.17157425209012045
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,10,-3.721576043606451,1.9294709898803706,-6.895555821959661,-0.5475962652532416
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,11,-4.539808402464403,1.9775354726356023,-7.792854254949969,-1.286762549978837
+2026-06-01,retrenchment,Cyclical retrenchment,uk_ipi_c261_12m_pct,UK C261 components,import,12,-5.807936422556703,2.084387425921379,-9.236753738197372,-2.3791191069160345
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,0,0.5920877591490287,0.2929852407349292,0.11012703814007013,1.0740484801579873
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,1,0.5170316944438615,0.5291378040626206,-0.3533999932391493,1.3874633821268723
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,2,0.8774445800617946,0.8233292412218597,-0.4769320217481646,2.2318211818717537
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,3,0.7812899411234066,1.1510387562451245,-1.1121688128998235,2.6747486951466364
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,4,0.6709575308270654,1.4310127119614509,-1.6830583803495212,3.024973442003652
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,5,0.5054032701223581,1.7226834733614915,-2.3284110435572956,3.3392175838020117
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,6,-0.03631579105624322,1.8395450244540414,-3.0623673562831413,2.9897357741706547
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,7,-0.26598602988291753,1.8545135846534373,-3.3166608766378216,2.784688816871987
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,8,-1.4722007271225281,1.8130418994162953,-4.454654651662334,1.510253197417278
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,9,-2.881482586471355,1.7662188431417156,-5.786912583439477,0.023947410496766963
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,10,-4.231528692258164,1.6703605344274122,-6.979271771391257,-1.4837856131250704
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,11,-6.2030399449988645,1.6555728673666472,-8.926457311817,-3.47962257818073
+2026-06-01,retrenchment,Cyclical retrenchment,historical_targeted_hardware_12m_pct,Targeted hardware CPI,basket,12,-8.808477440852327,1.7378034838246208,-11.667164171743828,-5.949790709960826
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,0,0.7924792633883246,0.26565447169177026,0.3554776574553626,1.2294808693212866
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,1,0.6469708767049388,0.4783578583696922,-0.13992780031320484,1.4338695537230826
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,2,0.9434209158300321,0.7709141170966693,-0.3247328067939891,2.2115746384540533
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,3,0.8051323865584222,1.082754050087694,-0.9759980258358344,2.5862627989526787
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,4,0.5894768811639838,1.3452870167877606,-1.6235202614518824,2.80247402377985
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,5,0.3381304770713415,1.5990557154919216,-2.2923161749128695,2.9685771290555527
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,6,-0.4495388826315939,1.739222140737639,-3.31055930414501,2.411481538881822
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,7,-0.7776377396431181,1.810669903760237,-3.7561897313287083,2.200914252042472
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,8,-2.1681651134165256,1.8312088054293487,-5.180503598347805,0.8441733715147532
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,9,-3.5248535040746445,1.8115383279043236,-6.504834053477257,-0.5448729546720323
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,10,-4.94195261678037,1.7426307911353915,-7.808580268198089,-2.0753249653626504
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,11,-6.793735568231947,1.7022853657596217,-9.593994994906524,-3.9934761415573687
+2026-06-01,retrenchment,Cyclical retrenchment,historical_ex_games_12m_pct,Technology CPI ex-games,basket,12,-9.4129094727818,1.7341684980990966,-12.265616652154815,-6.5602022934087865
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,0,0.5128866449726714,0.14951576954586548,0.26693320406972276,0.7588400858756201
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,1,0.3266122908790893,0.31374664015129744,-0.18950093216979502,0.8427255139279736
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,2,0.6552286744432063,0.4697607579138416,-0.11752777232506306,1.4279851212114756
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,3,0.4363871466992345,0.6649962647012794,-0.6575317087343701,1.5303060021328392
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,4,0.4248984829469533,0.798466652291705,-0.8885791600729014,1.738376125966808
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,5,0.057319261996713555,0.913773016349621,-1.4458373498984132,1.5604758738918403
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,6,-0.30943425311058625,0.9559155098578132,-1.881915266826689,1.2630467606055165
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,7,-0.6307921041770687,0.9847776092089428,-2.2507512713257793,0.9891670629716421
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,8,-1.5224518791024906,1.0587301699262133,-3.2640630086311115,0.21915925042613038
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,9,-1.9990967858987507,1.1302754792210001,-3.8583999492172962,-0.13979362258020545
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,10,-3.08007365899777,1.1413978359358605,-4.957673099112261,-1.2024742188832795
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,11,-4.107572415881085,1.2284343113378997,-6.1283468580319305,-2.0867979737302402
+2026-06-01,retrenchment,Cyclical retrenchment,expanded_consumer_tech_12m_pct,Expanded consumer technology CPI,basket,12,-5.666785496943986,1.3361382280966798,-7.8647328821630245,-3.4688381117249483

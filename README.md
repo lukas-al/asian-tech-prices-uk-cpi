@@ -30,6 +30,7 @@ uv run --frozen uk-tech build
 uv run --frozen uk-tech model
 uv run --frozen uk-tech channels
 uv run --frozen uk-tech transmission
+uv run --frozen uk-tech scenarios
 uv run --frozen uk-tech report
 ```
 
@@ -61,6 +62,8 @@ The detailed twelve-month extension and source-history audit are in
 [`docs/extended_horizon_results.md`](docs/extended_horizon_results.md).
 The pre-COICOP5 UK backcast and combined import/CPI transmission analysis are in
 [`docs/uk_measure_extension_and_transmission.md`](docs/uk_measure_extension_and_transmission.md).
+The current-shock pass-through scenarios and timing scorecard are in
+[`docs/scenario_transmission_results.md`](docs/scenario_transmission_results.md).
 
 To deliberately refresh every foreign source snapshot before rerunning:
 
@@ -73,6 +76,7 @@ uv run uk-tech build
 uv run uk-tech model
 uv run uk-tech channels
 uv run uk-tech transmission
+uv run uk-tech scenarios
 uv run uk-tech report
 ```
 
