@@ -64,6 +64,8 @@ The pre-COICOP5 UK backcast and combined import/CPI transmission analysis are in
 [`docs/uk_measure_extension_and_transmission.md`](docs/uk_measure_extension_and_transmission.md).
 The current-shock pass-through scenarios and timing scorecard are in
 [`docs/scenario_transmission_results.md`](docs/scenario_transmission_results.md).
+The latest July 2026 border-price and CPI update is in
+[`docs/july_2026_update.md`](docs/july_2026_update.md).
 
 To deliberately refresh every foreign source snapshot before rerunning:
 

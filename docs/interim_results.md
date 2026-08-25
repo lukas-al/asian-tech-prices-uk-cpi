@@ -18,4 +18,5 @@ The current assessment is:
 - the four-country ridge result at three to eight months is promising but has
   only 12–21 forecast errors.
 
-Data vintage: 2 August 2026.
+This staged assessment has been superseded by the 24 August 2026 refresh; see
+[`july_2026_update.md`](july_2026_update.md) for the current readings.

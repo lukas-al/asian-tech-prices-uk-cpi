@@ -354,31 +354,68 @@ def build_uk_backcasts(current: pd.DataFrame | None = None) -> pd.DataFrame:
         PROCESSED_DIR / "uk_tech_backcast_validation.csv", index=False
     )
     mobile_diagnostics.to_csv(PROCESSED_DIR / "uk_mobile_item_backcast_diagnostics.csv")
-    _save_backcast_chart(result)
+    _save_backcast_chart(result, mobile_index=mobile_index)
     return result
 
 
-def _save_backcast_chart(result: pd.DataFrame) -> None:
-    fig, ax = plt.subplots(figsize=(12.5, 5.8))
+def _save_backcast_chart(
+    result: pd.DataFrame,
+    *,
+    mobile_index: pd.Series,
+) -> None:
+    parent_indices, _ = _load_parent_components("include_ex_games")
+    feature_specs = (
+        ("D7EN", "Audio-visual equipment", "-"),
+        ("D7EO", "Photo and optical goods", "--"),
+        ("D7EP", "Information-processing equipment", "-."),
+        ("D7ES", "Recording media", ":"),
+    )
+
+    fig, ax = plt.subplots(figsize=(12.5, 6.2))
+    for column, label, linestyle in feature_specs:
+        feature = parent_indices[column].pct_change(12, fill_method=None) * 100
+        ax.plot(
+            feature.index,
+            feature,
+            color="#6f7f8d",
+            linewidth=1.0,
+            linestyle=linestyle,
+            alpha=0.28,
+            label=label,
+            zorder=1,
+        )
+    mobile_rate = mobile_index.pct_change(12, fill_method=None) * 100
+    ax.plot(
+        mobile_rate.index,
+        mobile_rate,
+        color="#8a6f82",
+        linewidth=1.0,
+        linestyle="--",
+        alpha=0.28,
+        label="Handset items",
+        zorder=1,
+    )
     ax.plot(
         result.index,
         result["historical_targeted_hardware_12m_pct"],
         color="#205493",
-        linewidth=1.6,
+        linewidth=2.0,
         label="Targeted hardware",
+        zorder=3,
     )
     ax.plot(
         result.index,
         result["historical_ex_games_12m_pct"],
         color="#d17a22",
-        linewidth=1.2,
-        alpha=0.9,
-        label="Broader technology goods, excluding games",
+        linewidth=2.8,
+        label="UK tech-goods aggregate",
+        zorder=4,
     )
     splice = pd.Timestamp("2015-01-01")
     ax.axvspan(result.index.min(), splice, color="#dbe7f2", alpha=0.45)
     ax.axvline(splice, color="#555555", linewidth=0.9, linestyle="--")
     ax.axhline(0, color="black", linewidth=0.7)
+    ax.set_xlim(result.index.min(), result.index.max())
     ax.text(
         pd.Timestamp("2005-01-01"),
         ax.get_ylim()[1] * 0.88,
@@ -387,17 +424,18 @@ def _save_backcast_chart(result: pd.DataFrame) -> None:
         color="#425b72",
         fontsize=9,
     )
-    ax.set_title("A linked UK technology-goods CPI history can be reconstructed to 1996")
+    ax.set_title("UK tech-goods aggregate and the ONS inputs used to reconstruct it")
     ax.set_ylabel("Twelve-month inflation, %")
-    ax.legend(frameon=False, ncol=2, loc="lower left")
+    ax.legend(frameon=False, ncol=3, loc="lower left", fontsize=8.5)
     fig.text(
         0.5,
         0.02,
-        "Before 2015, annual ONS parent classes are chained, with handset items added from "
-        "2005; from 2015, the validated COICOP5 aggregates are used.",
+        "Transparent lines show the component inputs. Before 2015, ONS parent classes are "
+        "chained, with handset items added from 2005; validated COICOP5 aggregates are used "
+        "thereafter.",
         ha="center",
         fontsize=9,
     )
-    fig.subplots_adjust(left=0.08, right=0.98, bottom=0.14, top=0.90)
+    fig.subplots_adjust(left=0.08, right=0.98, bottom=0.15, top=0.90)
     fig.savefig(CHART_DIR / "uk_tech_backcast.png", dpi=180)
     plt.close(fig)

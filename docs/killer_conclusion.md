@@ -7,9 +7,20 @@ official ONS predecessor classes and handset items to the validated current
 aggregate gives a targeted-hardware history back to 1996; its overlap annual-rate
 correlation with the current construction is 0.986. Over the common international
 sample, China, Japan and Asian-NIE electronics prices share a pronounced regional
-cycle: one factor explains 94.4% of their standardised variation.
+cycle: one factor explains 93.3% of their standardised variation.
 
-![Combined recursive forecasts](../outputs/charts/combined_transmission_forecasts.png)
+![Asian lead correlations](../outputs/charts/correlation_raw_vs_prewhitened.png)
+
+The shared-cycle evidence is a primary result, not something to discard because
+it weakens after pre-whitening. China's sterling technology PPI correlates 0.69
+with ex-games CPI twelve months later, while the OECD targeted basket correlates
+0.67 at an eleven-month lead; both survive the within-indicator lead search.
+Pre-whitening asks whether isolated innovations line up after removing each
+series' persistent dynamics. That is a useful robustness check, but it is not the
+main estimand when the research question concerns an internationally shared
+technology-price cycle.
+
+![Recursive forecast RMSE ratios](../outputs/charts/forecast_rmse_ratios.png)
 
 The predictive signal is in the combination, not a fixed single-country lead. A
 recursively cross-validated Asian ridge model reduces UK C26 import-price forecast
@@ -19,15 +30,21 @@ full sample. But the useful window moves—from nearer 3–5 months for C26 befo
 2020 to 8–12 months after 2022—so this should be treated as a monitored horizon
 band rather than a structural lag.
 
-![Current-shock transmission scenarios](../outputs/charts/scenario_transmission_chain.png)
+The PCA factor and ridge should be kept conceptually separate. PCA constructs a
+target-free, unitless measure of the common Asian price cycle. Ridge constructs
+a target-, horizon- and vintage-specific forecast combination. The factor
+documents that a coherent cycle exists; the ridge results show that allowing
+the constituent series to receive different supervised weights creates useful
+out-of-sample information.
 
-The current OECD/BLS calculation implies 3.13pp of Asian-origin C26 pressure.
-Innovation diagnostics suggest a UK border response within 1–3 months, peaking
-around 3–6 months, and a CPI association building towards 9–11 months. If the
-current pressure is sustained,
-the dynamic scenario reaches about 0.09pp on headline CPI after a year; if it
-intensifies to the historical 95th percentile, the estimate reaches about 0.30pp.
-The uncertainty bands are wide and raw correlations largely vanish after
-pre-whitening. The senior message is therefore conditional: the risk is material,
-but C261/C26 and retail evidence should determine whether the scenario is carried
-into forecast judgement.
+![Local-projection impact paths](../outputs/charts/local_projection_impact_paths.png)
+
+Direct Asia-to-CPI local projections provide an empirical horizon profile without
+imposing a full conditional forecasting system. An Asian-factor innovation
+equivalent to one percentage point of OECD-weighted C26 pressure implies about
+0.007pp on headline CPI immediately, 0.023pp after three months, 0.036pp after
+six, 0.046pp after nine and a 0.048pp peak after eleven. This expresses the Asian
+shock in C26-pressure units; it is not a C26-to-CPI coefficient. Scaling one-,
+two- and three-point-equivalent surprises gives peak impacts of about 0.048pp,
+0.096pp and 0.144pp. A full DRAM path must be converted into successive
+innovations and their later responses summed.

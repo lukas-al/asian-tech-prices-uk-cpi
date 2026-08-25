@@ -44,7 +44,7 @@ TARGET_SPECS = {
     "uk_ipi_c261_12m_pct": ("UK C261 components", "import"),
     "uk_ipi_c262_12m_pct": ("UK C262 computers", "import"),
     "historical_targeted_hardware_12m_pct": ("Targeted hardware CPI", "basket"),
-    "historical_ex_games_12m_pct": ("Technology CPI ex-games", "basket"),
+    "historical_ex_games_12m_pct": ("UK tech-goods aggregate", "basket"),
     "expanded_consumer_tech_12m_pct": ("Expanded consumer technology CPI", "basket"),
 }
 SCENARIO_TARGETS = (

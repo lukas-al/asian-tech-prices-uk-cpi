@@ -105,20 +105,19 @@ forecasting.
 
 ## First-build observations
 
-The July 2026 ONS vintage produces complete monthly aggregates from January 2015
-to June 2026.
+The August 2026 ONS vintage produces complete monthly aggregates from January 2015
+to July 2026.
 
-For June 2026:
+For July 2026:
 
-- headline twelve-month inflation: **0.84%**;
-- ex-games twelve-month inflation: **-0.22%**;
-- telecom/computing: **-1.14%**;
-- audio-visual/optical: **-0.79%**;
-- media/games: **5.86%**.
+- headline twelve-month inflation: **-1.36%**;
+- ex-games twelve-month inflation: **-0.07%**;
+- telecom/computing: **0.25%**;
+- audio-visual/optical: **-3.60%**;
+- media/games: **-2.36%**.
 
 `Games and hobbies` accounts for approximately 26.3% of the custom aggregate's
 2026 weight. The difference between the headline and ex-games result is
 therefore economically material. Any claim about “technology-goods inflation”
 should show both series until the desired treatment of this broad COICOP5 group
 is settled.
-

@@ -4,11 +4,13 @@
 
 Asian technology prices are useful as an upstream risk monitor, but the
 historical relationship is not strong enough to generate an automatic UK CPI
-adjustment. Raw annual-rate correlations suggest that some sterling Asian
-prices lead the preferred UK CPI aggregate excluding games by about 9–12
-months. Those relationships weaken sharply after removing each series' own
-persistence, and the apparent long lead is concentrated in a short,
-pandemic-heavy forecast evaluation.
+adjustment. Raw annual-rate correlations provide strong evidence that some
+sterling Asian prices and aggregated indices lead the preferred UK CPI
+aggregate excluding games by about 9–12 months. This is a substantive result
+about the shared global technology-price cycle, even though it is not an
+incremental-shock estimate. The relationships weaken sharply after removing
+each series' own persistence, while recursive forecasting provides a separate
+test of whether the signal was usable in real time.
 
 The strongest operational result comes from combining information rather than
 selecting one country. A recursively estimated ridge combination of the longer
@@ -33,8 +35,8 @@ wait for C26 and especially C261 UK import prices to confirm that pressure has
 reached the UK border; and apply component-level judgement only when UK-facing
 prices or retail evidence also move.
 
-Data vintage: 3 August 2026. OECD TiVA data are the revised 2025 edition and run
-to 2022. Monthly UK CPI and most UK import-price data run through June 2026.
+Data vintage: 24 August 2026. OECD TiVA data are the revised 2025 edition and run
+to 2022. Monthly UK CPI and most UK import-price data run through July 2026.
 
 ## 1. Question and preferred measures
 
@@ -143,9 +145,10 @@ does not estimate margins, contracts, inventories or quality adjustment.
 
 ![Mechanical CPI contribution](../outputs/charts/report_3_mechanical_cpi_contribution.png)
 
-The latest targeted estimate is **0.053pp** in June 2026. South Korea
-contributes +0.051pp, Taiwan +0.013pp, Japan +0.011pp, Hong Kong close to zero
-and China -0.023pp. The longer BLS proxy gives 0.040pp. The targeted series has
+The latest targeted estimate is **0.055pp** in June 2026, its latest common
+country observation. South Korea contributes +0.051pp, Taiwan +0.014pp, Japan
++0.012pp, Hong Kong close to zero and China -0.023pp. The longer BLS proxy gives
+0.041pp in June and its July pressure reading is 2.93pp. The targeted series has
 not exceeded 0.092pp in its available history; the longer proxy peaked at
 0.174pp during 2022.
 
@@ -158,7 +161,8 @@ calibration target.
 
 ## 4. Raw versus pre-whitened co-movement
 
-Pre-whitening and raw correlations answer different questions:
+The raw correlations are the primary estimand for the shared-cycle question.
+Pre-whitening remains useful as a deliberately narrower robustness diagnostic:
 
 - raw annual-rate correlations ask whether foreign and UK prices moved through
   the same broad cycle;
@@ -175,11 +179,15 @@ a correlation of 0.67 at an 11-month lead. Both survive the within-indicator
 0–12-month circular-shift search. Japan, Taiwan, Hong Kong and the long BLS
 proxy also show raw peaks around 0.52–0.57, mainly at 3 or 9 months.
 
-These results should not be discarded: they show that technology prices can
-participate in a broad global price cycle. But the corresponding pre-whitened
-relationships are smaller, unstable or change sign, and generally do not
-survive the lead search. Raw correlations therefore describe scenario
-co-movement; they do not identify a stable independent timing coefficient.
+These results are substantively important: the object being measured is a
+shared global technology-price cycle that appears in Asian producer and export
+prices before UK retail prices. Removing each series' own dynamics also removes
+much of that persistent cycle, so the smaller pre-whitened estimates do not
+invalidate the raw result. They instead show that the evidence is about the
+timing of a common cycle rather than a sequence of isolated independent shocks.
+The correlations still do not by themselves identify causality or a fixed
+pass-through coefficient; that is why the recursive forecast evidence is
+reported separately.
 
 ## 5. Recursive forecast evidence
 
@@ -241,12 +249,23 @@ monitoring associations, not an identified structural supply chain.
 
 ### 5.4 Common factors and combined forecasts
 
-The first principal component of the sterling BLS electronics price indices for
-China, Japan and the Asian NIEs explains 94.4% of their standardised variation.
-That is evidence of a coherent upstream regional cycle, but the static factor
-alone does not improve C26 forecasts. A time-series-cross-validated ridge model,
-which allows the three origins to receive different coefficients, reduces C26
-forecast RMSE by roughly 8–17% at 4–10 months in the full sample.
+![Recursive RMSE ratios for synthesized signals](../outputs/charts/forecast_rmse_ratios.png)
+
+The synthesis exercise constructs two different objects from the longer
+sterling BLS electronics price indices for China, Japan and the Asian NIEs. The
+first principal component is target-free: at every forecast origin it
+standardises the three available series and estimates the direction of greatest
+shared variation. The full-sample diagnostic has similar positive loadings and
+explains 93.3% of standardised variation, so it is best interpreted as a common
+regional price-cycle factor, not an exposure-weighted basket.
+
+The ridge specification is supervised and should not be described as one fixed
+index. For each target, horizon and forecast origin, it standardises the same
+three origin-price series together with the baseline predictors and uses
+time-series cross-validation to choose the shrinkage penalty. Its effective
+weights can therefore differ by target, horizon and vintage. The PCA factor
+alone does not improve C26 forecasts, but the ridge forecast combination reduces
+C26 RMSE by roughly 8–17% at 4–10 months in the full sample.
 
 For targeted-hardware CPI, the combined UK-import/Asian ridge model reduces RMSE
 relative to own lags and controls by about 32% at nine months and 41% at ten and
@@ -257,8 +276,8 @@ as a forecast ensemble rather than evidence for one invariant pass-through lag.
 
 Local projections reinforce the caution. C261 import-price coefficients are
 positive over the first few months but imprecise after multiple-testing
-adjustment and reverse later. The current 3.13pp upstream C26 pressure maps to a
-0.040pp headline contribution under full pass-through, but only about 0.005–
+adjustment and reverse later. The current 2.93pp upstream C26 pressure maps to a
+0.038pp headline contribution under full pass-through, but only about 0.004–
 0.007pp using the illustrative early C261 coefficients. Neither calculation is
 a central forecast: the former is an upper mechanical exposure and the latter
 is a noisy historical association.
@@ -269,15 +288,15 @@ The scenario extension treats the common Asian factor as an AR(2) process and
 extracts its unexpected innovations. Innovation local projections make the UK
 border response detectable within 1–3 months and place its peak around 3–6
 months, with the strongest technology-CPI association at 9–11 months. These are
-shorter and more defensible border lags
-than the raw common-cycle correlations, which peak around 4–6 months for imports
-and 10–12 months for CPI but largely disappear after pre-whitening.
+an innovation-based complement to the raw common-cycle correlations, which peak
+around 4–6 months for imports and 10–12 months for CPI. They answer a narrower
+question and should not displace the shared-cycle timing result.
 
-Dynamic ARDL models then condition on three paths for the latest 3.13pp upstream
+Dynamic ARDL models then condition on three paths for the latest 2.93pp upstream
 pressure. If it is sustained, the central ex-games contribution builds to about
-0.016pp on headline CPI after six months, 0.049pp after nine months and 0.091pp
+0.042pp on headline CPI after six months, 0.080pp after nine months and 0.125pp
 after twelve months. If pressure intensifies to the historical 95th percentile,
-the twelve-month contribution reaches about 0.30pp. These estimates have wide
+the twelve-month contribution reaches about 0.34pp. These estimates have wide
 parameter and specification uncertainty and are scenarios rather than forecasts.
 The full results are in
 [`scenario_transmission_results.md`](scenario_transmission_results.md).

@@ -13,7 +13,7 @@ history from 1997.
 
 The longer sample changes the modelling conclusion in a useful way. China, Japan
 and the Asian NIE computer/electronics border-price series share an exceptionally
-strong common cycle: their first principal component explains **94.4%** of their
+strong common cycle: their first principal component explains **93.3%** of their
 standardised variation. A recursively estimated ridge combination predicts UK C26
 electronics import-price inflation better than own lags and broad controls at
 3–10 months in the full sample, with RMSE reductions of about 8–17% at 4–10 months.
@@ -69,7 +69,7 @@ a statistical splice.
 Three longer, comparable sterling series are used: BLS computer/electronics
 border-price indices for China, Japan and the Asian NIE group. The Asian NIE group
 contains Hong Kong, Singapore, South Korea and Taiwan. The common factor has
-near-equal loadings—0.584 for China, 0.582 for Japan and 0.566 for the Asian NIEs—
+near-equal loadings—0.586 for China, 0.583 for Japan and 0.563 for the Asian NIEs—
 so it represents a regional technology-price cycle rather than a single-country
 shock.
 
@@ -81,7 +81,7 @@ models similarly compare controls, a ridge combination of C26/C261/C262 UK impor
 prices, the Asian factor, and a combined ridge over both blocks. Forecasts are
 direct, publication-aware and evaluated from one to twelve months.
 
-![Combined recursive forecast results](../outputs/charts/combined_transmission_forecasts.png)
+![Recursive forecast RMSE ratios](../outputs/charts/forecast_rmse_ratios.png)
 
 The main results are:
 
@@ -104,23 +104,23 @@ months”. A monitored horizon band is more defensible.
 
 ## 3. Imports, CPI exposure and estimated pass-through
 
-The OECD/BLS calculation currently implies **3.13pp** of Asian-origin pressure on
+The July OECD/BLS calculation currently implies **2.93pp** of Asian-origin pressure on
 UK C26 import prices. Multiplying this by the current ex-games CPI weight and
-assuming complete one-for-one pass-through gives **0.040pp** on headline CPI. That
+assuming complete one-for-one pass-through gives **0.038pp** on headline CPI. That
 is the useful upper mechanical exposure comparator.
 
 The estimated historical C261-to-ex-games-CPI local-projection coefficients are
-0.116 after one month, 0.184 after three months and 0.090 after six months for each
-one percentage point of C261 inflation. Applied illustratively to the same 3.13pp
-upstream pressure, these imply headline contributions of approximately **0.0046pp,
-0.0074pp and 0.0036pp**, respectively. The coefficients are not significant after
+0.116 after one month, 0.183 after three months and 0.087 after six months for each
+one percentage point of C261 inflation. Applied illustratively to the same 2.93pp
+upstream pressure, these imply headline contributions of approximately **0.0044pp,
+0.0069pp and 0.0033pp**, respectively. The coefficients are not significant after
 false-discovery-rate adjustment, and they turn negative later. The broad C26
 conditional coefficients are negative over much of the horizon, which is not a
 credible structural cost coefficient and should not be used to make a forecast.
 
 ![Historical transmission estimates](../outputs/charts/transmission_local_projections.png)
 
-The gap between 0.040pp under full pass-through and the much smaller early-month
+The gap between 0.038pp under full pass-through and the much smaller early-month
 historical estimates is economically plausible. The UK import indices and CPI
 have different product mixes; quality adjustment treats performance improvements
 as effective price falls; firms can absorb costs in margins or inventories; and

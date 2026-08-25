@@ -1,3 +1,3 @@
 series_group,file,retrieved_at_utc,source_url,sha256,bytes
-Hong Kong C&SD industry producer price indices,producer_price_indices.json,2026-08-02T21:17:11.290189+00:00,https://www.censtatd.gov.hk/api/get.php?id=520-62001&lang=en&full_series=1,9e4b2ad55584d7659e8134bbc9b9822a4ed653c01fd1e0191110d8c512a795d8,284367
-Hong Kong C&SD merchandise export unit value index,merchandise_export_indices.json,2026-08-02T21:17:11.290189+00:00,https://www.censtatd.gov.hk/api/get.php?id=410-51002&lang=en&full_series=1,010069f2647ceaf5bac89d4168b3c57840ea10ba3b03b56a04601206537b7cd1,378646
+Hong Kong C&SD industry producer price indices,producer_price_indices.json,2026-08-24T08:53:27.934034+00:00,https://www.censtatd.gov.hk/api/get.php?id=520-62001&lang=en&full_series=1,dec184ff7bd1469919620a690bd9e2ed0ed91184fc010d275a4ecd0e7f6a7d4f,284367
+Hong Kong C&SD merchandise export unit value index,merchandise_export_indices.json,2026-08-24T08:53:27.934034+00:00,https://www.censtatd.gov.hk/api/get.php?id=410-51002&lang=en&full_series=1,39e90a1caaec2e91bd7cd9cdf04718a6bbcf83438282125d5322eb54b830de93,379305

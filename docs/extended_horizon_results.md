@@ -1,6 +1,7 @@
 # Twelve-month horizons, wider UK targets and extended export-price histories
 
-Data vintage: 2 August 2026.
+This staged assessment has been superseded by the 24 August 2026 refresh; see
+[`july_2026_update.md`](july_2026_update.md) for the current readings.
 
 ## What changed
 
@@ -109,4 +110,3 @@ The operational judgement trigger should require agreement across at least two
 layers of that chain. The current data show an unprecedented upstream shock,
 but do not yet justify a general UK CPI add-factor or a single country-weighted
 Asian indicator.
-
