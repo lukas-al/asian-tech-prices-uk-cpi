@@ -3,10 +3,23 @@ import pandas as pd
 
 from uk_tech_prices.modeling import (
     MULTICOUNTRY_FEATURES,
+    _rmse_ratio_block_interval,
     expanding_forecasts,
     latest_forecasts,
     regularized_multicountry_forecasts,
 )
+
+
+def test_rmse_ratio_block_interval_preserves_paired_scale() -> None:
+    benchmark_error = np.linspace(-2, 2, 48)
+    lower, upper = _rmse_ratio_block_interval(
+        benchmark_error / 2,
+        benchmark_error,
+        draws=200,
+    )
+
+    assert np.isclose(lower, 0.5)
+    assert np.isclose(upper, 0.5)
 
 
 def _synthetic_panel() -> pd.DataFrame:

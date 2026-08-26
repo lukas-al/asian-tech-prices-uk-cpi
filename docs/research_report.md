@@ -171,13 +171,23 @@ Pre-whitening remains useful as a deliberately narrower robustness diagnostic:
 - recursive forecasts ask whether the foreign measure would have improved a
   real-time UK forecast beyond own lags and broad controls.
 
-![Raw and pre-whitened correlations](../outputs/charts/correlation_raw_vs_prewhitened.png)
+![Raw and pre-whitened correlations through 18 months](../outputs/charts/correlation_raw_vs_prewhitened_0_18.png)
 
 For ex-games CPI, China's sterling targeted PPI has a raw common-sample
 correlation of 0.69 at a 12-month lead and the OECD-weighted targeted basket has
 a correlation of 0.67 at an 11-month lead. Both survive the within-indicator
 0–12-month circular-shift search. Japan, Taiwan, Hong Kong and the long BLS
 proxy also show raw peaks around 0.52–0.57, mainly at 3 or 9 months.
+
+An additional 0–18-month sensitivity scan checks whether the peaks at the edge
+of the primary window continue strengthening. They do not. On the common
+18-month sample, China peaks at 12 months (correlation 0.69) and falls to 0.35 by
+18 months; the OECD-weighted targeted basket also peaks at 12 months
+(correlation 0.70) and falls to 0.35. Both peaks survive the familywise
+adjustment across the wider 0–18-month search. The pre-whitened correlations at
+the same leads remain close to zero. This supports a broad cycle with a peak
+around one year, rather than a relationship that continues strengthening at
+longer leads.
 
 These results are substantively important: the object being measured is a
 shared global technology-price cycle that appears in Asian producer and export
@@ -263,16 +273,67 @@ The ridge specification is supervised and should not be described as one fixed
 index. For each target, horizon and forecast origin, it standardises the same
 three origin-price series together with the baseline predictors and uses
 time-series cross-validation to choose the shrinkage penalty. Its effective
-weights can therefore differ by target, horizon and vintage. The PCA factor
-alone does not improve C26 forecasts, but the ridge forecast combination reduces
-C26 RMSE by roughly 8–17% at 4–10 months in the full sample.
+weights can therefore differ by target, horizon and vintage. Relative to the OLS
+controls benchmark, the Asian ridge reduces C26 RMSE by roughly 8–17% at several
+4–10 month horizons. A like-for-like controls-only ridge reveals that most of
+this gain comes from regularisation: adding the Asian series changes RMSE by only
+about -3% to +6% over 1–10 months, before a 7% improvement at eleven months.
+There is therefore little evidence of a broad, stable incremental forecasting
+gain from the Asian data alone.
 
-For targeted-hardware CPI, the combined UK-import/Asian ridge model reduces RMSE
-relative to own lags and controls by about 32% at nine months and 41% at ten and
-twelve months. Import prices alone account for much of this gain, while the
-Asian block adds information at selected horizons. The location of the gains
-changes between the pre-2020 and post-2022 samples, so the model should be used
-as a forecast ensemble rather than evidence for one invariant pass-through lag.
+The no-ridge comparisons sharpen the distinction between the two forecast
+targets. Adding Asian prices to the C26 AR(2)/OLS model raises RMSE at every
+horizon. By contrast, adding UK import and Asian prices to the targeted-hardware
+AR(2)/OLS model reduces RMSE by about 10% at seven months, 22% at eight months and
+27% at nine to ten months. The second-stage predictor block therefore contains
+useful longer-horizon information under the common OLS architecture.
+
+A direct Asian-only targeted-hardware model provides an important middle case.
+Its OLS RMSE is 15% lower at eight months, 26% lower at nine months and 31% lower
+at ten months, suggesting that the Asian block accounts for much of the combined
+model's longer-horizon point improvement. The Asian-only ridge is not consistently
+better than the controls-only ridge. All of the bootstrap intervals around the
+apparent longer-horizon improvements include one, however, so this evidence is
+indicative rather than precise.
+
+For targeted-hardware CPI, the combined UK-import/Asian ridge reduces RMSE
+relative to the OLS controls model by about 32% at nine months and 41% at ten and
+twelve months. However, a controls-only ridge already captures much of that gain.
+Against the like-for-like ridge baseline, the combined model's clearest gains are
+19% at ten months and 10% at twelve months, with mixed performance elsewhere.
+The location of the gains also changes across subperiods, so the model should be
+used as a forecast ensemble rather than evidence for one invariant pass-through
+lag.
+
+The evaluation is recursive rather than a single holdout split. Each model first
+uses at least 36 monthly observations and is then refitted at every forecast
+origin using an expanding window. Depending on the horizon, there are 99–112
+out-of-sample forecasts with target dates spanning July 2016 to July 2026. The
+reported 90% RMSE-ratio intervals use a paired circular moving-block bootstrap
+with 2,000 draws and 12-month blocks.
+
+### 5.5 Smooth distributed-lag robustness
+
+![Smooth distributed-lag forecast comparisons](../outputs/charts/ardl_forecast_comparison.png)
+
+An ARDL robustness exercise allows the added price series to enter through lags
+zero to six. To avoid estimating seven independent coefficients for every series,
+each lag profile is represented by a linear Almon polynomial with two basis
+terms. Both OLS and time-series-cross-validated ridge versions are compared with
+like-for-like controls-only baselines. The six lag-construction months plus 30
+initial regression observations preserve the same 36-month starting history as
+the main models. The ARDL forecasts are restricted to exactly the same recursive
+target–horizon–origin cells: 99–112 forecasts per horizon, covering target dates
+from July 2016 to July 2026.
+
+The smooth Asian lag block gives the C26 ridge forecast point gains of only about
+3% at five to six months; the 90% intervals include an RMSE ratio of one, while
+one-to-two-month performance is significantly worse. Asian lags alone generally
+worsen targeted-hardware CPI forecasts. Adding both Asian and UK-import lag
+profiles produces small ridge gains at five to eight and ten months, but becomes
+very unstable at eleven to twelve months. The OLS ARDL models mostly raise RMSE
+and deteriorate sharply at long horizons, demonstrating why an unrestricted
+distributed-lag panel would be poorly matched to this sample size.
 
 Local projections reinforce the caution. C261 import-price coefficients are
 positive over the first few months but imprecise after multiple-testing
@@ -282,7 +343,7 @@ adjustment and reverse later. The current 2.93pp upstream C26 pressure maps to a
 a central forecast: the former is an upper mechanical exposure and the latter
 is a noisy historical association.
 
-### 5.5 Conditional current-shock scenarios
+### 5.6 Conditional current-shock scenarios
 
 The scenario extension treats the common Asian factor as an AR(2) process and
 extracts its unexpected innovations. Innovation local projections make the UK

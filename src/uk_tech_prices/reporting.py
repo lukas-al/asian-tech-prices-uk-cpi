@@ -740,8 +740,14 @@ def save_exposure_component_chart() -> None:
     plt.close(fig)
 
 
-def save_correlation_method_chart() -> None:
-    correlations = pd.read_csv(PROCESSED_DIR / "lead_correlation_comparison.csv")
+def save_correlation_method_chart(
+    *,
+    max_lead: int = 12,
+    source_filename: str = "lead_correlation_comparison.csv",
+    output_filename: str = "correlation_raw_vs_prewhitened.png",
+) -> None:
+    correlations = pd.read_csv(PROCESSED_DIR / source_filename)
+    familywise_column = f"familywise_p_0_{max_lead}"
     candidates = list(REPRESENTATIVE_ASIAN_SERIES)
     selected = correlations.loc[
         correlations["target"].eq("ex_games_12m_pct")
@@ -752,15 +758,15 @@ def save_correlation_method_chart() -> None:
     innovations = selected.loc[selected["method"].eq("prewhitened_ar")]
     values = raw.pivot(
         index="candidate", columns="lead_months", values="common_sample_correlation"
-    ).reindex(index=candidates, columns=range(13))
+    ).reindex(index=candidates, columns=range(max_lead + 1))
     p_values = raw.pivot(
-        index="candidate", columns="lead_months", values="familywise_p_0_12"
-    ).reindex(index=candidates, columns=range(13))
+        index="candidate", columns="lead_months", values=familywise_column
+    ).reindex(index=candidates, columns=range(max_lead + 1))
 
     fig, axes = plt.subplots(
         1,
         2,
-        figsize=(17, 7),
+        figsize=(19 if max_lead > 12 else 17, 7),
         gridspec_kw={"width_ratios": [2.25, 1]},
     )
     image = axes[0].imshow(
@@ -770,11 +776,21 @@ def save_correlation_method_chart() -> None:
         vmax=0.8,
         aspect="auto",
     )
-    axes[0].set_xticks(range(13), labels=[f"{lead}m" for lead in range(13)])
+    axes[0].set_xticks(
+        range(max_lead + 1),
+        labels=[f"{lead}m" for lead in range(max_lead + 1)],
+    )
+    if max_lead > 12:
+        axes[0].axvspan(12.5, max_lead + 0.5, color="#e8e8e8", alpha=0.22)
+        axes[0].axvline(12.5, color="#555555", linewidth=0.8, linestyle="--")
     axes[0].set_yticks(
         range(len(candidates)), labels=[COUNTRY_LABELS[item] for item in candidates]
     )
-    axes[0].set_title("Primary result: shared annual technology-price cycle")
+    axes[0].set_title(
+        "Shared annual technology-price cycle"
+        if max_lead > 12
+        else "Primary result: shared annual technology-price cycle"
+    )
     axes[0].set_xlabel("Foreign price lead over the UK tech-goods aggregate")
     for row in range(values.shape[0]):
         for column in range(values.shape[1]):
@@ -868,20 +884,25 @@ def save_correlation_method_chart() -> None:
     colorbar_axis = fig.add_axes([0.925, 0.24, 0.012, 0.56])
     fig.colorbar(image, cax=colorbar_axis, label="Raw correlation")
     fig.suptitle(
-        "Asian technology prices lead the UK tech-goods aggregate within a shared cycle",
+        (
+            "Asian technology-price correlations peak around 12 months and then fade"
+            if max_lead > 12
+            else "Asian technology prices lead the UK tech-goods aggregate within a shared cycle"
+        ),
         y=0.98,
     )
     fig.text(
         0.5,
         0.015,
-        "* familywise p < 0.10 across the 0–12 month lead search. The raw annual-rate "
-        "relationship is the estimand of interest; innovation correlations are a "
-        "sensitivity check.",
+        f"* familywise p < 0.10 across the 0–{max_lead} month lead search. "
+        + ("Leads 13–18 are shaded as the extended window. " if max_lead > 12 else "")
+        + "The raw annual-rate relationship is the estimand of interest; innovation "
+        "correlations are a sensitivity check.",
         ha="center",
         fontsize=9,
     )
     fig.subplots_adjust(left=0.12, right=0.90, bottom=0.17, top=0.90, wspace=0.30)
-    fig.savefig(CHART_DIR / "correlation_raw_vs_prewhitened.png", dpi=180)
+    fig.savefig(CHART_DIR / output_filename, dpi=180)
     plt.close(fig)
 
 
@@ -1452,6 +1473,11 @@ def build_report_outputs() -> None:
     save_asian_factor_inputs_chart()
     save_exposure_component_chart()
     save_correlation_method_chart()
+    save_correlation_method_chart(
+        max_lead=18,
+        source_filename="lead_correlation_comparison_0_18.csv",
+        output_filename="correlation_raw_vs_prewhitened_0_18.png",
+    )
     save_mechanical_contribution_chart()
     save_forward_mechanical_pass_through_chart()
     save_lp_pass_through_fan_chart()

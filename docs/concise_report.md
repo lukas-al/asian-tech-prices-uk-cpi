@@ -24,14 +24,31 @@ upstream before reaching UK retail prices. Pre-whitened relationships are
 weaker, showing that the result concerns a common cycle rather than a sequence
 of isolated shocks.
 
-![Asian lead correlations](../outputs/charts/correlation_raw_vs_prewhitened.png)
+Extending the lead search from 12 to 18 months confirms that the strongest China
+and OECD-weighted relationships peak at about 12 months and then decline, rather
+than continuing to strengthen beyond the original window.
 
-Individual indicators and the PCA factor are not consistent C26 forecasters,
-but a recursively estimated Asian ridge improves predictions by combining their
-information. At the CPI stage, UK import prices and the Asian factor provide
-complementary longer-horizon information, with the joint ridge performing best.
-This is predictive evidence, not an identified Asia-to-C26-to-CPI causal chain;
-ridge is a target- and horizon-specific combination rather than a fixed index.
+![Asian lead correlations](../outputs/charts/correlation_raw_vs_prewhitened_0_18.png)
+
+Individual indicators and the PCA factor are not consistent C26 forecasters.
+The Asian ridge improves on an OLS controls benchmark, but a like-for-like ridge
+baseline shows that most of this gain comes from regularisation rather than the
+extra Asian variables. A no-ridge comparison is clearer still: adding Asian
+prices raises C26 forecast RMSE at every horizon. At the CPI stage, however,
+adding UK import and Asian prices to the same AR(2)/OLS architecture reduces
+targeted-hardware forecast RMSE by around 10–27% at seven to ten months. A ridge
+baseline captures much of this gain, leaving the clearest incremental ridge
+improvements at ten and twelve months. This is predictive evidence, not an
+identified Asia-to-C26-to-CPI causal chain. An Asian-only CPI model produces
+similar longer-horizon OLS point gains, but 90% block-bootstrap intervals include
+one, so the size of the improvement is uncertain.
+
+A smooth ARDL robustness test over lags zero to six does not strengthen the
+forecast evidence. Regularised Asian lags provide only small, imprecise C26 gains
+around five to six months and generally worsen the CPI forecasts. The combined
+Asian/import ARDL is unstable, particularly at eleven to twelve months, while
+unregularised specifications perform worse still. All ARDL results are evaluated
+on the same recursive forecast origins as the main models.
 
 ![Recursive forecast performance](../outputs/charts/forecast_rmse_ratios.png)
 

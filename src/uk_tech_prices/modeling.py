@@ -278,6 +278,35 @@ def _one_sided_p_from_z(statistic: float) -> float:
     return 0.5 * math.erfc(statistic / math.sqrt(2))
 
 
+def _rmse_ratio_block_interval(
+    error: np.ndarray,
+    benchmark_error: np.ndarray,
+    *,
+    block_length: int = 12,
+    confidence: float = 0.90,
+    draws: int = 2_000,
+) -> tuple[float, float]:
+    """Paired circular moving-block bootstrap interval for an RMSE ratio."""
+    n = len(error)
+    if n < 12:
+        return float("nan"), float("nan")
+    block_length = min(block_length, n)
+    blocks_needed = math.ceil(n / block_length)
+    rng = np.random.default_rng(19_947 + n)
+    starts = rng.integers(0, n, size=(draws, blocks_needed))
+    offsets = np.arange(block_length)
+    indices = (starts[..., None] + offsets) % n
+    indices = indices.reshape(draws, -1)[:, :n]
+    sampled_error = error[indices]
+    sampled_benchmark_error = benchmark_error[indices]
+    ratios = np.sqrt(np.mean(sampled_error**2, axis=1)) / np.sqrt(
+        np.mean(sampled_benchmark_error**2, axis=1)
+    )
+    tail = (1 - confidence) / 2
+    lower, upper = np.quantile(ratios, (tail, 1 - tail))
+    return float(lower), float(upper)
+
+
 def _period_masks(frame: pd.DataFrame) -> dict[str, pd.Series]:
     dates = frame["target_date"]
     return {
@@ -301,6 +330,11 @@ def _comparison_metrics(
     benchmark_prediction = pivot[benchmark].to_numpy(dtype=float)
     error = actual - prediction
     benchmark_error = actual - benchmark_prediction
+    ratio_lower, ratio_upper = _rmse_ratio_block_interval(
+        error,
+        benchmark_error,
+        block_length=max(12, horizon),
+    )
     loss_gain = benchmark_error**2 - error**2
     dm_z, dm_p = _newey_west_mean_test(loss_gain, max_lag=max(horizon - 1, 0))
     clark_west_gain = loss_gain + (benchmark_prediction - prediction) ** 2
@@ -322,6 +356,10 @@ def _comparison_metrics(
         "rmse_ratio": float(
             np.sqrt(np.mean(error**2)) / np.sqrt(np.mean(benchmark_error**2))
         ),
+        "rmse_ratio_lower_90": ratio_lower,
+        "rmse_ratio_upper_90": ratio_upper,
+        "rmse_ratio_bootstrap_block": max(12, horizon),
+        "rmse_ratio_bootstrap_draws": 2_000,
         "direction_accuracy": float(np.mean(direction == actual_direction)),
         "dm_loss_gain_z": dm_z,
         "dm_two_sided_p": dm_p,
@@ -544,6 +582,7 @@ def prewhitened_lead_correlations(
     max_lead: int = 12,
     ar_lags: int = 12,
 ) -> pd.DataFrame:
+    familywise_column = f"familywise_p_0_{max_lead}"
     rows: list[dict[str, object]] = []
     periods = {
         "full": ("1900-01-01", "2100-01-01"),
@@ -573,7 +612,7 @@ def prewhitened_lead_correlations(
                     y_by_lead.append(paired["y_lead"].to_numpy(dtype=float))
 
                 # Use the common shortest sample in the circular-shift test so
-                # all 0-12 month lag scans face the same null distribution.
+                # every lead in the scan faces the same null distribution.
                 common_n = min(len(values) for values in y_by_lead)
                 x_values = base["x"].to_numpy(dtype=float)[:common_n]
                 y_values = [values[:common_n] for values in y_by_lead]
@@ -597,7 +636,8 @@ def prewhitened_lead_correlations(
                             "correlation": observed[lead],
                             "common_sample_correlation": observed_array[lead],
                             "circular_shift_p": point_p[lead],
-                            "familywise_p_0_12": family_p[lead],
+                            familywise_column: family_p[lead],
+                            "search_max_lead": max_lead,
                             "n": len(y_by_lead[lead]),
                             "ar_lags": ar_lags,
                         }
@@ -615,9 +655,10 @@ def raw_lead_correlations(
     """Descriptive lead correlations in annual rates without pre-whitening.
 
     These intentionally retain common persistent movements. Circular-shift
-    familywise p-values address the 0-12 month search, but the raw estimates
+    familywise p-values address the full requested lead search, but the raw estimates
     are reported as co-movement rather than incremental predictive content.
     """
+    familywise_column = f"familywise_p_0_{max_lead}"
     rows: list[dict[str, object]] = []
     periods = {
         "full": ("1900-01-01", "2100-01-01"),
@@ -666,7 +707,8 @@ def raw_lead_correlations(
                             "correlation": observed[lead],
                             "common_sample_correlation": observed_array[lead],
                             "circular_shift_p": point_p[lead],
-                            "familywise_p_0_12": family_p[lead],
+                            familywise_column: family_p[lead],
+                            "search_max_lead": max_lead,
                             "n": len(y_by_lead[lead]),
                             "ar_lags": 0,
                         }
