@@ -50,7 +50,7 @@ Asian/import ARDL is unstable, particularly at eleven to twelve months, while
 unregularised specifications perform worse still. All ARDL results are evaluated
 on the same recursive forecast origins as the main models.
 
-![Recursive forecast performance](../outputs/charts/forecast_rmse_ratios.png)
+![Like-for-like forecast architecture comparisons](../outputs/charts/forecast_architecture_comparison.png)
 
 ## Implication
 

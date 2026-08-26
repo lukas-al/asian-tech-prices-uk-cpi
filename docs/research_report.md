@@ -259,7 +259,7 @@ monitoring associations, not an identified structural supply chain.
 
 ### 5.4 Common factors and combined forecasts
 
-![Recursive RMSE ratios for synthesized signals](../outputs/charts/forecast_rmse_ratios.png)
+![Like-for-like forecast architecture comparisons](../outputs/charts/forecast_architecture_comparison.png)
 
 The synthesis exercise constructs two different objects from the longer
 sterling BLS electronics price indices for China, Japan and the Asian NIEs. The
