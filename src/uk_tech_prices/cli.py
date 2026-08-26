@@ -160,6 +160,7 @@ def main() -> None:
         result = run_transmission_analysis()
         print(
             f"Completed {len(result['forecasts']):,} combined forecasts and "
+            f"{len(result['ardl_forecasts']):,} ARDL forecasts, plus "
             f"{len(result['local_projections']):,} pass-through estimates."
         )
     elif args.command == "scenarios":

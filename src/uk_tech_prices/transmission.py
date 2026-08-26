@@ -137,6 +137,14 @@ def _recursive_suite(
                         None,
                     )
                 }
+                baseline_ridge_prediction, baseline_ridge_alpha = _ridge_prediction(
+                    train, origin_values, baseline
+                )
+                predictions["m0_ridge_controls"] = (
+                    baseline_ridge_prediction,
+                    baseline_ridge_alpha,
+                    None,
+                )
                 if suite == "asia_to_import":
                     weighted_features = [*baseline, "oecd_weighted"]
                     weighted_result = _fit_ols(
@@ -169,6 +177,18 @@ def _recursive_suite(
                         alpha,
                         None,
                     )
+                    asia_ols_features = [*baseline, *ASIA_LONG_FEATURES]
+                    asia_ols_result = _fit_ols(
+                        train[asia_ols_features], train["actual"]
+                    )
+                    predictions["m4_asia_ols"] = (
+                        _predict_ols(
+                            asia_ols_result,
+                            origin_values[asia_ols_features],
+                        ),
+                        None,
+                        None,
+                    )
                 else:
                     import_features = [*baseline, *UK_IMPORT_FEATURES]
                     import_prediction, import_alpha = _ridge_prediction(
@@ -192,6 +212,26 @@ def _recursive_suite(
                         None,
                         loadings,
                     )
+                    direct_asia_features = [*baseline, *ASIA_LONG_FEATURES]
+                    direct_asia_prediction, direct_asia_alpha = _ridge_prediction(
+                        train, origin_values, direct_asia_features
+                    )
+                    predictions["m4_direct_asia_ridge"] = (
+                        direct_asia_prediction,
+                        direct_asia_alpha,
+                        None,
+                    )
+                    direct_asia_ols_result = _fit_ols(
+                        train[direct_asia_features], train["actual"]
+                    )
+                    predictions["m5_direct_asia_ols"] = (
+                        _predict_ols(
+                            direct_asia_ols_result,
+                            origin_values[direct_asia_features],
+                        ),
+                        None,
+                        None,
+                    )
                     combined_features = [
                         *baseline,
                         *UK_IMPORT_FEATURES,
@@ -203,6 +243,17 @@ def _recursive_suite(
                     predictions["m3_combined_ridge"] = (
                         combined_prediction,
                         combined_alpha,
+                        None,
+                    )
+                    combined_ols_result = _fit_ols(
+                        train[combined_features], train["actual"]
+                    )
+                    predictions["m4_combined_ols"] = (
+                        _predict_ols(
+                            combined_ols_result,
+                            origin_values[combined_features],
+                        ),
+                        None,
                         None,
                     )
                 actual = float(origin_values["actual"])
@@ -234,6 +285,122 @@ def _recursive_suite(
                         ):
                             row[f"loading_{feature}"] = loading
                     rows.append(row)
+    result = pd.DataFrame(rows)
+    if not result.empty:
+        result["origin"] = pd.to_datetime(result["origin"])
+        result["target_date"] = pd.to_datetime(result["target_date"])
+    return result
+
+
+def _almon_lag_features(
+    panel: pd.DataFrame,
+    features: Iterable[str],
+    *,
+    max_lag: int = 6,
+) -> pd.DataFrame:
+    """Create linear Almon lag-basis terms over lags zero through max_lag."""
+    lag_positions = np.linspace(-1, 1, max_lag + 1)
+    basis_weights = (
+        np.ones(max_lag + 1),
+        lag_positions,
+    )
+    result = pd.DataFrame(index=panel.index)
+    for feature in features:
+        lagged = pd.concat(
+            [panel[feature].shift(lag) for lag in range(max_lag + 1)],
+            axis=1,
+        )
+        for degree, weights in enumerate(basis_weights):
+            result[f"almon_{feature}_p{degree}"] = (
+                lagged.mul(weights, axis=1).sum(axis=1, min_count=max_lag + 1)
+                / (max_lag + 1)
+            )
+    return result
+
+
+def _recursive_ardl_suite(
+    panel: pd.DataFrame,
+    *,
+    target: str,
+    added_features: Iterable[str],
+    suite: str,
+    horizons: Iterable[int] = range(1, 13),
+    max_lag: int = 6,
+    min_train: int = 30,
+    ar_lags: int = 2,
+) -> pd.DataFrame:
+    """Evaluate smooth distributed-lag OLS and ridge models recursively."""
+    added_features = tuple(added_features)
+    almon = _almon_lag_features(panel, added_features, max_lag=max_lag)
+    rows: list[dict[str, object]] = []
+    for horizon in horizons:
+        design = pd.DataFrame(index=panel.index)
+        design["actual"] = panel[target].shift(-horizon)
+        design["target_date"] = design.index.to_series().shift(-horizon)
+        own_lags = []
+        for lag in range(ar_lags):
+            column = f"y_lag{lag}"
+            design[column] = panel[target].shift(lag)
+            own_lags.append(column)
+        for column in BROAD_CONTROLS:
+            design[column] = panel[column]
+        design = design.join(almon)
+        baseline = [*own_lags, *BROAD_CONTROLS]
+        augmented = [*baseline, *almon.columns]
+        required = ["actual", "target_date", *augmented]
+        valid = design[required].dropna().index
+        for origin in valid:
+            origin_position = design.index.get_loc(origin)
+            training_stop = origin_position - horizon + 1
+            if training_stop <= 0:
+                continue
+            train = design.iloc[:training_stop].dropna(subset=required)
+            if len(train) < min_train:
+                continue
+            origin_values = design.loc[origin]
+            baseline_ols = _fit_ols(train[baseline], train["actual"])
+            augmented_ols = _fit_ols(train[augmented], train["actual"])
+            baseline_ridge_prediction, baseline_alpha = _ridge_prediction(
+                train, origin_values, baseline
+            )
+            augmented_ridge_prediction, augmented_alpha = _ridge_prediction(
+                train, origin_values, augmented
+            )
+            predictions = (
+                (
+                    "a0_controls_ols",
+                    _predict_ols(baseline_ols, origin_values[baseline]),
+                    np.nan,
+                ),
+                (
+                    "a1_ardl_ols",
+                    _predict_ols(augmented_ols, origin_values[augmented]),
+                    np.nan,
+                ),
+                ("a0_controls_ridge", baseline_ridge_prediction, baseline_alpha),
+                ("a1_ardl_ridge", augmented_ridge_prediction, augmented_alpha),
+            )
+            actual = float(origin_values["actual"])
+            y_origin = float(origin_values["y_lag0"])
+            for model, prediction, alpha in predictions:
+                rows.append(
+                    {
+                        "target": target,
+                        "candidate": suite,
+                        "horizon": horizon,
+                        "window": f"expanding_ardl{max_lag}_ar{ar_lags}_min{min_train}",
+                        "model": model,
+                        "origin": origin,
+                        "target_date": origin_values["target_date"],
+                        "actual": actual,
+                        "prediction": prediction,
+                        "error": actual - prediction,
+                        "actual_direction": np.sign(actual - y_origin),
+                        "predicted_direction": np.sign(prediction - y_origin),
+                        "train_n": len(train),
+                        "ridge_alpha": alpha,
+                    }
+                )
     result = pd.DataFrame(rows)
     if not result.empty:
         result["origin"] = pd.to_datetime(result["origin"])
@@ -329,15 +496,24 @@ def _add_local_projection_fdr(results: pd.DataFrame) -> pd.DataFrame:
 
 def _forecast_evaluation(forecasts: pd.DataFrame) -> pd.DataFrame:
     import_comparisons = (
+        ("m0_ridge_controls", "m0_controls"),
+        ("m4_asia_ols", "m0_controls"),
         ("m1_oecd_weighted", "m0_controls"),
         ("m2_asia_factor", "m0_controls"),
         ("m3_asia_ridge", "m0_controls"),
+        ("m3_asia_ridge", "m0_ridge_controls"),
         ("m2_asia_factor", "m1_oecd_weighted"),
     )
     cpi_comparisons = (
+        ("m0_ridge_controls", "m0_controls"),
+        ("m5_direct_asia_ols", "m0_controls"),
+        ("m4_direct_asia_ridge", "m0_controls"),
+        ("m4_direct_asia_ridge", "m0_ridge_controls"),
+        ("m4_combined_ols", "m0_controls"),
         ("m1_import_ridge", "m0_controls"),
         ("m2_asia_factor", "m0_controls"),
         ("m3_combined_ridge", "m0_controls"),
+        ("m3_combined_ridge", "m0_ridge_controls"),
         ("m3_combined_ridge", "m1_import_ridge"),
     )
     import_forecasts = forecasts.loc[forecasts["candidate"].eq("asia_to_import")]
@@ -347,6 +523,34 @@ def _forecast_evaluation(forecasts: pd.DataFrame) -> pd.DataFrame:
         summarize_forecasts(cpi_forecasts, comparisons=cpi_comparisons),
     ]
     return add_forecast_fdr(pd.concat(parts, ignore_index=True))
+
+
+def _ardl_forecast_evaluation(forecasts: pd.DataFrame) -> pd.DataFrame:
+    comparisons = (
+        ("a1_ardl_ols", "a0_controls_ols"),
+        ("a1_ardl_ridge", "a0_controls_ridge"),
+        ("a1_ardl_ridge", "a0_controls_ols"),
+    )
+    return add_forecast_fdr(
+        summarize_forecasts(forecasts, comparisons=comparisons)
+    )
+
+
+def _align_ardl_forecast_origins(
+    ardl_forecasts: pd.DataFrame,
+    reference_forecasts: pd.DataFrame,
+) -> pd.DataFrame:
+    """Keep the exact target, horizon and origin cells used by the main models."""
+    reference = reference_forecasts.loc[
+        reference_forecasts["model"].eq("m0_controls"),
+        ["target", "horizon", "origin"],
+    ].drop_duplicates()
+    return ardl_forecasts.merge(
+        reference,
+        on=["target", "horizon", "origin"],
+        how="inner",
+        validate="many_to_one",
+    )
 
 
 def _save_forecast_chart(evaluation: pd.DataFrame) -> None:
@@ -416,6 +620,256 @@ def _save_forecast_chart(evaluation: pd.DataFrame) -> None:
     )
     fig.subplots_adjust(left=0.22, right=0.95, bottom=0.14, top=0.90)
     fig.savefig(CHART_DIR / "combined_transmission_forecasts.png", dpi=180)
+    plt.close(fig)
+
+
+def _save_forecast_architecture_comparison_chart(
+    evaluation: pd.DataFrame,
+    forecasts: pd.DataFrame,
+) -> None:
+    """Compare like-for-like ridge and OLS information sets at both stages."""
+    primary = evaluation.loc[
+        evaluation["window"].eq("expanding_ar2_min36")
+        & evaluation["evaluation_period"].eq("full")
+    ]
+    panels = (
+        (
+            "uk_ipi_c26_12m_pct",
+            "UK technology import-price inflation",
+            "m3_asia_ridge",
+            "m4_asia_ols",
+            "Asian prices",
+        ),
+        (
+            "historical_targeted_hardware_12m_pct",
+            "UK targeted-hardware CPI inflation",
+            "m4_direct_asia_ridge",
+            "m5_direct_asia_ols",
+            "Asian prices only",
+        ),
+    )
+    fig, axes = plt.subplots(1, 2, figsize=(15.5, 6.4), sharey=False)
+    for ax, (target, title, ridge_model, ols_model, added_data) in zip(
+        axes, panels, strict=True
+    ):
+        ax.axhspan(0.5, 1, color="#e8f3e8", alpha=0.65, zorder=0)
+        ax.axhline(1, color="#222222", linewidth=1)
+        specs = (
+            (
+                ridge_model,
+                "m0_ridge_controls",
+                "Augmented ridge vs ridge baseline",
+                "#2468a2",
+                "-",
+            ),
+            (
+                ols_model,
+                "m0_controls",
+                "Augmented AR(2)/OLS vs AR(2)/OLS baseline",
+                "#d18b2c",
+                "-.",
+            ),
+        )
+        for model, benchmark, label, color, linestyle in specs:
+            values = primary.loc[
+                primary["target"].eq(target)
+                & primary["model"].eq(model)
+                & primary["benchmark"].eq(benchmark)
+            ].sort_values("horizon")
+            ax.plot(
+                values["horizon"],
+                values["rmse_ratio"],
+                color=color,
+                linestyle=linestyle,
+                linewidth=2.3,
+                marker="o",
+                markersize=4,
+                label=label,
+            )
+            ax.fill_between(
+                values["horizon"],
+                values["rmse_ratio_lower_90"],
+                values["rmse_ratio_upper_90"],
+                color=color,
+                alpha=0.10,
+                linewidth=0,
+            )
+        ax.set_xlim(0.7, 12.3)
+        ax.set_xticks([1, 3, 6, 9, 12])
+        ax.set_xlabel("Forecast horizon, months")
+        ax.set_title(f"{title}\nAdded data: {added_data}")
+        ax.grid(axis="y", color="#dddddd", linewidth=0.7)
+        ax.legend(frameon=False, fontsize=8.5, loc="best")
+    axes[0].set_ylabel("Out-of-sample RMSE ratio")
+    fig.suptitle(
+        "Do the additional predictors improve forecasts using the same architecture?",
+        y=0.98,
+    )
+    evaluation_sample = forecasts.loc[
+        forecasts["target"].eq("uk_ipi_c26_12m_pct")
+        & forecasts["model"].eq("m0_controls")
+        & forecasts["window"].eq("expanding_ar2_min36")
+    ].copy()
+    evaluation_sample["target_date"] = pd.to_datetime(
+        evaluation_sample["target_date"]
+    )
+    forecast_counts = evaluation_sample.groupby("horizon").size()
+    first_target = evaluation_sample["target_date"].min().strftime("%b %Y")
+    last_target = evaluation_sample["target_date"].max().strftime("%b %Y")
+    fig.text(
+        0.5,
+        0.065,
+        "Below 1 means the augmented model has a lower RMSE than the named baseline. "
+        "Both comparisons change only the information set.",
+        ha="center",
+        fontsize=9,
+    )
+    fig.text(
+        0.5,
+        0.037,
+        f"Recursive expanding-window evaluation: minimum 36 monthly training observations; "
+        f"models refitted each month; {forecast_counts.min()}–{forecast_counts.max()} "
+        f"out-of-sample forecasts per horizon ({first_target}–{last_target}, horizon-dependent). "
+        "There is no fixed 70/30 train-test split.",
+        ha="center",
+        fontsize=8.5,
+    )
+    fig.text(
+        0.5,
+        0.012,
+        "Shading shows 90% paired circular moving-block bootstrap confidence intervals "
+        "(2,000 draws; 12-month blocks).",
+        ha="center",
+        fontsize=8.5,
+    )
+    fig.subplots_adjust(left=0.07, right=0.99, bottom=0.21, top=0.80, wspace=0.14)
+    fig.savefig(CHART_DIR / "forecast_architecture_comparison.png", dpi=180)
+    plt.close(fig)
+
+
+def _save_ardl_comparison_chart(
+    evaluation: pd.DataFrame,
+    forecasts: pd.DataFrame,
+) -> None:
+    """Show like-for-like smooth distributed-lag comparisons at both stages."""
+    primary = evaluation.loc[
+        evaluation["evaluation_period"].eq("full")
+    ]
+    panels = (
+        (
+            "ardl_asia_to_import",
+            "UK technology import-price inflation",
+            "Added distributed lags: Asian prices",
+        ),
+        (
+            "ardl_asia_to_cpi",
+            "UK targeted-hardware CPI inflation",
+            "Added distributed lags: Asian prices only",
+        ),
+        (
+            "ardl_combined_to_cpi",
+            "UK targeted-hardware CPI inflation",
+            "Added distributed lags: UK import + Asian prices",
+        ),
+    )
+    specs = (
+        (
+            "a1_ardl_ridge",
+            "a0_controls_ols",
+            "ARDL ridge vs OLS baseline",
+            "#7a7a7a",
+            "--",
+        ),
+        (
+            "a1_ardl_ridge",
+            "a0_controls_ridge",
+            "ARDL ridge vs ridge baseline",
+            "#2468a2",
+            "-",
+        ),
+        (
+            "a1_ardl_ols",
+            "a0_controls_ols",
+            "ARDL OLS vs OLS baseline",
+            "#d18b2c",
+            "-.",
+        ),
+    )
+    fig, axes = plt.subplots(1, 3, figsize=(20, 6.4), sharey=False)
+    for ax, (candidate, title, subtitle) in zip(axes, panels, strict=True):
+        ax.axhspan(0.5, 1, color="#e8f3e8", alpha=0.65, zorder=0)
+        ax.axhline(1, color="#222222", linewidth=1)
+        for model, benchmark, label, color, linestyle in specs:
+            values = primary.loc[
+                primary["candidate"].eq(candidate)
+                & primary["model"].eq(model)
+                & primary["benchmark"].eq(benchmark)
+            ].sort_values("horizon")
+            ax.plot(
+                values["horizon"],
+                values["rmse_ratio"],
+                color=color,
+                linestyle=linestyle,
+                linewidth=2.3,
+                marker="o",
+                markersize=4,
+                label=label,
+            )
+            ax.fill_between(
+                values["horizon"],
+                values["rmse_ratio_lower_90"],
+                values["rmse_ratio_upper_90"],
+                color=color,
+                alpha=0.10,
+                linewidth=0,
+            )
+        ax.set_xlim(0.7, 12.3)
+        ax.set_xticks([1, 3, 6, 9, 12])
+        ax.set_xlabel("Forecast horizon, months")
+        ax.set_title(f"{title}\n{subtitle}")
+        ax.grid(axis="y", color="#dddddd", linewidth=0.7)
+        ax.legend(frameon=False, fontsize=8.5, loc="best")
+    axes[0].set_ylabel("Out-of-sample RMSE ratio")
+    fig.suptitle(
+        "Do smooth distributed lags improve forecasts?",
+        y=0.98,
+    )
+    sample = forecasts.loc[
+        forecasts["candidate"].eq("ardl_asia_to_import")
+        & forecasts["model"].eq("a0_controls_ols")
+    ].copy()
+    sample["target_date"] = pd.to_datetime(sample["target_date"])
+    counts = sample.groupby("horizon").size()
+    first_target = sample["target_date"].min().strftime("%b %Y")
+    last_target = sample["target_date"].max().strftime("%b %Y")
+    fig.text(
+        0.5,
+        0.065,
+        "Below 1 means the ARDL model has a lower RMSE than the named baseline. "
+        "The blue and orange comparisons change only the information set.",
+        ha="center",
+        fontsize=9,
+    )
+    fig.text(
+        0.5,
+        0.037,
+        f"Linear Almon distributed lag over months 0–6; recursive expanding window; "
+        f"minimum 30 estimable observations after six lag-construction months; "
+        f"{counts.min()}–{counts.max()} "
+        f"out-of-sample forecasts per horizon ({first_target}–{last_target}, horizon-dependent).",
+        ha="center",
+        fontsize=8.5,
+    )
+    fig.text(
+        0.5,
+        0.012,
+        "Shading shows 90% paired circular moving-block bootstrap confidence intervals "
+        "(2,000 draws; 12-month blocks).",
+        ha="center",
+        fontsize=8.5,
+    )
+    fig.subplots_adjust(left=0.055, right=0.99, bottom=0.21, top=0.80, wspace=0.16)
+    fig.savefig(CHART_DIR / "ardl_forecast_comparison.png", dpi=180)
     plt.close(fig)
 
 
@@ -546,6 +1000,31 @@ def run_transmission_analysis() -> dict[str, pd.DataFrame]:
         ignore_index=True,
     )
     evaluation = _forecast_evaluation(forecasts)
+    ardl_forecasts = pd.concat(
+        [
+            _recursive_ardl_suite(
+                panel,
+                target="uk_ipi_c26_12m_pct",
+                added_features=ASIA_LONG_FEATURES,
+                suite="ardl_asia_to_import",
+            ),
+            _recursive_ardl_suite(
+                panel,
+                target="historical_targeted_hardware_12m_pct",
+                added_features=ASIA_LONG_FEATURES,
+                suite="ardl_asia_to_cpi",
+            ),
+            _recursive_ardl_suite(
+                panel,
+                target="historical_targeted_hardware_12m_pct",
+                added_features=(*ASIA_LONG_FEATURES, *UK_IMPORT_FEATURES),
+                suite="ardl_combined_to_cpi",
+            ),
+        ],
+        ignore_index=True,
+    )
+    ardl_forecasts = _align_ardl_forecast_origins(ardl_forecasts, forecasts)
+    ardl_evaluation = _ardl_forecast_evaluation(ardl_forecasts)
 
     local_parts = []
     for outcome in ("uk_ipi_c26_12m_pct", "uk_ipi_c261_12m_pct"):
@@ -590,17 +1069,27 @@ def run_transmission_analysis() -> dict[str, pd.DataFrame]:
     evaluation.to_csv(
         PROCESSED_DIR / "combined_transmission_evaluation.csv", index=False
     )
+    ardl_forecasts.to_csv(
+        PROCESSED_DIR / "ardl_transmission_forecasts.csv", index=False
+    )
+    ardl_evaluation.to_csv(
+        PROCESSED_DIR / "ardl_transmission_evaluation.csv", index=False
+    )
     loadings.to_csv(TABLE_DIR / "asia_common_factor_loadings.csv", index=False)
     local_projections.to_csv(
         PROCESSED_DIR / "transmission_local_projections.csv", index=False
     )
     scenarios.to_csv(TABLE_DIR / "transmission_exposure_scenarios.csv", index=False)
     _save_forecast_chart(evaluation)
+    _save_forecast_architecture_comparison_chart(evaluation, forecasts)
+    _save_ardl_comparison_chart(ardl_evaluation, ardl_forecasts)
     _save_local_projection_chart(local_projections)
     return {
         "panel": panel,
         "forecasts": forecasts,
         "evaluation": evaluation,
+        "ardl_forecasts": ardl_forecasts,
+        "ardl_evaluation": ardl_evaluation,
         "factor_loadings": loadings,
         "local_projections": local_projections,
         "exposure_scenarios": scenarios,

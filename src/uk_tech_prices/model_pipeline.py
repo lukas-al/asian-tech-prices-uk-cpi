@@ -696,6 +696,11 @@ def run_modeling() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     prewhitened = prewhitened_lead_correlations(panel)
     raw = raw_lead_correlations(panel)
     correlations = pd.concat([raw, prewhitened], ignore_index=True)
+    extended_prewhitened = prewhitened_lead_correlations(panel, max_lead=18)
+    extended_raw = raw_lead_correlations(panel, max_lead=18)
+    extended_correlations = pd.concat(
+        [extended_raw, extended_prewhitened], ignore_index=True
+    )
     ridge_forecasts = regularized_multicountry_forecasts(panel)
     ridge_summary = add_forecast_fdr(
         summarize_forecasts(
@@ -738,6 +743,15 @@ def run_modeling() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     raw.to_csv(PROCESSED_DIR / "raw_lead_correlations.csv", index=False)
     correlations.to_csv(
         PROCESSED_DIR / "lead_correlation_comparison.csv", index=False
+    )
+    extended_prewhitened.to_csv(
+        PROCESSED_DIR / "prewhitened_lead_correlations_0_18.csv", index=False
+    )
+    extended_raw.to_csv(
+        PROCESSED_DIR / "raw_lead_correlations_0_18.csv", index=False
+    )
+    extended_correlations.to_csv(
+        PROCESSED_DIR / "lead_correlation_comparison_0_18.csv", index=False
     )
     current_forecasts.to_csv(
         PROCESSED_DIR / "latest_forecasts.csv", index=False

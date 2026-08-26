@@ -740,8 +740,14 @@ def save_exposure_component_chart() -> None:
     plt.close(fig)
 
 
-def save_correlation_method_chart() -> None:
-    correlations = pd.read_csv(PROCESSED_DIR / "lead_correlation_comparison.csv")
+def save_correlation_method_chart(
+    *,
+    max_lead: int = 12,
+    source_filename: str = "lead_correlation_comparison.csv",
+    output_filename: str = "correlation_raw_vs_prewhitened.png",
+) -> None:
+    correlations = pd.read_csv(PROCESSED_DIR / source_filename)
+    familywise_column = f"familywise_p_0_{max_lead}"
     candidates = list(REPRESENTATIVE_ASIAN_SERIES)
     selected = correlations.loc[
         correlations["target"].eq("ex_games_12m_pct")
@@ -749,33 +755,34 @@ def save_correlation_method_chart() -> None:
         & correlations["candidate"].isin(candidates)
     ]
     raw = selected.loc[selected["method"].eq("raw_annual_rates")]
-    innovations = selected.loc[selected["method"].eq("prewhitened_ar")]
     values = raw.pivot(
         index="candidate", columns="lead_months", values="common_sample_correlation"
-    ).reindex(index=candidates, columns=range(13))
+    ).reindex(index=candidates, columns=range(max_lead + 1))
     p_values = raw.pivot(
-        index="candidate", columns="lead_months", values="familywise_p_0_12"
-    ).reindex(index=candidates, columns=range(13))
+        index="candidate", columns="lead_months", values=familywise_column
+    ).reindex(index=candidates, columns=range(max_lead + 1))
 
-    fig, axes = plt.subplots(
-        1,
-        2,
-        figsize=(17, 7),
-        gridspec_kw={"width_ratios": [2.25, 1]},
-    )
-    image = axes[0].imshow(
+    fig, ax = plt.subplots(figsize=(16 if max_lead > 12 else 13, 6.8))
+    image = ax.imshow(
         values,
         cmap="RdBu_r",
         vmin=-0.8,
         vmax=0.8,
         aspect="auto",
     )
-    axes[0].set_xticks(range(13), labels=[f"{lead}m" for lead in range(13)])
-    axes[0].set_yticks(
+    ax.set_xticks(
+        range(max_lead + 1),
+        labels=[f"{lead}m" for lead in range(max_lead + 1)],
+    )
+    ax.set_yticks(
         range(len(candidates)), labels=[COUNTRY_LABELS[item] for item in candidates]
     )
-    axes[0].set_title("Primary result: shared annual technology-price cycle")
-    axes[0].set_xlabel("Foreign price lead over the UK tech-goods aggregate")
+    ax.set_title(
+        "Shared annual technology-price cycle"
+        if max_lead > 12
+        else "Primary result: shared annual technology-price cycle"
+    )
+    ax.set_xlabel("Foreign price lead over the UK tech-goods aggregate")
     for row in range(values.shape[0]):
         for column in range(values.shape[1]):
             value = values.iloc[row, column]
@@ -786,7 +793,7 @@ def save_correlation_method_chart() -> None:
                     and p_values.iloc[row, column] < 0.1
                     else ""
                 )
-                axes[0].text(
+                ax.text(
                     column,
                     row,
                     f"{value:.2f}{star}",
@@ -795,93 +802,25 @@ def save_correlation_method_chart() -> None:
                     fontsize=7,
                 )
 
-    peak_rows = []
-    for candidate in candidates:
-        candidate_raw = raw.loc[raw["candidate"].eq(candidate)]
-        peak = candidate_raw.loc[
-            candidate_raw["common_sample_correlation"].idxmax()
-        ]
-        same_lead = innovations.loc[
-            innovations["candidate"].eq(candidate)
-            & innovations["lead_months"].eq(peak["lead_months"])
-        ]
-        peak_rows.append(
-            {
-                "candidate": candidate,
-                "lead": int(peak["lead_months"]),
-                "raw": float(peak["common_sample_correlation"]),
-                "innovation": (
-                    float(same_lead["common_sample_correlation"].iloc[0])
-                    if not same_lead.empty
-                    else np.nan
-                ),
-            }
-        )
-    peaks = pd.DataFrame(peak_rows).set_index("candidate").reindex(candidates)
-    y_positions = np.arange(len(candidates))
-    for position, row in enumerate(peaks.itertuples()):
-        axes[1].plot(
-            [row.innovation, row.raw],
-            [position, position],
-            color="#b7b7b7",
-            linewidth=1.5,
-            zorder=1,
-        )
-    axes[1].scatter(
-        peaks["innovation"],
-        y_positions,
-        label="AR(12) innovations, same lead",
-        color="#9aa0a6",
-        s=42,
-        zorder=2,
-    )
-    axes[1].scatter(
-        peaks["raw"],
-        y_positions,
-        label="Raw annual rates, peak lead",
-        color="#b5483b",
-        s=58,
-        zorder=3,
-    )
-    for position, row in enumerate(peaks.itertuples()):
-        axes[1].text(
-            row.raw + 0.025,
-            position,
-            f"{row.raw:.2f} at {row.lead}m",
-            va="center",
-            fontsize=8,
-        )
-    axes[1].axvline(0, color="#222222", linewidth=0.8)
-    axes[1].set_xlim(-0.65, 0.84)
-    axes[1].set_yticks(
-        y_positions, labels=[COUNTRY_LABELS[item] for item in candidates]
-    )
-    axes[1].invert_yaxis()
-    axes[1].set_xlabel("Correlation")
-    axes[1].set_title("Robustness: remove separate AR dynamics")
-    axes[1].legend(
-        frameon=False,
-        fontsize=7.5,
-        loc="upper center",
-        bbox_to_anchor=(0.5, -0.08),
-    )
-    colorbar_axis = fig.add_axes([0.925, 0.24, 0.012, 0.56])
-    fig.colorbar(image, cax=colorbar_axis, label="Raw correlation")
+    fig.colorbar(image, ax=ax, label="Raw correlation", shrink=0.82, pad=0.025)
     fig.suptitle(
-        "Asian technology prices lead the UK tech-goods aggregate within a shared cycle",
+        (
+            "Asian technology-price correlations peak around 12 months and then fade"
+            if max_lead > 12
+            else "Asian technology prices lead the UK tech-goods aggregate within a shared cycle"
+        ),
         y=0.98,
     )
     fig.text(
         0.5,
         0.015,
-        "* familywise p < 0.10 across the 0–12 month lead search. The raw annual-rate "
-        "relationship is the estimand of interest; innovation correlations are a "
-        "sensitivity check.",
+        f"* familywise p < 0.10 across the 0–{max_lead} month lead search. "
+        "The raw annual-rate relationship is the estimand of interest.",
         ha="center",
         fontsize=9,
     )
-    fig.subplots_adjust(left=0.12, right=0.90, bottom=0.17, top=0.90, wspace=0.30)
-    fig.savefig(CHART_DIR / "correlation_raw_vs_prewhitened.png", dpi=180)
+    fig.subplots_adjust(left=0.14, right=0.96, bottom=0.17, top=0.88)
+    fig.savefig(CHART_DIR / output_filename, dpi=180)
     plt.close(fig)
 
 
@@ -1452,6 +1391,11 @@ def build_report_outputs() -> None:
     save_asian_factor_inputs_chart()
     save_exposure_component_chart()
     save_correlation_method_chart()
+    save_correlation_method_chart(
+        max_lead=18,
+        source_filename="lead_correlation_comparison_0_18.csv",
+        output_filename="correlation_raw_vs_prewhitened_0_18.png",
+    )
     save_mechanical_contribution_chart()
     save_forward_mechanical_pass_through_chart()
     save_lp_pass_through_fan_chart()

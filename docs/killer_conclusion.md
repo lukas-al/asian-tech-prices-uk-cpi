@@ -9,7 +9,7 @@ correlation with the current construction is 0.986. Over the common internationa
 sample, China, Japan and Asian-NIE electronics prices share a pronounced regional
 cycle: one factor explains 93.3% of their standardised variation.
 
-![Asian lead correlations](../outputs/charts/correlation_raw_vs_prewhitened.png)
+![Asian lead correlations](../outputs/charts/correlation_raw_vs_prewhitened_0_18.png)
 
 The shared-cycle evidence is a primary result, not something to discard because
 it weakens after pre-whitening. China's sterling technology PPI correlates 0.69
@@ -22,13 +22,21 @@ technology-price cycle.
 
 ![Recursive forecast RMSE ratios](../outputs/charts/forecast_rmse_ratios.png)
 
-The predictive signal is in the combination, not a fixed single-country lead. A
-recursively cross-validated Asian ridge model reduces UK C26 import-price forecast
-RMSE by about 8–17% at 4–10 months. Combining Asian prices with UK import prices
-also materially improves targeted-hardware CPI forecasts at 7–12 months in the
-full sample. But the useful window moves—from nearer 3–5 months for C26 before
-2020 to 8–12 months after 2022—so this should be treated as a monitored horizon
-band rather than a structural lag.
+Against an OLS controls benchmark, a recursively cross-validated Asian ridge
+reduces UK C26 import-price forecast RMSE by about 8–17% at several 4–10 month
+horizons. But a new like-for-like ridge benchmark shows that most of this is a
+regularisation gain: adding the Asian series produces only small, uneven changes
+in RMSE, with the clearest full-sample improvement—about 7%—at eleven months.
+The no-ridge comparison reinforces that conclusion: adding Asian prices to the
+C26 AR(2)/OLS forecast raises RMSE at every horizon. The second stage is more
+encouraging. Adding UK import and Asian prices to the targeted-hardware AR(2)/OLS
+model lowers RMSE by roughly 10–27% at seven to ten months. Yet a controls-only
+ridge captures much of this improvement, so the combined ridge's clearest
+like-for-like gains are confined to ten and twelve months. The evidence supports
+selected longer-horizon CPI forecast value, not a general improvement at both
+stages. Asian prices alone generate similar CPI point gains around eight to ten
+months, but the 90% block-bootstrap intervals include an RMSE ratio of one
+(no improvement), underlining the uncertainty around the exact magnitude.
 
 The PCA factor and ridge should be kept conceptually separate. PCA constructs a
 target-free, unitless measure of the common Asian price cycle. Ridge constructs
