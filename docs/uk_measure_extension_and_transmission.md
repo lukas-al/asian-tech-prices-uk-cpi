@@ -92,8 +92,6 @@ results contain 99–112 recursive forecasts, with target dates spanning July 20
 to July 2026. RMSE-ratio uncertainty is shown using 90% paired circular moving-
 block bootstrap intervals based on 2,000 draws and 12-month blocks.
 
-![Recursive forecast RMSE ratios](../outputs/charts/forecast_rmse_ratios.png)
-
 ![Like-for-like forecast architecture comparisons](../outputs/charts/forecast_architecture_comparison.png)
 
 ![Smooth distributed-lag forecast comparisons](../outputs/charts/ardl_forecast_comparison.png)

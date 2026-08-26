@@ -20,7 +20,7 @@ series' persistent dynamics. That is a useful robustness check, but it is not th
 main estimand when the research question concerns an internationally shared
 technology-price cycle.
 
-![Recursive forecast RMSE ratios](../outputs/charts/forecast_rmse_ratios.png)
+![Like-for-like forecast architecture comparisons](../outputs/charts/forecast_architecture_comparison.png)
 
 Against an OLS controls benchmark, a recursively cross-validated Asian ridge
 reduces UK C26 import-price forecast RMSE by about 8–17% at several 4–10 month
