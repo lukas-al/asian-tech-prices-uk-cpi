@@ -784,9 +784,6 @@ def save_correlation_method_chart(
         range(max_lead + 1),
         labels=[f"{lead}m" for lead in range(max_lead + 1)],
     )
-    if max_lead > 12:
-        axes[0].axvspan(12.5, max_lead + 0.5, color="#e8e8e8", alpha=0.22)
-        axes[0].axvline(12.5, color="#555555", linewidth=0.8, linestyle="--")
     axes[0].set_yticks(
         range(len(candidates)), labels=[COUNTRY_LABELS[item] for item in candidates]
     )
@@ -888,18 +885,13 @@ def save_correlation_method_chart(
     colorbar_axis = fig.add_axes([0.925, 0.24, 0.012, 0.56])
     fig.colorbar(image, cax=colorbar_axis, label="Raw correlation")
     fig.suptitle(
-        (
-            "Asian technology-price correlations peak around 12 months and then fade"
-            if max_lead > 12
-            else "Asian technology prices lead the UK tech-goods aggregate within a shared cycle"
-        ),
+        "Asian technology prices lead the UK tech-goods aggregate within a shared cycle",
         y=0.98,
     )
     fig.text(
         0.5,
         0.015,
         f"* familywise p < 0.10 across the 0–{max_lead} month lead search. "
-        + ("Leads 13–18 are shaded as the extended window. " if max_lead > 12 else "")
         + "The raw annual-rate relationship is the estimand of interest; innovation "
         "correlations are a sensitivity check.",
         ha="center",
@@ -1478,6 +1470,8 @@ def build_report_outputs() -> None:
     save_exposure_component_chart()
     save_correlation_method_chart()
     save_correlation_method_chart(
+        max_lead=18,
+        source_filename="lead_correlation_comparison_0_18.csv",
         output_filename="correlation_raw_vs_prewhitened_0_18.png",
     )
     save_mechanical_contribution_chart()
