@@ -1478,8 +1478,6 @@ def build_report_outputs() -> None:
     save_exposure_component_chart()
     save_correlation_method_chart()
     save_correlation_method_chart(
-        max_lead=18,
-        source_filename="lead_correlation_comparison_0_18.csv",
         output_filename="correlation_raw_vs_prewhitened_0_18.png",
     )
     save_mechanical_contribution_chart()

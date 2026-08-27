@@ -171,7 +171,7 @@ Pre-whitening remains useful as a deliberately narrower robustness diagnostic:
 - recursive forecasts ask whether the foreign measure would have improved a
   real-time UK forecast beyond own lags and broad controls.
 
-![Raw and pre-whitened correlations through 18 months](../outputs/charts/correlation_raw_vs_prewhitened_0_18.png)
+![Raw and pre-whitened correlations through 12 months](../outputs/charts/correlation_raw_vs_prewhitened_0_18.png)
 
 For ex-games CPI, China's sterling targeted PPI has a raw common-sample
 correlation of 0.69 at a 12-month lead and the OECD-weighted targeted basket has

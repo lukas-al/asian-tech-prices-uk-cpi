@@ -24,9 +24,8 @@ upstream before reaching UK retail prices. Pre-whitened relationships are
 weaker, showing that the result concerns a common cycle rather than a sequence
 of isolated shocks.
 
-Extending the lead search from 12 to 18 months confirms that the strongest China
-and OECD-weighted relationships peak at about 12 months and then decline, rather
-than continuing to strengthen beyond the original window.
+Within the primary 0–12-month window, the strongest China and OECD-weighted
+relationships peak at around one year.
 
 ![Asian lead correlations](../outputs/charts/correlation_raw_vs_prewhitened_0_18.png)
 
