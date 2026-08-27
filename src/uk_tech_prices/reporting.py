@@ -748,7 +748,11 @@ def save_correlation_method_chart(
 ) -> None:
     correlations = pd.read_csv(PROCESSED_DIR / source_filename)
     familywise_column = f"familywise_p_0_{max_lead}"
-    candidates = list(REPRESENTATIVE_ASIAN_SERIES)
+    candidates = [
+        candidate
+        for candidate in REPRESENTATIVE_ASIAN_SERIES
+        if candidate != "oecd_asia_c26_bls_gbp_12m_pct"
+    ]
     selected = correlations.loc[
         correlations["target"].eq("ex_games_12m_pct")
         & correlations["period"].eq("full")
