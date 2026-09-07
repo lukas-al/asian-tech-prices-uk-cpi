@@ -14,7 +14,7 @@ os.environ.setdefault(
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
-from matplotlib.colors import TwoSlopeNorm
+from matplotlib.colors import LinearSegmentedColormap, TwoSlopeNorm
 
 from uk_tech_prices.channels import (
     COMPONENT_IDS,
@@ -759,7 +759,6 @@ def save_correlation_method_chart(
         & correlations["candidate"].isin(candidates)
     ]
     raw = selected.loc[selected["method"].eq("raw_annual_rates")]
-    innovations = selected.loc[selected["method"].eq("prewhitened_ar")]
     values = raw.pivot(
         index="candidate", columns="lead_months", values="common_sample_correlation"
     ).reindex(index=candidates, columns=range(max_lead + 1))
@@ -767,32 +766,50 @@ def save_correlation_method_chart(
         index="candidate", columns="lead_months", values=familywise_column
     ).reindex(index=candidates, columns=range(max_lead + 1))
 
-    fig, axes = plt.subplots(
-        1,
-        2,
-        figsize=(19 if max_lead > 12 else 17, 7),
-        gridspec_kw={"width_ratios": [2.25, 1]},
+    boe_dark_blue = "#12273F"
+    boe_diverging = LinearSegmentedColormap.from_list(
+        "boe_aqua_orange",
+        (
+            (0.00, boe_dark_blue),
+            (0.28, "#34BCC1"),
+            (0.50, "#F7F8FA"),
+            (0.72, "#FFC799"),
+            (1.00, "#E76900"),
+        ),
     )
-    image = axes[0].imshow(
+    fig, ax = plt.subplots(figsize=(16.5 if max_lead > 12 else 13.5, 5.6))
+    fig.patch.set_facecolor(boe_dark_blue)
+    ax.set_facecolor(boe_dark_blue)
+    image = ax.imshow(
         values,
-        cmap="RdBu_r",
+        cmap=boe_diverging,
         vmin=-0.8,
         vmax=0.8,
         aspect="auto",
     )
-    axes[0].set_xticks(
+    ax.set_xticks(
         range(max_lead + 1),
         labels=[f"{lead}m" for lead in range(max_lead + 1)],
     )
-    axes[0].set_yticks(
+    ax.set_yticks(
         range(len(candidates)), labels=[COUNTRY_LABELS[item] for item in candidates]
     )
-    axes[0].set_title(
-        "Shared annual technology-price cycle"
-        if max_lead > 12
-        else "Primary result: shared annual technology-price cycle"
+    ax.set_title(
+        "Correlation with UK technology-goods inflation",
+        loc="left",
+        color="white",
+        fontsize=11,
+        pad=10,
     )
-    axes[0].set_xlabel("Foreign price lead over the UK tech-goods aggregate")
+    ax.set_xlabel(
+        "Foreign price lead over the UK tech-goods aggregate",
+        color="white",
+        labelpad=7,
+    )
+    ax.tick_params(colors="white", labelsize=9)
+    for spine in ax.spines.values():
+        spine.set_color("white")
+        spine.set_linewidth(0.8)
     for row in range(values.shape[0]):
         for column in range(values.shape[1]):
             value = values.iloc[row, column]
@@ -803,101 +820,57 @@ def save_correlation_method_chart(
                     and p_values.iloc[row, column] < 0.1
                     else ""
                 )
-                axes[0].text(
+                ax.text(
                     column,
                     row,
                     f"{value:.2f}{star}",
                     ha="center",
                     va="center",
-                    fontsize=7,
+                    fontsize=6.7,
+                    color="black",
+                    fontweight="bold" if star else "normal",
                 )
-
-    peak_rows = []
-    for candidate in candidates:
-        candidate_raw = raw.loc[raw["candidate"].eq(candidate)]
-        peak = candidate_raw.loc[
-            candidate_raw["common_sample_correlation"].idxmax()
-        ]
-        same_lead = innovations.loc[
-            innovations["candidate"].eq(candidate)
-            & innovations["lead_months"].eq(peak["lead_months"])
-        ]
-        peak_rows.append(
-            {
-                "candidate": candidate,
-                "lead": int(peak["lead_months"]),
-                "raw": float(peak["common_sample_correlation"]),
-                "innovation": (
-                    float(same_lead["common_sample_correlation"].iloc[0])
-                    if not same_lead.empty
-                    else np.nan
-                ),
-            }
-        )
-    peaks = pd.DataFrame(peak_rows).set_index("candidate").reindex(candidates)
-    y_positions = np.arange(len(candidates))
-    for position, row in enumerate(peaks.itertuples()):
-        axes[1].plot(
-            [row.innovation, row.raw],
-            [position, position],
-            color="#b7b7b7",
-            linewidth=1.5,
-            zorder=1,
-        )
-    axes[1].scatter(
-        peaks["innovation"],
-        y_positions,
-        label="AR(12) innovations, same lead",
-        color="#9aa0a6",
-        s=42,
-        zorder=2,
+    colorbar = fig.colorbar(
+        image,
+        ax=ax,
+        label="Raw correlation",
+        shrink=0.86,
+        pad=0.02,
     )
-    axes[1].scatter(
-        peaks["raw"],
-        y_positions,
-        label="Raw annual rates, peak lead",
-        color="#b5483b",
-        s=58,
-        zorder=3,
-    )
-    for position, row in enumerate(peaks.itertuples()):
-        axes[1].text(
-            row.raw + 0.025,
-            position,
-            f"{row.raw:.2f} at {row.lead}m",
-            va="center",
-            fontsize=8,
-        )
-    axes[1].axvline(0, color="#222222", linewidth=0.8)
-    axes[1].set_xlim(-0.65, 0.84)
-    axes[1].set_yticks(
-        y_positions, labels=[COUNTRY_LABELS[item] for item in candidates]
-    )
-    axes[1].invert_yaxis()
-    axes[1].set_xlabel("Correlation")
-    axes[1].set_title("Robustness: remove separate AR dynamics")
-    axes[1].legend(
-        frameon=False,
-        fontsize=7.5,
-        loc="upper center",
-        bbox_to_anchor=(0.5, -0.08),
-    )
-    colorbar_axis = fig.add_axes([0.925, 0.24, 0.012, 0.56])
-    fig.colorbar(image, cax=colorbar_axis, label="Raw correlation")
+    colorbar.ax.tick_params(colors="white", labelsize=8.5)
+    colorbar.ax.yaxis.label.set_color("white")
+    colorbar.outline.set_edgecolor("white")
     fig.suptitle(
-        "Asian technology prices lead the UK tech-goods aggregate within a shared cycle",
-        y=0.98,
+        (
+            "Asian technology-price correlations peak around 12 months and then fade"
+            if max_lead > 12
+            else "Asian technology prices lead the UK tech-goods aggregate within a shared cycle"
+        ),
+        x=0.135,
+        y=0.96,
+        ha="left",
+        color="white",
+        fontsize=16,
+        fontweight="bold",
     )
     fig.text(
-        0.5,
-        0.015,
+        0.135,
+        0.045,
         f"* familywise p < 0.10 across the 0–{max_lead} month lead search. "
-        + "The raw annual-rate relationship is the estimand of interest; innovation "
-        "correlations are a sensitivity check.",
-        ha="center",
-        fontsize=9,
+        "The raw annual-rate relationship is the estimand of interest.",
+        ha="left",
+        fontsize=8.5,
+        color="white",
     )
-    fig.subplots_adjust(left=0.12, right=0.90, bottom=0.17, top=0.90, wspace=0.30)
+    fig.text(
+        0.135,
+        0.012,
+        "Sources: national statistical agencies, OECD, BLS/FRED and Bank calculations.",
+        ha="left",
+        fontsize=8,
+        color="white",
+    )
+    fig.subplots_adjust(left=0.135, right=0.965, bottom=0.22, top=0.81)
     fig.savefig(CHART_DIR / output_filename, dpi=180)
     plt.close(fig)
 
